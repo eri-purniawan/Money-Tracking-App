@@ -364,6 +364,11 @@ nav .btn-menu {
 
   nav {
     gap: 0;
+    /* grid-template-areas:
+      'heading btn-menu'
+      'menus menus';
+    gap: 0;
+    align-items: center; */
   }
 
   .grid-areas {
@@ -372,10 +377,18 @@ nav .btn-menu {
       'menus menus';
     gap: 0;
     align-items: center;
+    transition: 0.3s ease-in-out;
   }
 
   nav .menu {
     display: none;
+    /* width: auto;
+    border-top: 1px solid var(--black);
+    grid-area: menus;
+    transform: translateY(-100%) translateX(-200%);
+    margin-top: 20px;
+    position: relative;
+    z-index: -999; */
   }
 
   nav .menu-show {
@@ -417,6 +430,6 @@ nav .btn-menu {
   }
 
   .list {
-    font-size: 2vmax;
+    font-size: 15px;
   }
 }

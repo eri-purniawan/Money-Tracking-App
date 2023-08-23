@@ -166,31 +166,29 @@ foreach ($dup as $k => $v) {
     </section>
 
     <?php foreach ($dates as $date) : ?>
+      <p class="tgl"><?= $date ?></p>
       <section class="list">
-        <p class="tgl"><?= $date ?></p>
 
-        <table cellspacing='0'>
-          <tr>
-            <th>Pengeluaran</th>
-            <th>Kategori</th>
-            <th>Keterangan</th>
-          </tr>
-          <?php $tgl_value = $db->query("SELECT * FROM $table_name WHERE tgl = '$date'") ?>
-          <?php foreach ($tgl_value as $value) : ?>
-            <?php if ($value['pengeluaran'] !== NULL && $value['kategori'] !== NULL && $value['ket'] !== NULL) : ?>
-              <tr>
-                <td><span><?= number_format($value['pengeluaran']) ?></span></td>
-                <td><?= $value['kategori'] ?></td>
-                <td>
-                  <p><?= $value['ket'] ?></p>
-                </td>
-              </tr>
-            <?php endif; ?>
-          <?php endforeach; ?>
-        </table>
+        <div class="table-header">
+          <span class="pengeluaran">Pengeluaran</span>
+          <span class="kategori">Kategori</span>
+          <span class="keterangan">Keterangan</span>
+        </div>
+
+        <?php $tgl_value = $db->query("SELECT * FROM $table_name WHERE tgl = '$date'") ?>
+        <?php foreach ($tgl_value as $value) : ?>
+          <?php if ($value['pengeluaran'] !== NULL && $value['kategori'] !== NULL && $value['ket'] !== NULL) : ?>
+
+            <div class="table-value">
+              <span class="pengeluaran"><?= number_format($value['pengeluaran']) ?></span>
+              <p class="kategori"><?= $value['kategori'] ?></p>
+              <p class="keterangan"><?= $value['ket'] ?></p>
+            </div>
+
+          <?php endif; ?>
+        <?php endforeach; ?>
       </section>
     <?php endforeach; ?>
-
   </div>
   <script src="main.js"></script>
 </body>

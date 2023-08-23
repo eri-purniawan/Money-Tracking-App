@@ -267,7 +267,7 @@ nav .btn-menu {
   box-shadow: var(--shadow);
   display: grid;
   grid-template-rows: 1fr 1fr;
-  font-size: 2vmax;
+  font-size: 20px;
 }
 
 .tgl {
@@ -276,7 +276,7 @@ nav .btn-menu {
   border-style: solid;
   border-color: var(--black);
   padding: 10px;
-  font-size: 2vmax;
+  font-size: 25px;
   background-color: var(--red);
   color: white;
 }
@@ -414,5 +414,9 @@ nav .btn-menu {
 
   .balance .tampil-form {
     transform: translateY(0);
+  }
+
+  .list {
+    font-size: 2vmax;
   }
 }

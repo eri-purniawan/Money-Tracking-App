@@ -1,0 +1,404 @@
+@import url('https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  font-family: 'Victor Mono', monospace;
+  outline: none;
+}
+
+:root {
+  --red: #ff3366;
+  --teal: #0e7c7b;
+  --blue: #20a4f3;
+  --versigrid: #17bebb;
+  --Nyanza: #d4f4dd;
+  --violet: #4b1d3f;
+  --white: #f6f7f8;
+  --black: #011627;
+  --shadow: 5px 5px var(--black);
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+}
+
+nav {
+  background-color: var(--versigrid);
+  color: var(--black);
+  border: 1px solid var(--black);
+  box-shadow: var(--shadow);
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 50px;
+  padding: 20px;
+  align-items: center;
+}
+
+nav .menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 20px;
+  font-size: 18px;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+nav .list-menu {
+  cursor: pointer;
+  padding: 10px 0;
+  transition: 0.2s ease-in-out;
+}
+
+nav .list-menu:hover {
+  margin-top: -5px;
+}
+
+nav .btn-menu {
+  display: none;
+}
+
+.balance {
+  background-color: var(--Nyanza);
+  border: 1px solid var(--black);
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  align-items: baseline;
+  margin-bottom: 30px;
+  gap: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.balance .bulanan .btn {
+  cursor: pointer;
+}
+
+.balance .uang {
+  margin-top: 30px;
+  font-size: 4vmax;
+}
+
+.balance .uang::before {
+  content: 'Rp. ';
+  display: flex;
+  font-size: 20px;
+}
+
+.balance .btn-add {
+  background-color: var(--teal);
+  color: var(--white);
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  font-size: 20vmin;
+  cursor: pointer;
+  display: grid;
+  align-items: center;
+}
+
+.balance .bulanan,
+.balance .pengeluaran {
+  margin-top: 10px;
+  padding: 30px;
+}
+
+.balance .bulanan .uang::after {
+  font-family: 'Font Awesome 5 Free';
+  content: '\f044';
+  font-size: 20px;
+  padding: 10px;
+  display: flex;
+  text-align: center;
+}
+
+.balance .pengeluaran .uang {
+  color: var(--red);
+}
+
+.balance p {
+  margin-top: 10px;
+}
+
+.list {
+  border-width: 1px 0px 1px 1px;
+  border-style: solid;
+  border-color: var(--black);
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  align-items: center;
+  box-shadow: var(--shadow);
+  margin-bottom: 30px;
+}
+
+.list .tgl {
+  font-weight: bold;
+  background-color: var(--red);
+  height: 100%;
+  display: grid;
+  place-content: center;
+  color: var(--white);
+}
+
+.list table {
+  border-left: 1px solid var(--black);
+}
+
+.list table th,
+.list table td {
+  padding: 10px 20px;
+  text-align: center;
+  background-color: var(--white);
+  border-right: 1px solid var(--black);
+}
+
+.list table th {
+  border-bottom: 2px solid var(--black);
+}
+
+.list table td p {
+  text-align: start;
+}
+
+.list table tr td span {
+  color: var(--red);
+}
+
+.balance .form-input-uang {
+  display: grid;
+  background-color: var(--Nyanza);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  place-content: center;
+  gap: 10px;
+  transform: scale(0);
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+}
+
+.balance .show-window {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.form-input-uang .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  align-items: center;
+  font-size: 30px;
+  background-color: var(--red);
+  border: 1px solid var(--black);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.balance .form-input-uang label {
+  font-weight: bold;
+  font-size: 3vmax !important;
+  border: none !important;
+}
+
+.balance .form-input-uang label,
+.balance .form-input-uang input[type='number'],
+.balance .form-input-uang button {
+  font-size: 2vmax;
+  padding: 10px 10px;
+  border: 1px solid var(--black);
+}
+
+.balance .form-input-uang button {
+  background-color: var(--blue);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: 0.2s ease-in-out;
+}
+
+.balance .form-input-uang input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.balance .form-input-uang button:hover {
+  box-shadow: 8px 8px var(--black);
+}
+
+.balance .input-data-pengeluaran {
+  position: absolute;
+  display: grid;
+  background-color: var(--Nyanza);
+  right: 0;
+  border-left: 2px solid var(--black);
+  width: 50%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(100%);
+  transition: 0.3s ease-in-out;
+}
+
+.balance .tampil-form {
+  transform: translateX(0);
+}
+
+.balance .input-data-pengeluaran .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 25px;
+  display: grid;
+  align-items: center;
+  background-color: var(--red);
+  color: var(--white);
+  border: 1px solid var(--black);
+  cursor: pointer;
+}
+
+.balance .input-data-pengeluaran .form-list {
+  display: grid;
+  gap: 5px;
+  font-size: 17px;
+}
+
+.balance .input-data-pengeluaran .form-list label {
+  font-weight: bold;
+}
+
+.balance .input-data-pengeluaran .form-list input[type='number'],
+.balance .input-data-pengeluaran .form-list select,
+.balance .input-data-pengeluaran .form-list textarea,
+.balance .input-data-pengeluaran .form-list button {
+  font-size: 17px;
+  padding: 5px;
+  border: 1px solid var(--black);
+}
+
+.balance .input-data-pengeluaran .form-list input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.balance .input-data-pengeluaran .form-list input[type='number']:focus,
+.balance .input-data-pengeluaran .form-list select:focus,
+.balance .input-data-pengeluaran .form-list textarea:focus {
+  border: 1px solid var(--blue);
+}
+
+.balance .input-data-pengeluaran .form-list button {
+  box-shadow: var(--shadow);
+  background-color: var(--blue);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+@media (max-width: 667px) {
+  .balance {
+    grid-template-areas:
+      'bulanan'
+      'pengeluaran'
+      'button' !important;
+    text-align: center;
+  }
+
+  .balance .bulanan .uang::after {
+    justify-content: center;
+  }
+
+  .bulanan .pengeluaran {
+    padding-top: 100px !important;
+  }
+
+  .balance .uang::before {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .balance {
+    grid-template-areas:
+      'bulanan pengeluaran'
+      'button button';
+  }
+
+  .balance .bulanan {
+    grid-area: bulanan;
+  }
+
+  .balance .pengeluaran {
+    grid-area: pengeluaran;
+  }
+
+  .balance .btn-add {
+    font-size: 50px !important;
+    padding: 20px;
+    grid-area: button;
+  }
+
+  .balance .bulanan {
+    margin-bottom: -80px;
+  }
+
+  nav {
+    gap: 0;
+  }
+
+  .grid-areas {
+    grid-template-areas:
+      'heading btn-menu'
+      'menus menus';
+    gap: 0;
+    align-items: center;
+  }
+
+  nav .menu {
+    display: none;
+  }
+
+  nav .menu-show {
+    padding: 40px;
+    margin-top: 20px;
+    border-top: 1px solid var(--black);
+    display: flex;
+    flex-direction: column;
+    grid-area: menus;
+  }
+
+  nav .menu-show .list-menu {
+    padding: 10px;
+  }
+
+  nav .btn-menu {
+    display: block;
+    text-align: end;
+    font-size: 30px;
+  }
+
+  nav .btn-menu i {
+    cursor: pointer;
+  }
+
+  .balance .btn-add {
+    font-size: 5vmin;
+  }
+
+  .balance .input-data-pengeluaran {
+    border: none;
+    width: 100%;
+    transform: translateY(100%);
+    transition: 0.3s ease-in-out;
+  }
+
+  .balance .tampil-form {
+    transform: translateY(0);
+  }
+}

@@ -53,11 +53,11 @@ nav .menu {
 nav .list-menu {
   cursor: pointer;
   padding: 10px 0;
-  transition: 0.2s ease-in-out;
+  transition: 0.1s ease-in-out;
 }
 
 nav .list-menu:hover {
-  margin-top: -5px;
+  scale: 1.1;
 }
 
 nav .btn-menu {
@@ -268,6 +268,7 @@ nav .btn-menu {
   display: grid;
   grid-template-rows: 1fr 1fr;
   font-size: 20px;
+  margin-bottom: 20px;
 }
 
 .tgl {
@@ -279,6 +280,7 @@ nav .btn-menu {
   font-size: 25px;
   background-color: var(--red);
   color: white;
+  box-shadow: var(--shadow);
 }
 
 .list .table-header {
@@ -364,11 +366,6 @@ nav .btn-menu {
 
   nav {
     gap: 0;
-    /* grid-template-areas:
-      'heading btn-menu'
-      'menus menus';
-    gap: 0;
-    align-items: center; */
   }
 
   .grid-areas {
@@ -382,13 +379,6 @@ nav .btn-menu {
 
   nav .menu {
     display: none;
-    /* width: auto;
-    border-top: 1px solid var(--black);
-    grid-area: menus;
-    transform: translateY(-100%) translateX(-200%);
-    margin-top: 20px;
-    position: relative;
-    z-index: -999; */
   }
 
   nav .menu-show {
@@ -421,6 +411,7 @@ nav .btn-menu {
   .balance .input-data-pengeluaran {
     border: none;
     width: 100%;
+    gap: 0;
     transform: translateY(120%);
     transition: 0.3s ease-in-out;
   }
@@ -431,5 +422,11 @@ nav .btn-menu {
 
   .list {
     font-size: 15px;
+  }
+
+  .tgl {
+    font-size: 15px;
+    width: 100%;
+    text-align: center;
   }
 }

@@ -150,6 +150,7 @@ foreach ($dup as $k => $v) {
             <option value="service-motor">Service Motor</option>
             <option value="hobi">Hobi</option>
             <option value="holiday">Holiday</option>
+            <option value="tagihan">Tagihan</option>
           </select>
         </div>
         <div class="form-list">
@@ -180,8 +181,8 @@ foreach ($dup as $k => $v) {
           <?php if ($value['pengeluaran'] !== NULL && $value['kategori'] !== NULL && $value['ket'] !== NULL) : ?>
 
             <div class="table-value">
-              <span class="pengeluaran"><?= number_format($value['pengeluaran']) ?></span>
-              <p class="kategori"><?= $value['kategori'] ?></p>
+              <span class="pengeluaran"><?= 'Rp.' . number_format($value['pengeluaran']) ?></span>
+              <p class="kategori"><?= ucwords($value['kategori']) ?></p>
               <p class="keterangan"><?= $value['ket'] ?></p>
             </div>
 

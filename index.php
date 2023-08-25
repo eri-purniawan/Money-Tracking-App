@@ -59,30 +59,34 @@ if (isset($_POST['tambah-data'])) {
   }
 }
 
-$hasil = $db->query("SELECT pengeluaran, tgl, kategori, ket FROM $table_name");
+$hasil = $db->query("SELECT * FROM $table_name");
 $baris = $hasil->fetchAll(PDO::FETCH_ASSOC);
 
 $pengeluaran = ($baris ? $pengeluaran = $baris[0]['pengeluaran'] : 0);
 
 //mengembalikan total nilai pengeluaran
-foreach ($baris as $k => $v) {
+foreach ($baris as $v) {
   $pengeluaran += $v['pengeluaran'];
 }
 
-// menyimpan nilai yang sama ke dalam array dup[]
-$dup = [];
-foreach ($baris as $dup_date) {
-  if ($dup_date['pengeluaran'] !== NULL && $dup_date['kategori'] !== NULL && $dup_date['ket'] !== NULL) {
-    $dup[] = $dup_date['tgl'];
-  }
-}
+$page_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL");
+$pages = $page_row->fetchAll(PDO::FETCH_ASSOC);
 
-// menghitung duplicate array lalu memasukkan $key array ke dalam $dates
-$dup = array_count_values($dup);
-$dates = [];
-foreach ($dup as $k => $v) {
-  $dates[] = $k;
-}
+//konfigurasi paguination
+$jum_data = 1;
+$tot_data = count($pages);
+$jum_hal = ceil($tot_data / $jum_data);
+$hal_aktif = (isset($_GET['halaman']) ? $_GET['halaman'] : 1);
+$awal_data = ($jum_data * $hal_aktif) - $jum_data;
+
+//konfiurasi link
+$jum_link = 1;
+$startNumber = ($hal_aktif > $jum_link ? $hal_aktif - $jum_link : 1);
+$endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jumlahLink : $jum_hal);
+
+$date_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL LIMIT $awal_data, $jum_data");
+$dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 
@@ -167,7 +171,7 @@ foreach ($dup as $k => $v) {
     </section>
 
     <?php foreach ($dates as $date) : ?>
-      <p class="tgl"><?= $date ?></p>
+      <p class="tgl"><?= $date = $date['tgl'] ?></p>
       <section class="list">
 
         <div class="table-header">
@@ -176,20 +180,40 @@ foreach ($dup as $k => $v) {
           <span class="keterangan">Keterangan</span>
         </div>
 
-        <?php $tgl_value = $db->query("SELECT * FROM $table_name WHERE tgl = '$date'") ?>
-        <?php foreach ($tgl_value as $value) : ?>
+        <?php $values = $db->query("SELECT * FROM $table_name WHERE tgl = '$date'"); ?>
+        <?php foreach ($values as $value) : ?>
           <?php if ($value['pengeluaran'] !== NULL && $value['kategori'] !== NULL && $value['ket'] !== NULL) : ?>
-
             <div class="table-value">
               <span class="pengeluaran"><?= 'Rp.' . number_format($value['pengeluaran']) ?></span>
               <p class="kategori"><?= ucwords($value['kategori']) ?></p>
               <p class="keterangan"><?= $value['ket'] ?></p>
             </div>
-
           <?php endif; ?>
         <?php endforeach; ?>
       </section>
     <?php endforeach; ?>
+
+    <section class="halaman">
+      <?php if ($hal_aktif > 1) : ?>
+
+        <a href="?halaman=<?= $hal_aktif - 1 ?>"><i class='bx bxs-left-arrow'></i></a>
+
+      <?php endif; ?>
+
+      <?php for ($i = $startNumber; $i <= $endNumber; $i++) : ?>
+        <?php if ($i == $hal_aktif) : ?>
+          <a class="halaman-aktif" href="?halaman=<?= $i ?>""><?= $i ?></a>
+        <?php else : ?>
+          <a href=" ?halaman=<?= $i ?>"><?= $i ?></a>
+        <?php endif; ?>
+      <?php endfor; ?>
+
+      <?php if ($hal_aktif < $jum_hal) : ?>
+
+        <a href="?halaman=<?= $hal_aktif + 1 ?>"><i class='bx bxs-right-arrow'></i></a>
+
+      <?php endif; ?>
+    </section>
   </div>
   <script src="main.js"></script>
 </body>

@@ -312,6 +312,28 @@ nav .btn-menu {
   text-align: center;
 }
 
+.halaman {
+  display: grid;
+  width: 20%;
+  margin: auto;
+  grid-template-columns: repeat(auto-fit, minmax(5px, 1fr));
+  text-align: center;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.halaman a {
+  background-color: var(--white);
+  padding: 5px 10px;
+  color: var(--black);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--black);
+}
+
+.halaman .halaman-aktif {
+  background-color: var(--blue);
+}
+
 @media (max-width: 667px) {
   .balance {
     grid-template-areas:
@@ -331,6 +353,11 @@ nav .btn-menu {
 
   .balance .uang::before {
     justify-content: center;
+  }
+
+  .halaman {
+    display: grid;
+    width: 30%;
   }
 }
 

@@ -313,21 +313,27 @@ nav .btn-menu {
 }
 
 .halaman {
-  display: grid;
-  width: 20%;
+  display: flex;
+  justify-content: center;
   margin: auto;
-  grid-template-columns: repeat(auto-fit, minmax(5px, 1fr));
   text-align: center;
   gap: 10px;
   font-weight: bold;
 }
 
 .halaman a {
+  width: 100px;
   background-color: var(--white);
   padding: 5px 10px;
   color: var(--black);
   box-shadow: var(--shadow);
   border: 1px solid var(--black);
+}
+
+.halaman .arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .halaman .halaman-aktif {
@@ -353,11 +359,6 @@ nav .btn-menu {
 
   .balance .uang::before {
     justify-content: center;
-  }
-
-  .halaman {
-    display: grid;
-    width: 30%;
   }
 }
 

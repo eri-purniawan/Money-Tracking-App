@@ -197,7 +197,8 @@ nav .btn-menu {
 
 .balance .input-data-pengeluaran {
   position: absolute;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   background-color: var(--white);
   right: 0;
   box-shadow: 0 0 80px rgba(0, 0, 0, 0.295);
@@ -227,9 +228,12 @@ nav .btn-menu {
 }
 
 .balance .input-data-pengeluaran .form-list {
+  margin-top: 5px;
   display: grid;
+  width: 80%;
   gap: 5px;
   font-size: 17px;
+  text-align: left;
 }
 
 .balance .input-data-pengeluaran .form-list label {
@@ -256,10 +260,13 @@ nav .btn-menu {
 }
 
 .balance .input-data-pengeluaran .form-list button {
+  width: 30%;
+  margin: auto;
   box-shadow: var(--shadow);
-  background-color: var(--blue);
+  background-color: var(--red);
   cursor: pointer;
   font-weight: bold;
+  color: var(--white);
 }
 
 .list {
@@ -268,7 +275,6 @@ nav .btn-menu {
   display: grid;
   grid-template-rows: 1fr 1fr;
   font-size: 20px;
-  margin-bottom: 20px;
 }
 
 .tgl {
@@ -310,6 +316,13 @@ nav .btn-menu {
 .list .table-value .pengeluaran,
 .list .table-value .kategori {
   text-align: center;
+}
+
+.total-pengeluaran {
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: var(--black);
+  margin-bottom: 20px;
 }
 
 .halaman {
@@ -365,6 +378,10 @@ nav .btn-menu {
 
   .balance .uang::before {
     justify-content: center;
+  }
+
+  .halaman {
+    font-size: 11px;
   }
 }
 

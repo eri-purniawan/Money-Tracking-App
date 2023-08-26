@@ -319,6 +319,7 @@ nav .btn-menu {
   text-align: center;
   gap: 10px;
   font-weight: bold;
+  font-size: 14px;
 }
 
 .halaman a {
@@ -328,9 +329,14 @@ nav .btn-menu {
   color: var(--black);
   box-shadow: var(--shadow);
   border: 1px solid var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .halaman .arrow {
+  height: 40px;
+  width: 50px;
   display: flex;
   align-items: center;
   justify-content: center;

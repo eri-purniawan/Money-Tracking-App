@@ -269,6 +269,19 @@ nav .btn-menu {
   color: var(--white);
 }
 
+.container .search-field {
+  display: grid;
+  grid-template-columns: 4fr 50px;
+  background-color: var(--Nyanza);
+  margin-bottom: 20px;
+}
+
+.container .search-field .search,
+.container .search-field .search-btn {
+  padding: 10px;
+  font-size: 16px;
+}
+
 .list {
   border: 1px solid var(--black);
   box-shadow: var(--shadow);

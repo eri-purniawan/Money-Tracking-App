@@ -173,6 +173,11 @@ while ($i <= count($pages)) {
       </form>
     </section>
 
+    <form class="search-field" action="" method="post">
+      <input class="search" type="search" name="search" id="search">
+      <button class="search-btn" type="submit" name="search-btn"><i class='bx bx-search'></i></button>
+    </form>
+
     <?php foreach ($dates as $date) : ?>
       <p class="tgl"><?= $date = $date['tgl'] ?></p>
       <section class="list">

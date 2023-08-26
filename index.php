@@ -190,15 +190,13 @@ while ($i <= count($pages)) {
           <span class="keterangan">Keterangan</span>
         </div>
 
-        <?php $values = $db->query("SELECT * FROM $table_name WHERE tgl = '$date'"); ?>
+        <?php $values = $db->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL"); ?>
         <?php foreach ($values as $value) : ?>
-          <?php if ($value['pengeluaran'] !== NULL && $value['kategori'] !== NULL && $value['ket'] !== NULL) : ?>
-            <div class="table-value">
-              <span class="pengeluaran"><?= 'Rp.' . number_format($value['pengeluaran']) ?></span>
-              <p class="kategori"><?= ucwords($value['kategori']) ?></p>
-              <p class="keterangan"><?= $value['ket'] ?></p>
-            </div>
-          <?php endif; ?>
+          <div class="table-value">
+            <span class="pengeluaran"><?= 'Rp.' . number_format($value['pengeluaran']) ?></span>
+            <p class="kategori"><?= ucwords($value['kategori']) ?></p>
+            <p class="keterangan"><?= $value['ket'] ?></p>
+          </div>
         <?php endforeach; ?>
       </section>
     <?php endforeach; ?>

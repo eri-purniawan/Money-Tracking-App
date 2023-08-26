@@ -69,7 +69,7 @@ foreach ($baris as $v) {
   $pengeluaran += $v['pengeluaran'];
 }
 
-$page_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL");
+$page_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC");
 $pages = $page_row->fetchAll(PDO::FETCH_ASSOC);
 
 //konfigurasi paguination
@@ -82,11 +82,21 @@ $awal_data = ($jum_data * $hal_aktif) - $jum_data;
 //konfiurasi link
 $jum_link = 1;
 $startNumber = ($hal_aktif > $jum_link ? $hal_aktif - $jum_link : 1);
-$endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jumlahLink : $jum_hal);
+$endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_hal);
 
-$date_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL LIMIT $awal_data, $jum_data");
+$date_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC LIMIT $awal_data, $jum_data");
 $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
 
+// konfigurasi nama link agar seusai tgl
+$i = 1;
+$date_pages = [];
+while ($i <= count($pages)) {
+  $c_date = $pages[count($pages) - $i]['tgl'];
+  $c_date = explode(' ', $c_date);
+  $c_date = array_diff($c_date, array(date('Y')));
+  $date_pages[] = $c_date[0] . ' ' . $c_date[1];
+  $i++;
+}
 ?>
 
 
@@ -196,21 +206,21 @@ $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
     <section class="halaman">
       <?php if ($hal_aktif > 1) : ?>
 
-        <a href="?halaman=<?= $hal_aktif - 1 ?>"><i class='bx bxs-left-arrow'></i></a>
+        <a class="arrow" href="?halaman=<?= $hal_aktif - 1 ?>"><i class='bx bx-chevron-left bx-lg'></i></a>
 
       <?php endif; ?>
 
       <?php for ($i = $startNumber; $i <= $endNumber; $i++) : ?>
         <?php if ($i == $hal_aktif) : ?>
-          <a class="halaman-aktif" href="?halaman=<?= $i ?>""><?= $i ?></a>
+          <a class="halaman-aktif" href="?halaman=<?= $i ?>""><?= $date_pages[count($pages) - $i] ?></a>
         <?php else : ?>
-          <a href=" ?halaman=<?= $i ?>"><?= $i ?></a>
+          <a href=" ?halaman=<?= $i ?>"><?= $date_pages[count($pages) - $i] ?></a>
         <?php endif; ?>
       <?php endfor; ?>
 
       <?php if ($hal_aktif < $jum_hal) : ?>
 
-        <a href="?halaman=<?= $hal_aktif + 1 ?>"><i class='bx bxs-right-arrow'></i></a>
+        <a class="arrow" href="?halaman=<?= $hal_aktif + 1 ?>"><i class='bx bx-chevron-right bx-lg'></i></a>
 
       <?php endif; ?>
     </section>

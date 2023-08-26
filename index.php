@@ -23,9 +23,7 @@ $stmt->execute();
 
 $stmt = $db->query("SELECT uang_bln FROM $table_name");
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$index = count($row);
-$uang_bulanan = ($row ? $uang_bulanan = $row[$index - 1]['uang_bln'] : 0);
+$uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
 
 if (isset($_POST['uang_btn'])) {
   $uang_bulanan += (int)$_POST['uang_bulanan'];
@@ -99,8 +97,6 @@ while ($i <= count($pages)) {
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -126,7 +122,6 @@ while ($i <= count($pages)) {
         <li class="list-menu">About</li>
       </ul>
     </nav>
-
 
     <section class="balance">
       <div class="bulanan">
@@ -172,12 +167,10 @@ while ($i <= count($pages)) {
           <textarea name="keterangan" id="keterangan" cols="30" rows="3"></textarea>
         </div>
         <div class="form-list">
-          <button type="submit" name="tambah-data">Tambah Pengeluaran</button>
+          <button type="submit" name="tambah-data"><i class='bx bx-plus bx-md'></i></button>
         </div>
-
         <div id="close-btn-input_2" class="close"><i class='bx bx-x'></i></div>
       </form>
-
     </section>
 
     <?php foreach ($dates as $date) : ?>
@@ -190,8 +183,10 @@ while ($i <= count($pages)) {
           <span class="keterangan">Keterangan</span>
         </div>
 
-        <?php $values = $db->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL"); ?>
-        <?php foreach ($values as $value) : ?>
+        <?php $values = $db->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL");
+        $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+        <?php foreach ($row_values as $value) : ?>
           <div class="table-value">
             <span class="pengeluaran"><?= 'Rp.' . number_format($value['pengeluaran']) ?></span>
             <p class="kategori"><?= ucwords($value['kategori']) ?></p>
@@ -199,6 +194,15 @@ while ($i <= count($pages)) {
           </div>
         <?php endforeach; ?>
       </section>
+      <p class="tgl total-pengeluaran">
+        <?php
+        $total_pengeluaran = 0;
+        foreach ($row_values as $value) {
+          $total_pengeluaran += $value['pengeluaran'];
+        }
+        echo 'Total Pengeluaran: Rp.' . number_format($total_pengeluaran)
+        ?>
+      </p>
     <?php endforeach; ?>
 
     <section class="halaman">

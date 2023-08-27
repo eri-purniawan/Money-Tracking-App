@@ -11,15 +11,18 @@
 }
 
 :root {
-  --red: #ff3366;
-  --teal: #0e7c7b;
-  --blue: #20a4f3;
-  --versigrid: #17bebb;
+  --red: #bf616a;
+  --red-2: #ff3366;
+  --blue: #5e81ac;
+  --versigrid: #88c0d0;
   --Nyanza: #d4f4dd;
-  --violet: #4b1d3f;
-  --white: #f6f7f8;
-  --black: #011627;
+  --white: #eceff4;
+  --black: #2e3440;
   --shadow: 5px 5px var(--black);
+}
+
+body {
+  background-color: #d8dee9;
 }
 
 .container {
@@ -93,7 +96,7 @@ nav .btn-menu {
 }
 
 .balance .btn-add {
-  background-color: var(--teal);
+  background-color: var(--blue);
   color: var(--white);
   text-align: center;
   height: 100%;
@@ -126,7 +129,7 @@ nav .btn-menu {
 }
 
 .balance .pengeluaran .uang {
-  color: var(--red);
+  color: var(--red-2);
 }
 
 .balance p {
@@ -142,14 +145,12 @@ nav .btn-menu {
   text-align: center;
   place-content: center;
   gap: 10px;
-  transform: scale(0);
-  opacity: 0;
-  transition: 0.2s ease-in-out;
+  transform: translateX(-105%);
+  transition: 0.3s ease-in-out;
 }
 
 .balance .show-window {
-  transform: scale(1);
-  opacity: 1;
+  transform: translateX(0);
 }
 
 .form-input-uang .close {
@@ -260,7 +261,7 @@ nav .btn-menu {
 }
 
 .balance .input-data-pengeluaran .form-list button {
-  width: 30%;
+  width: 100px;
   margin: auto;
   box-shadow: var(--shadow);
   background-color: var(--red);
@@ -271,6 +272,7 @@ nav .btn-menu {
 
 .list {
   border: 1px solid var(--black);
+  border-bottom: none !important;
   box-shadow: var(--shadow);
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -278,6 +280,7 @@ nav .btn-menu {
 }
 
 .tgl {
+  font-weight: bold;
   margin: auto;
   border-width: 1px 1px 0px 1px;
   width: fit-content;
@@ -285,8 +288,8 @@ nav .btn-menu {
   border-color: var(--black);
   padding: 10px;
   font-size: 25px;
-  background-color: var(--red);
-  color: white;
+  background-color: var(--white);
+  color: var(--black);
   box-shadow: var(--shadow);
 }
 
@@ -302,27 +305,32 @@ nav .btn-menu {
 .list .table-value {
   background-color: var(--white);
   align-items: center;
-  padding: 10px;
-  gap: 20px;
+  padding: 10px 0;
+  gap: 10px;
   border-width: 0px 0px 1px 0px;
-  border-style: solid;
+  border-style: dashed;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  grid-template-columns: 1fr 0.8fr 1fr;
 }
 
 .list .table-value .pengeluaran {
-  color: var(--red);
+  color: var(--red-2);
+  font-weight: bold;
 }
 
 .list .table-value .pengeluaran,
 .list .table-value .kategori {
   text-align: center;
+  border-width: 0px 1px 0px 0px;
+  border-style: dashed;
+  border-color: var(--black);
 }
 
 .total-pengeluaran {
   border-width: 0px 1px 1px 1px;
   border-style: solid;
   border-color: var(--black);
+  color: var(--red-2);
   margin-bottom: 20px;
   font-size: 18px;
   width: 100%;
@@ -341,7 +349,7 @@ nav .btn-menu {
 }
 
 .halaman a {
-  width: 100px;
+  width: 50px;
   background-color: var(--white);
   padding: 5px 10px;
   color: var(--black);
@@ -355,7 +363,7 @@ nav .btn-menu {
 .halaman .arrow {
   border: none;
   box-shadow: none;
-  background-color: white;
+  background-color: unset;
   height: 100%;
   width: 30px;
   display: flex;
@@ -365,16 +373,19 @@ nav .btn-menu {
 
 .halaman .halaman-aktif {
   background-color: var(--blue);
+  color: var(--white);
 }
 
 .pages-list {
   transform: scale(0);
   position: absolute;
   top: -110px;
+  width: 200px;
   display: grid;
+  grid-template-columns: 50px 50px 50px;
   gap: 10px;
   background-color: var(--white);
-  padding: 15px;
+  padding: 10px;
   border: 1px solid var(--black);
   box-shadow: var(--shadow);
   height: 100px;
@@ -387,14 +398,14 @@ nav .btn-menu {
 }
 
 .pages-list-icon {
-  height: 40px;
+  height: 46px;
   width: 50px;
   border: 1px solid var(--black);
   display: grid;
   align-items: center;
   cursor: pointer;
   box-shadow: var(--shadow);
-  background-color: var(--white);
+  background-color: var(--versigrid);
 }
 
 .pages-list::-webkit-scrollbar {
@@ -420,10 +431,6 @@ nav .btn-menu {
 
   .balance .uang::before {
     justify-content: center;
-  }
-
-  .halaman {
-    font-size: 11px;
   }
 }
 

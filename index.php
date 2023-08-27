@@ -91,8 +91,7 @@ $date_pages = [];
 while ($i <= count($pages)) {
   $c_date = $pages[count($pages) - $i]['tgl'];
   $c_date = explode(' ', $c_date);
-  $c_date = array_diff($c_date, array(date('Y')));
-  $date_pages[] = $c_date[0] . ' ' . $c_date[1];
+  $date_pages[] = $c_date[0];
   $i++;
 }
 ?>
@@ -180,7 +179,7 @@ while ($i <= count($pages)) {
 
     <!-- tampil data pengeluaran -->
     <?php foreach ($dates as $date) : ?>
-      <p class="tgl"><?= $date = $date['tgl'] ?></p>
+      <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
       <section class="list">
 
         <div class="table-header">
@@ -215,7 +214,7 @@ while ($i <= count($pages)) {
     <section class="halaman">
       <?php if ($hal_aktif > 1) : ?>
 
-        <a class="arrow" href="?halaman=<?= $hal_aktif - 1 ?>"><i class='bx bx-chevron-left bx-sm'></i></a>
+        <a class="arrow" href="?halaman=<?= $hal_aktif - 1 ?>"><i class='bx bx-chevron-left bx-md'></i></a>
 
       <?php endif; ?>
 
@@ -244,7 +243,7 @@ while ($i <= count($pages)) {
 
       <?php if ($hal_aktif < $jum_hal) : ?>
 
-        <a class="arrow" href="?halaman=<?= $hal_aktif + 1 ?>"><i class='bx bx-chevron-right bx-sm'></i></a>
+        <a class="arrow" href="?halaman=<?= $hal_aktif + 1 ?>"><i class='bx bx-chevron-right bx-md'></i></a>
 
       <?php endif; ?>
     </section>

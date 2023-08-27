@@ -111,6 +111,8 @@ while ($i <= count($pages)) {
 
 <body>
   <div class="container">
+
+    <!-- Navigaiton -->
     <nav id="nav">
       <h1 class="heading">Money Tracking</h1>
       <div id="btn-menu" class="btn-menu">
@@ -123,6 +125,7 @@ while ($i <= count($pages)) {
       </ul>
     </nav>
 
+    <!-- Balance -->
     <section class="balance">
       <div class="bulanan">
         <h2>Sisa Uang Bulanan</h2>
@@ -138,6 +141,7 @@ while ($i <= count($pages)) {
         <i class='bx bx-plus'></i>
       </div>
 
+      <!-- form input balance -->
       <form id="input-uang" class="form-input-uang" action="" method="post">
         <label for="uang-bulanan">Uang Bulanan</label>
         <input type="number" name="uang_bulanan" id="uang-bulanan" autofocus placeholder="Number Only!">
@@ -145,6 +149,7 @@ while ($i <= count($pages)) {
         <div id="close-btn-input" class="close"><i class='bx bx-x'></i></div>
       </form>
 
+      <!-- form input pengeluaran -->
       <form id="tambah-data" action="" method="post" class="input-data-pengeluaran">
         <div class="form-list">
           <label for="pengeluaran">Pengeluaran</label>
@@ -173,11 +178,7 @@ while ($i <= count($pages)) {
       </form>
     </section>
 
-    <form class="search-field" action="" method="post">
-      <input class="search" type="search" name="search" id="search">
-      <button class="search-btn" type="submit" name="search-btn"><i class='bx bx-search'></i></button>
-    </form>
-
+    <!-- tampil data pengeluaran -->
     <?php foreach ($dates as $date) : ?>
       <p class="tgl"><?= $date = $date['tgl'] ?></p>
       <section class="list">
@@ -210,10 +211,11 @@ while ($i <= count($pages)) {
       </p>
     <?php endforeach; ?>
 
+    <!-- pagination -->
     <section class="halaman">
       <?php if ($hal_aktif > 1) : ?>
 
-        <a class="arrow" href="?halaman=<?= $hal_aktif - 1 ?>"><i class='bx bx-chevron-left bx-lg'></i></a>
+        <a class="arrow" href="?halaman=<?= $hal_aktif - 1 ?>"><i class='bx bx-chevron-left bx-sm'></i></a>
 
       <?php endif; ?>
 
@@ -225,9 +227,24 @@ while ($i <= count($pages)) {
         <?php endif; ?>
       <?php endfor; ?>
 
+      <?php if (count($pages) > 3) : ?>
+        <div id="pages-btn" class="pages-list-icon">
+          <i class='bx bx-dots-vertical bx-sm'></i>
+        </div>
+        <div id="pages-list" class="pages-list">
+          <?php for ($i = 1; $i <= count($pages); $i++) : ?>
+            <?php if ($i == $hal_aktif) : ?>
+              <a class="halaman-aktif" href="?halaman=<?= $i ?>""><?= $date_pages[count($pages) - $i] ?></a>
+        <?php else : ?>
+          <a href=" ?halaman=<?= $i ?>"><?= $date_pages[count($pages) - $i] ?></a>
+            <?php endif; ?>
+          <?php endfor; ?>
+        </div>
+      <?php endif; ?>
+
       <?php if ($hal_aktif < $jum_hal) : ?>
 
-        <a class="arrow" href="?halaman=<?= $hal_aktif + 1 ?>"><i class='bx bx-chevron-right bx-lg'></i></a>
+        <a class="arrow" href="?halaman=<?= $hal_aktif + 1 ?>"><i class='bx bx-chevron-right bx-sm'></i></a>
 
       <?php endif; ?>
     </section>

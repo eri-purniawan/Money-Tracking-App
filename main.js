@@ -28,3 +28,9 @@ const close_btn_input = document.getElementById('close-btn-input');
 close_btn_input.addEventListener('click', () => {
   form_input_uang.classList.remove('show-window');
 });
+
+const page_btn = document.getElementById('pages-btn');
+const pages_list = document.getElementById('pages-list');
+page_btn.addEventListener('click', () => {
+  pages_list.classList.toggle('pages-list-show');
+});

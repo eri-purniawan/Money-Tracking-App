@@ -269,19 +269,6 @@ nav .btn-menu {
   color: var(--white);
 }
 
-.container .search-field {
-  display: grid;
-  grid-template-columns: 4fr 50px;
-  background-color: var(--Nyanza);
-  margin-bottom: 20px;
-}
-
-.container .search-field .search,
-.container .search-field .search-btn {
-  padding: 10px;
-  font-size: 16px;
-}
-
 .list {
   border: 1px solid var(--black);
   box-shadow: var(--shadow);
@@ -291,6 +278,7 @@ nav .btn-menu {
 }
 
 .tgl {
+  margin: auto;
   border-width: 1px 1px 0px 1px;
   width: fit-content;
   border-style: solid;
@@ -336,6 +324,9 @@ nav .btn-menu {
   border-style: solid;
   border-color: var(--black);
   margin-bottom: 20px;
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
 }
 
 .halaman {
@@ -346,6 +337,7 @@ nav .btn-menu {
   gap: 10px;
   font-weight: bold;
   font-size: 14px;
+  position: relative;
 }
 
 .halaman a {
@@ -361,8 +353,11 @@ nav .btn-menu {
 }
 
 .halaman .arrow {
-  height: 40px;
-  width: 50px;
+  border: none;
+  box-shadow: none;
+  background-color: white;
+  height: 100%;
+  width: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -370,6 +365,40 @@ nav .btn-menu {
 
 .halaman .halaman-aktif {
   background-color: var(--blue);
+}
+
+.pages-list {
+  transform: scale(0);
+  position: absolute;
+  top: -110px;
+  display: grid;
+  gap: 10px;
+  background-color: var(--white);
+  padding: 15px;
+  border: 1px solid var(--black);
+  box-shadow: var(--shadow);
+  height: 100px;
+  overflow-x: scroll;
+  transition: 0.2s ease-in-out;
+}
+
+.halaman .pages-list-show {
+  transform: scale(1);
+}
+
+.pages-list-icon {
+  height: 40px;
+  width: 50px;
+  border: 1px solid var(--black);
+  display: grid;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  background-color: var(--white);
+}
+
+.pages-list::-webkit-scrollbar {
+  display: none;
 }
 
 @media (max-width: 667px) {
@@ -482,6 +511,10 @@ nav .btn-menu {
 
   .balance .tampil-form {
     transform: translateY(0);
+  }
+
+  .container .search-field {
+    width: 100%;
   }
 
   .list {

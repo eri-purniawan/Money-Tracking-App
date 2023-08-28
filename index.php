@@ -26,7 +26,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
 
 if (isset($_POST['uang_btn'])) {
-  $uang_bulanan += (int)$_POST['uang_bulanan'];
+  $uang_bulanan += intval(str_replace(',', '', $_POST['uang_bulanan']));
   $tgl = date('d F Y');
 
   $stmt = $db->prepare("INSERT INTO $table_name (uang_bln, tgl) VALUES ('$uang_bulanan', '$tgl')");
@@ -38,7 +38,7 @@ if (isset($_POST['uang_btn'])) {
 }
 
 if (isset($_POST['tambah-data'])) {
-  $pengeluaran = (int)$_POST['pengeluaran'];
+  $pengeluaran = intval(str_replace(',', '', $_POST['pengeluaran']));
   $kategori = $_POST['kategori'];
   $keterangan = $_POST['keterangan'];
   $uang_bulanan = $uang_bulanan - $pengeluaran;
@@ -143,7 +143,7 @@ while ($i <= count($pages)) {
       <!-- form input balance -->
       <form id="input-uang" class="form-input-uang" action="" method="post">
         <label for="uang-bulanan">Uang Bulanan</label>
-        <input type="number" name="uang_bulanan" id="uang-bulanan" autofocus placeholder="Number Only!">
+        <input type="text" name="uang_bulanan" id="uang-bulanan" autofocus placeholder="Number Only!">
         <button type="submit" name="uang_btn">Submit</button>
         <div id="close-btn-input" class="close"><i class='bx bx-x'></i></div>
       </form>
@@ -152,7 +152,7 @@ while ($i <= count($pages)) {
       <form id="tambah-data" action="" method="post" class="input-data-pengeluaran">
         <div class="form-list">
           <label for="pengeluaran">Pengeluaran</label>
-          <input type="number" name="pengeluaran" id="pengeluaran">
+          <input type="text" name="pengeluaran" id="pengeluaran">
         </div>
         <div class="form-list">
           <label for="kategori">Kategori</label>

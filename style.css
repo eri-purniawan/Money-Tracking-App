@@ -18,6 +18,7 @@
   --Nyanza: #d4f4dd;
   --white: #eceff4;
   --black: #2e3440;
+  --white-50: #eceff480;
   --shadow: 5px 5px var(--black);
 }
 
@@ -26,7 +27,7 @@ body {
 }
 
 .container {
-  width: 80%;
+  width: 900px;
   margin: auto;
 }
 
@@ -72,12 +73,13 @@ nav .btn-menu {
   border: 1px solid var(--black);
   box-shadow: var(--shadow);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: 1fr 1fr 0.7fr;
   align-items: baseline;
   margin-bottom: 30px;
   gap: 30px;
   position: relative;
   overflow: hidden;
+  height: 330px;
 }
 
 .balance .bulanan .btn {
@@ -86,7 +88,7 @@ nav .btn-menu {
 
 .balance .uang {
   margin-top: 30px;
-  font-size: 4vmax;
+  font-size: 3rem;
 }
 
 .balance .uang::before {
@@ -139,6 +141,7 @@ nav .btn-menu {
 .balance .form-input-uang {
   display: grid;
   background-color: var(--white);
+  backdrop-filter: blur(10px);
   width: 100%;
   height: 100%;
   position: absolute;
@@ -150,6 +153,7 @@ nav .btn-menu {
 }
 
 .balance .show-window {
+  background-color: var(--white-50);
   transform: translateX(0);
 }
 
@@ -173,7 +177,7 @@ nav .btn-menu {
 }
 
 .balance .form-input-uang label,
-.balance .form-input-uang input[type='number'],
+.balance .form-input-uang input[type='text'],
 .balance .form-input-uang button {
   font-size: 2vmax;
   padding: 10px 10px;
@@ -185,11 +189,6 @@ nav .btn-menu {
   cursor: pointer;
   box-shadow: var(--shadow);
   transition: 0.2s ease-in-out;
-}
-
-.balance .form-input-uang input[type='number']::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
 
 .balance .form-input-uang button:hover {
@@ -209,9 +208,11 @@ nav .btn-menu {
   align-items: center;
   transform: translateX(120%);
   transition: 0.3s ease-in-out;
+  backdrop-filter: blur(8px);
 }
 
 .balance .tampil-form {
+  background-color: var(--white-50);
   transform: translateX(0);
 }
 
@@ -241,7 +242,7 @@ nav .btn-menu {
   font-weight: bold;
 }
 
-.balance .input-data-pengeluaran .form-list input[type='number'],
+.balance .input-data-pengeluaran .form-list input[type='text'],
 .balance .input-data-pengeluaran .form-list select,
 .balance .input-data-pengeluaran .form-list textarea,
 .balance .input-data-pengeluaran .form-list button {
@@ -250,11 +251,7 @@ nav .btn-menu {
   border: 1px solid var(--black);
 }
 
-.balance .input-data-pengeluaran .form-list input[type='number']::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
-.balance .input-data-pengeluaran .form-list input[type='number']:focus,
+.balance .input-data-pengeluaran .form-list input[type='text']:focus,
 .balance .input-data-pengeluaran .form-list select:focus,
 .balance .input-data-pengeluaran .form-list textarea:focus {
   border: 1px solid var(--blue);
@@ -280,15 +277,18 @@ nav .btn-menu {
 }
 
 .tgl {
+  position: relative;
+  z-index: 1;
   font-weight: bold;
   margin: auto;
-  border-width: 1px 1px 0px 1px;
+  margin-bottom: -10px;
+  border-width: 1px 1px 1px 1px;
   width: fit-content;
   border-style: solid;
   border-color: var(--black);
   padding: 10px;
   font-size: 25px;
-  background-color: var(--white);
+  background-color: var(--versigrid);
   color: var(--black);
   box-shadow: var(--shadow);
 }
@@ -299,6 +299,8 @@ nav .btn-menu {
   background-color: var(--versigrid) !important;
   color: var(--black);
   align-items: center !important;
+  height: 80px;
+  font-size: 1.1rem;
 }
 
 .list .table-header,
@@ -327,14 +329,17 @@ nav .btn-menu {
 }
 
 .total-pengeluaran {
-  border-width: 0px 1px 1px 1px;
-  border-style: solid;
-  border-color: var(--black);
+  border-width: 0px 1px 1px 1px !important;
+  border-style: solid !important;
+  border-color: var(--black) !important;
+  background-color: var(--white);
   color: var(--red-2);
   margin-bottom: 20px;
   font-size: 18px;
   width: 100%;
   text-align: center;
+  box-shadow: var(--shadow) !important;
+  position: static;
 }
 
 .halaman {
@@ -391,9 +396,11 @@ nav .btn-menu {
   height: 100px;
   overflow-x: scroll;
   transition: 0.2s ease-in-out;
+  backdrop-filter: blur(8px);
 }
 
 .halaman .pages-list-show {
+  background-color: var(--white-50);
   transform: scale(1);
 }
 
@@ -412,7 +419,7 @@ nav .btn-menu {
   display: none;
 }
 
-@media (max-width: 667px) {
+@media (max-width: 576px) {
   .balance {
     grid-template-areas:
       'bulanan'
@@ -434,7 +441,7 @@ nav .btn-menu {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 992px) {
   .container {
     width: 90%;
     margin: auto;
@@ -444,6 +451,12 @@ nav .btn-menu {
     grid-template-areas:
       'bulanan pengeluaran'
       'button button';
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    height: fit-content;
+  }
+
+  .balance .uang {
+    font-size: 2.3rem;
   }
 
   .balance .bulanan {
@@ -529,8 +542,10 @@ nav .btn-menu {
   }
 
   .tgl {
-    font-size: 15px;
+    font-size: 1.1rem;
     width: 100%;
     text-align: center;
+    box-shadow: 5px 0 var(--black);
+    border-bottom: none;
   }
 }

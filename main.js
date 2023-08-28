@@ -34,3 +34,39 @@ const pages_list = document.getElementById('pages-list');
 page_btn.addEventListener('click', () => {
   pages_list.classList.toggle('pages-list-show');
 });
+
+let uang_bln = document.getElementById('uang-bulanan');
+uang_bln.addEventListener(
+  'keyup',
+  (event) => {
+    number_only(event);
+    number_format(uang_bln);
+  },
+  false
+);
+
+let pengeluaran = document.getElementById('pengeluaran');
+pengeluaran.addEventListener(
+  'keyup',
+  (event) => {
+    number_only(event);
+    number_format(pengeluaran);
+  },
+  false
+);
+
+// function to change input value to curency format
+function number_format(value) {
+  let n = parseInt(value.value.replace(/\D/g, ''), 10);
+  value.value = n.toLocaleString();
+  if (value.value === 'NaN') {
+    value.value = '';
+  }
+}
+
+// function number only input
+function number_only(event) {
+  if (event.which < 48 || event.which > 57) {
+    event.preventDefault();
+  }
+}

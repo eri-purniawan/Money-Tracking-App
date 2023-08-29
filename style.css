@@ -15,15 +15,16 @@
   --red-2: #ff3366;
   --blue: #5e81ac;
   --versigrid: #88c0d0;
-  --Nyanza: #d4f4dd;
+  --Nyanza: #b48ead;
   --white: #eceff4;
+  --white-bg: #d8dee9;
   --black: #2e3440;
   --white-50: #eceff480;
   --shadow: 5px 5px var(--black);
 }
 
 body {
-  background-color: #d8dee9;
+  background-color: var(--white-bg);
 }
 
 .container {
@@ -32,16 +33,20 @@ body {
 }
 
 nav {
-  background-color: var(--versigrid);
+  background-color: #88c0d0b4;
+  backdrop-filter: blur(8px);
   color: var(--black);
   border: 1px solid var(--black);
   box-shadow: var(--shadow);
-  margin: 40px auto;
+  margin: -130px auto;
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   gap: 50px;
   padding: 20px;
   align-items: center;
+  width: 900px;
+  position: fixed;
+  z-index: 2;
 }
 
 nav .menu {
@@ -69,6 +74,7 @@ nav .btn-menu {
 }
 
 .balance {
+  margin-top: 160px;
   background-color: var(--white);
   border: 1px solid var(--black);
   box-shadow: var(--shadow);
@@ -80,6 +86,7 @@ nav .btn-menu {
   position: relative;
   overflow: hidden;
   height: 330px;
+  color: var(--black);
 }
 
 .balance .bulanan .btn {
@@ -122,12 +129,13 @@ nav .btn-menu {
 }
 
 .balance .bulanan .uang::after {
-  font-family: 'Font Awesome 5 Free';
-  content: '\f044';
-  font-size: 20px;
+  font-family: 'Font Awesome 5 Free', 'Victor Mono', monospace;
+  content: '\f044  Add';
+  font-size: 17px;
   padding: 10px;
   display: flex;
   text-align: center;
+  font-weight: bold;
 }
 
 .balance .pengeluaran .uang {
@@ -267,6 +275,32 @@ nav .btn-menu {
   color: var(--white);
 }
 
+.search {
+  color: var(--black);
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.search-field {
+  background-color: var(--white);
+  width: 100%;
+  padding: 10px;
+  font-size: 1.6rem;
+  border: 1px solid var(--black);
+  box-shadow: var(--shadow);
+}
+
+.search i {
+  border-width: 1px 1px 0px 0px;
+  border-style: solid;
+  border-color: var(--black);
+  color: var(--white);
+  position: absolute;
+  right: 0px;
+  padding: 9px;
+  background-color: var(--red);
+}
+
 .list {
   border: 1px solid var(--black);
   border-bottom: none !important;
@@ -299,12 +333,12 @@ nav .btn-menu {
   background-color: var(--versigrid) !important;
   color: var(--black);
   align-items: center !important;
-  height: 80px;
   font-size: 1.1rem;
 }
 
 .list .table-header,
 .list .table-value {
+  height: 80px !important;
   background-color: var(--white);
   align-items: center;
   padding: 10px 0;
@@ -343,37 +377,41 @@ nav .btn-menu {
 }
 
 .halaman {
+  background-color: var(--white);
   display: flex;
   justify-content: center;
   margin: auto;
   text-align: center;
-  gap: 10px;
   font-weight: bold;
   font-size: 14px;
   position: relative;
+  width: fit-content;
+  margin-bottom: 20px;
+  border: 1px solid var(--black);
+  box-shadow: var(--shadow);
 }
 
 .halaman a {
   width: 50px;
-  background-color: var(--white);
   padding: 5px 10px;
   color: var(--black);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--black);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .halaman .arrow {
+  margin: auto;
   border: none;
   box-shadow: none;
   background-color: unset;
-  height: 100%;
+  height: 46px;
   width: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 20px;
+  color: var(--black);
 }
 
 .halaman .halaman-aktif {
@@ -385,10 +423,9 @@ nav .btn-menu {
   transform: scale(0);
   position: absolute;
   top: -110px;
-  width: 200px;
+  width: 170px;
   display: grid;
   grid-template-columns: 50px 50px 50px;
-  gap: 10px;
   background-color: var(--white);
   padding: 10px;
   border: 1px solid var(--black);
@@ -407,12 +444,10 @@ nav .btn-menu {
 .pages-list-icon {
   height: 46px;
   width: 50px;
-  border: 1px solid var(--black);
   display: grid;
   align-items: center;
   cursor: pointer;
-  box-shadow: var(--shadow);
-  background-color: var(--versigrid);
+  color: var(--black);
 }
 
 .pages-list::-webkit-scrollbar {
@@ -438,6 +473,10 @@ nav .btn-menu {
 
   .balance .uang::before {
     justify-content: center;
+  }
+
+  .list .table-header {
+    font-size: 14px;
   }
 }
 
@@ -479,6 +518,7 @@ nav .btn-menu {
 
   nav {
     gap: 0;
+    width: 90%;
   }
 
   .grid-areas {
@@ -487,7 +527,7 @@ nav .btn-menu {
       'menus menus';
     gap: 0;
     align-items: center;
-    transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out !important;
   }
 
   nav .menu {
@@ -539,6 +579,7 @@ nav .btn-menu {
 
   .list {
     font-size: 15px;
+    border-top: none !important;
   }
 
   .tgl {
@@ -547,5 +588,10 @@ nav .btn-menu {
     text-align: center;
     box-shadow: 5px 0 var(--black);
     border-bottom: none;
+  }
+
+  .list .table-header,
+  .list .table-value {
+    height: auto !important;
   }
 }

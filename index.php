@@ -125,87 +125,97 @@ while ($i <= count($pages)) {
     </nav>
 
     <!-- Balance -->
-    <section class="balance">
-      <div class="bulanan">
-        <h2>Sisa Uang Bulanan</h2>
-        <p><?= date('F Y') ?></p>
-        <p id="add-uang-btn" class="uang btn"><?= number_format($uang_bulanan) ?></p>
-      </div>
-      <div class="pengeluaran">
-        <h2>Total Pengeluaran</h2>
-        <p><?= date('F Y') ?></p>
-        <p class="uang"><?= number_format($pengeluaran) ?></p>
-      </div>
-      <div id="btn-add" class="btn-add">
-        <i class='bx bx-plus'></i>
-      </div>
-
-      <!-- form input balance -->
-      <form id="input-uang" class="form-input-uang" action="" method="post">
-        <label for="uang-bulanan">Uang Bulanan</label>
-        <input type="text" name="uang_bulanan" id="uang-bulanan" autofocus placeholder="Number Only!">
-        <button type="submit" name="uang_btn">Submit</button>
-        <div id="close-btn-input" class="close"><i class='bx bx-x'></i></div>
-      </form>
-
-      <!-- form input pengeluaran -->
-      <form id="tambah-data" action="" method="post" class="input-data-pengeluaran">
-        <div class="form-list">
-          <label for="pengeluaran">Pengeluaran</label>
-          <input type="text" name="pengeluaran" id="pengeluaran">
+    <header>
+      <section class="balance">
+        <div class="bulanan">
+          <h2>Sisa Uang Bulanan</h2>
+          <p><?= date('F Y') ?></p>
+          <p id="add-uang-btn" class="uang btn"><?= number_format($uang_bulanan) ?></p>
         </div>
-        <div class="form-list">
-          <label for="kategori">Kategori</label>
-          <select name="kategori" id="kategori">
-            <option value="" selected disabled hidden>Pilih Kategori</option>
-            <option value="makanan">Makanan</option>
-            <option value="bensin">Bensin</option>
-            <option value="service-motor">Service Motor</option>
-            <option value="hobi">Hobi</option>
-            <option value="holiday">Holiday</option>
-            <option value="tagihan">Tagihan</option>
-          </select>
+        <div class="pengeluaran">
+          <h2>Total Pengeluaran</h2>
+          <p><?= date('F Y') ?></p>
+          <p class="uang"><?= number_format($pengeluaran) ?></p>
         </div>
-        <div class="form-list">
-          <label for="keterangan">Keterangan</label>
-          <textarea name="keterangan" id="keterangan" cols="30" rows="3"></textarea>
-        </div>
-        <div class="form-list">
-          <button type="submit" name="tambah-data"><i class='bx bx-plus bx-md'></i></button>
-        </div>
-        <div id="close-btn-input_2" class="close"><i class='bx bx-x'></i></div>
-      </form>
-    </section>
-
-    <!-- tampil data pengeluaran -->
-    <?php foreach ($dates as $date) : ?>
-      <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
-      <section class="list">
-
-        <div class="table-header">
-          <span class="pengeluaran">Pengeluaran</span>
-          <span class="kategori">Kategori</span>
-          <span class="keterangan">Keterangan</span>
+        <div id="btn-add" class="btn-add">
+          <i class='bx bx-plus'></i>
         </div>
 
-        <?php $values = $db->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL");
-        $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
-        ?>
-        <?php foreach ($row_values as $value) : ?>
-          <div class="table-value">
-            <span class="pengeluaran"><?= 'Rp.' . number_format($value['pengeluaran']) ?></span>
-            <p class="kategori"><?= ucwords($value['kategori']) ?></p>
-            <p class="keterangan"><?= $value['ket'] ?></p>
+        <!-- form input balance -->
+        <form id="input-uang" class="form-input-uang" action="" method="post">
+          <label for="uang-bulanan">Uang Bulanan</label>
+          <input type="text" name="uang_bulanan" id="uang-bulanan" autofocus placeholder="Number Only!">
+          <button type="submit" name="uang_btn">Submit</button>
+          <div id="close-btn-input" class="close"><i class='bx bx-x'></i></div>
+        </form>
+
+        <!-- form input pengeluaran -->
+        <form id="tambah-data" action="" method="post" class="input-data-pengeluaran">
+          <div class="form-list">
+            <label for="pengeluaran">Pengeluaran</label>
+            <input type="text" name="pengeluaran" id="pengeluaran">
           </div>
-        <?php endforeach; ?>
+          <div class="form-list">
+            <label for="kategori">Kategori</label>
+            <select name="kategori" id="kategori">
+              <option value="" selected disabled hidden>Pilih Kategori</option>
+              <option value="makanan">Makanan</option>
+              <option value="bensin">Bensin</option>
+              <option value="service-motor">Service Motor</option>
+              <option value="hobi">Hobi</option>
+              <option value="holiday">Holiday</option>
+              <option value="tagihan">Tagihan</option>
+            </select>
+          </div>
+          <div class="form-list">
+            <label for="keterangan">Keterangan</label>
+            <textarea name="keterangan" id="keterangan" cols="30" rows="3"></textarea>
+          </div>
+          <div class="form-list">
+            <button type="submit" name="tambah-data"><i class='bx bx-plus bx-md'></i></button>
+          </div>
+          <div id="close-btn-input_2" class="close"><i class='bx bx-x'></i></div>
+        </form>
       </section>
+    </header>
+
+    <main>
+      <div class="search">
+        <input id="search" class="search-field" type="search" autofocus>
+        <i class='bx bx-search bx-md'></i>
+      </div>
+
+      <div class="data-container">
+        <!-- tampil data pengeluaran -->
+        <?php foreach ($dates as $date) : ?>
+          <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
+          <section class="list">
+
+            <div class="table-header">
+              <span class="pengeluaran">Pengeluaran</span>
+              <span class="kategori">Kategori</span>
+              <span class="keterangan">Keterangan</span>
+            </div>
+
+            <?php $values = $db->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL");
+            $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
+            ?>
+            <?php foreach ($row_values as $value) : ?>
+              <div class="table-value">
+                <span class="pengeluaran"><?= 'Rp.' . number_format($value['pengeluaran']) ?></span>
+                <p class="kategori"><?= ucwords($value['kategori']) ?></p>
+                <p class="keterangan"><?= $value['ket'] ?></p>
+              </div>
+            <?php endforeach; ?>
+          </section>
+      </div>
       <p class="tgl total-pengeluaran">
         <?php
-        $total_pengeluaran = 0;
-        foreach ($row_values as $value) {
-          $total_pengeluaran += $value['pengeluaran'];
-        }
-        echo 'Total Pengeluaran: Rp.' . number_format($total_pengeluaran)
+          $total_pengeluaran = 0;
+          foreach ($row_values as $value) {
+            $total_pengeluaran += $value['pengeluaran'];
+          }
+          echo 'Total Pengeluaran: Rp.' . number_format($total_pengeluaran)
         ?>
       </p>
     <?php endforeach; ?>
@@ -247,6 +257,8 @@ while ($i <= count($pages)) {
 
       <?php endif; ?>
     </section>
+    </main>
+
   </div>
   <script src="main.js"></script>
 </body>

@@ -402,11 +402,6 @@ nav .btn-menu {
   transition: 0.1s ease-in-out;
 }
 
-.halaman .list-halaman:hover {
-  background-color: var(--blue);
-  color: var(--white);
-}
-
 .halaman .arrow {
   margin: auto;
   border: none;

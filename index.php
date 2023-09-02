@@ -1,16 +1,8 @@
 <?php
 
-$db = new PDO("sqlite:money_tracking.db");
-$host = gethostname();
-date_default_timezone_set('Asia/Singapore');
+require "connect.php";
 
-$split = str_split($host);
-foreach ($split as $str) {
-  if ($str != '-' && $str != ' ') {
-    $new_name[] = $str;
-  }
-}
-$table_name = 'keuangan_' . implode('', $new_name);
+date_default_timezone_set('Asia/Singapore');
 $stmt = $db->prepare("CREATE TABLE IF NOT EXISTS $table_name (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         uang_bln INTEGER(20),
@@ -67,17 +59,6 @@ foreach ($baris as $v) {
   $pengeluaran += $v['pengeluaran'];
 }
 
-$page_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC");
-$pages = $page_row->fetchAll(PDO::FETCH_ASSOC);
-
-$i = 1;
-$date_pages = [];
-while ($i <= count($pages)) {
-  $c_date = $pages[count($pages) - $i]['tgl'];
-  $c_date = explode(' ', $c_date);
-  $date_pages[] = $c_date[0];
-  $i++;
-}
 ?>
 
 <!DOCTYPE html>

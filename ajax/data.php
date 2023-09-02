@@ -1,15 +1,8 @@
 <?php
-$db = new PDO("sqlite:../money_tracking.db");
-$host = gethostname();
+require "../connect.php";
+
 date_default_timezone_set('Asia/Singapore');
 
-$split = str_split($host);
-foreach ($split as $str) {
-  if ($str != '-' && $str != ' ') {
-    $new_name[] = $str;
-  }
-}
-$table_name = 'keuangan_' . implode('', $new_name);
 $page_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC");
 $pages = $page_row->fetchAll(PDO::FETCH_ASSOC);
 

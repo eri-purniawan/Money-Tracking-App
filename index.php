@@ -70,22 +70,6 @@ foreach ($baris as $v) {
 $page_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC");
 $pages = $page_row->fetchAll(PDO::FETCH_ASSOC);
 
-//konfigurasi paguination
-$jum_data = 1;
-$tot_data = count($pages);
-$jum_hal = ceil($tot_data / $jum_data);
-$hal_aktif = (isset($_GET['halaman']) ? $_GET['halaman'] : 1);
-$awal_data = ($jum_data * $hal_aktif) - $jum_data;
-
-//konfiurasi link
-$jum_link = 1;
-$startNumber = ($hal_aktif > $jum_link ? $hal_aktif - $jum_link : 1);
-$endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_hal);
-
-$date_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC LIMIT $awal_data, $jum_data");
-$dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
-
-// konfigurasi nama link agar seusai tgl
 $i = 1;
 $date_pages = [];
 while ($i <= count($pages)) {
@@ -106,6 +90,7 @@ while ($i <= count($pages)) {
   <link rel="stylesheet" href="style.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <script src="https://kit.fontawesome.com/3c30c2ec7b.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 
 <body>
@@ -179,84 +164,15 @@ while ($i <= count($pages)) {
       </section>
     </header>
 
-    <main>
+    <main id="main">
       <div class="search">
-        <input id="search" class="search-field" type="search" autofocus>
+        <input id="search" class="search-field" type="search" autofocus autocomplete="off">
         <i class='bx bx-search bx-md'></i>
       </div>
 
-      <div class="data-container">
-        <!-- tampil data pengeluaran -->
-        <?php foreach ($dates as $date) : ?>
-          <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
-          <section class="list">
 
-            <div class="table-header">
-              <span class="pengeluaran">Pengeluaran</span>
-              <span class="kategori">Kategori</span>
-              <span class="keterangan">Keterangan</span>
-            </div>
+      <div id="data-container"></div>
 
-            <?php $values = $db->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL");
-            $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
-            ?>
-            <?php foreach ($row_values as $value) : ?>
-              <div class="table-value">
-                <span class="pengeluaran"><?= 'Rp.' . number_format($value['pengeluaran']) ?></span>
-                <p class="kategori"><?= ucwords($value['kategori']) ?></p>
-                <p class="keterangan"><?= $value['ket'] ?></p>
-              </div>
-            <?php endforeach; ?>
-          </section>
-      </div>
-      <p class="tgl total-pengeluaran">
-        <?php
-          $total_pengeluaran = 0;
-          foreach ($row_values as $value) {
-            $total_pengeluaran += $value['pengeluaran'];
-          }
-          echo 'Total Pengeluaran: Rp.' . number_format($total_pengeluaran)
-        ?>
-      </p>
-    <?php endforeach; ?>
-
-    <!-- pagination -->
-    <section class="halaman">
-      <?php if ($hal_aktif > 1) : ?>
-
-        <a class="arrow" href="?halaman=<?= $hal_aktif - 1 ?>"><i class='bx bx-chevron-left bx-md'></i></a>
-
-      <?php endif; ?>
-
-      <?php for ($i = $startNumber; $i <= $endNumber; $i++) : ?>
-        <?php if ($i == $hal_aktif) : ?>
-          <a class="halaman-aktif" href="?halaman=<?= $i ?>""><?= $date_pages[count($pages) - $i] ?></a>
-        <?php else : ?>
-          <a href=" ?halaman=<?= $i ?>"><?= $date_pages[count($pages) - $i] ?></a>
-        <?php endif; ?>
-      <?php endfor; ?>
-
-      <?php if (count($pages) > 3) : ?>
-        <div id="pages-btn" class="pages-list-icon">
-          <i class='bx bx-dots-vertical bx-sm'></i>
-        </div>
-        <div id="pages-list" class="pages-list">
-          <?php for ($i = 1; $i <= count($pages); $i++) : ?>
-            <?php if ($i == $hal_aktif) : ?>
-              <a class="halaman-aktif" href="?halaman=<?= $i ?>""><?= $date_pages[count($pages) - $i] ?></a>
-        <?php else : ?>
-          <a href=" ?halaman=<?= $i ?>"><?= $date_pages[count($pages) - $i] ?></a>
-            <?php endif; ?>
-          <?php endfor; ?>
-        </div>
-      <?php endif; ?>
-
-      <?php if ($hal_aktif < $jum_hal) : ?>
-
-        <a class="arrow" href="?halaman=<?= $hal_aktif + 1 ?>"><i class='bx bx-chevron-right bx-md'></i></a>
-
-      <?php endif; ?>
-    </section>
     </main>
 
   </div>

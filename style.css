@@ -391,13 +391,20 @@ nav .btn-menu {
   box-shadow: var(--shadow);
 }
 
-.halaman a {
+.halaman .list-halaman {
   width: 50px;
   padding: 5px 10px;
   color: var(--black);
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+}
+
+.halaman .list-halaman:hover {
+  background-color: var(--blue);
+  color: var(--white);
 }
 
 .halaman .arrow {
@@ -417,41 +424,7 @@ nav .btn-menu {
 .halaman .halaman-aktif {
   background-color: var(--blue);
   color: var(--white);
-}
-
-.pages-list {
-  transform: scale(0);
-  position: absolute;
-  top: -110px;
-  width: 170px;
-  display: grid;
-  grid-template-columns: 50px 50px 50px;
-  background-color: var(--white);
-  padding: 10px;
-  border: 1px solid var(--black);
-  box-shadow: var(--shadow);
-  height: 100px;
-  overflow-x: scroll;
-  transition: 0.2s ease-in-out;
-  backdrop-filter: blur(8px);
-}
-
-.halaman .pages-list-show {
-  background-color: var(--white-50);
-  transform: scale(1);
-}
-
-.pages-list-icon {
-  height: 46px;
-  width: 50px;
-  display: grid;
-  align-items: center;
-  cursor: pointer;
-  color: var(--black);
-}
-
-.pages-list::-webkit-scrollbar {
-  display: none;
+  width: 100px;
 }
 
 @media (max-width: 576px) {

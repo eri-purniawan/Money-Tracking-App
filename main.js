@@ -29,12 +29,6 @@ close_btn_input.addEventListener('click', () => {
   form_input_uang.classList.remove('show-window');
 });
 
-const page_btn = document.getElementById('pages-btn');
-const pages_list = document.getElementById('pages-list');
-page_btn.addEventListener('click', () => {
-  pages_list.classList.toggle('pages-list-show');
-});
-
 let uang_bln = document.getElementById('uang-bulanan');
 uang_bln.addEventListener(
   'keyup',
@@ -70,3 +64,20 @@ function number_only(event) {
     event.preventDefault();
   }
 }
+
+//pagination ajax with jquery
+load_data();
+function load_data(page) {
+  $.ajax({
+    url: 'ajax/data.php',
+    method: 'POST',
+    data: { page: page },
+    success: function (data) {
+      $('#data-container').html(data);
+    },
+  });
+}
+$(document).on('click', '.list-halaman', function () {
+  var page = $(this).attr('id');
+  load_data(page);
+});

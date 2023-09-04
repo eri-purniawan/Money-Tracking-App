@@ -29,9 +29,17 @@ if (isset($_POST['uang_btn'])) {
   header($_SERVER['PHP_SELF']);
 }
 
+function minchar($str)
+{
+  $patern = '/-/i';
+  if (preg_match($patern, $str)) {
+    return preg_replace($patern, ' ', $str);
+  }
+}
+
 if (isset($_POST['tambah-data'])) {
   $pengeluaran = intval(str_replace(',', '', $_POST['pengeluaran']));
-  $kategori = $_POST['kategori'];
+  $kategori = minchar($_POST['kategori']);
   $keterangan = $_POST['keterangan'];
   $uang_bulanan = $uang_bulanan - $pengeluaran;
   $tgl = date('d F Y');
@@ -146,13 +154,42 @@ foreach ($baris as $v) {
     </header>
 
     <main id="main">
-      <div class="search">
-        <input id="search" class="search-field" type="search" autofocus autocomplete="off">
-        <i class='bx bx-search bx-md'></i>
+
+      <div class="select-menu">
+
+        <div class="select-field">
+          <div id="reset" class="reset-btn">
+            <i class='bx bx-reset bx-sm'></i>
+          </div>
+          <span class="text-field">Pilih Kategori</span>
+          <i id="icon" class='bx bx-caret-down bx-sm'></i>
+        </div>
+
+        <ul class="options">
+          <li class="option">
+            <p class="option-text">Makanan</p>
+          </li>
+          <li class="option">
+            <p class="option-text">Bensin</p>
+          </li>
+          <li class="option">
+            <p class="option-text">Service Motor</p>
+          </li>
+          <li class="option">
+            <p class="option-text">Hobi</p>
+          </li>
+          <li class="option">
+            <p class="option-text">Holiday</p>
+          </li>
+          <li class="option">
+            <p class="option-text">Tagihan</p>
+          </li>
+        </ul>
+
       </div>
 
-
       <div id="data-container"></div>
+      <div id="page"></div>
 
     </main>
 

@@ -65,19 +65,71 @@ function number_only(event) {
   }
 }
 
+penampung = document.getElementById('data-container');
+
+function ajaxHandler(value) {
+  let xhr = new XMLHttpRequest();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      penampung.innerHTML = xhr.responseText;
+    }
+  };
+
+  xhr.open('GET', 'ajax/filter_search.php?keyword=' + value, true);
+  xhr.send();
+}
+
+//search filter with ajax
+const text_field = document.querySelector('.text-field'),
+  options = document.querySelector('.options'),
+  option = document.querySelectorAll('.option'),
+  select_field = document.querySelector('.select-field'),
+  icon = document.getElementById('icon'),
+  reset = document.getElementById('reset');
+
+text_field.addEventListener('click', () => {
+  options.classList.toggle('active');
+  icon.classList.toggle('rotate');
+});
+
+option.forEach((list) => {
+  list.addEventListener('click', () => {
+    let selected = list.querySelector('.option-text').innerText;
+    options.classList.remove('active');
+    icon.classList.remove('rotate');
+    reset.classList.add('show');
+
+    let value = (text_field.innerText = selected);
+
+    ajaxHandler(value);
+  });
+});
+
+reset.addEventListener('click', () => {
+  text_field.innerText = 'Pilih Kategori';
+  reset.classList.remove('show');
+  loadDatas('#data-container', 'data.php');
+});
+
 //pagination ajax with jquery
-load_data();
-function load_data(page) {
-  $.ajax({
-    url: 'ajax/data.php',
-    method: 'POST',
-    data: { page: page },
-    success: function (data) {
-      $('#data-container').html(data);
-    },
+loadDatas('#data-container', 'data.php');
+// loadDatas('#page', 'pageData.php');
+
+function loadDatas(element, url) {
+  load_data();
+  function load_data(page) {
+    $.ajax({
+      url: 'ajax/' + url,
+      method: 'POST',
+      data: { page: page },
+      success: function (data) {
+        $(element).html(data);
+      },
+    });
+  }
+  $(document).on('click', '.list-halaman', function () {
+    var page = $(this).attr('id');
+    load_data(page);
   });
 }
-$(document).on('click', '.list-halaman', function () {
-  var page = $(this).attr('id');
-  load_data(page);
-});

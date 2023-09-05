@@ -2,18 +2,7 @@
 
 require "connect.php";
 
-date_default_timezone_set('Asia/Singapore');
-$stmt = $db->prepare("CREATE TABLE IF NOT EXISTS $table_name (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        uang_bln INTEGER(20),
-                        tgl VARCHAR(20),
-                        pengeluaran INTEGER(20),
-                        kategori VARCHAR(20),
-                        ket VARCHAR(300)
-                        )");
-$stmt->execute();
-
-$stmt = $db->query("SELECT uang_bln FROM $table_name");
+$stmt = $conn->query("SELECT uang_bln FROM $table_name");
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
 
@@ -21,7 +10,7 @@ if (isset($_POST['uang_btn'])) {
   $uang_bulanan += intval(str_replace(',', '', $_POST['uang_bulanan']));
   $tgl = date('d F Y');
 
-  $stmt = $db->prepare("INSERT INTO $table_name (uang_bln, tgl) VALUES ('$uang_bulanan', '$tgl')");
+  $stmt = $conn->prepare("INSERT INTO $table_name (uang_bln, tgl) VALUES ('$uang_bulanan', '$tgl')");
 
   $stmt->execute();
 
@@ -46,7 +35,7 @@ if (isset($_POST['tambah-data'])) {
 
   if ($uang_bulanan >= 0) {
 
-    $stmt = $db->prepare("INSERT INTO $table_name (uang_bln, tgl, pengeluaran, kategori, ket) VALUES ('$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
+    $stmt = $conn->prepare("INSERT INTO $table_name (uang_bln, tgl, pengeluaran, kategori, ket) VALUES ('$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
 
     $stmt->execute();
     sleep('3');
@@ -57,16 +46,27 @@ if (isset($_POST['tambah-data'])) {
   }
 }
 
-$hasil = $db->query("SELECT * FROM $table_name");
+$hasil = $conn->query("SELECT * FROM $table_name");
 $baris = $hasil->fetchAll(PDO::FETCH_ASSOC);
 
 $pengeluaran = ($baris ? $pengeluaran = $baris[0]['pengeluaran'] : 0);
 
+$max_spend = [];
 //mengembalikan total nilai pengeluaran
 foreach ($baris as $v) {
   $pengeluaran += $v['pengeluaran'];
+  $bulan = $v['tgl'];
 }
 
+$array_tgl = explode(' ', $bulan)[0];
+$array_bulan = explode(' ', $bulan);
+
+$bulan = array_diff($array_bulan, array($array_tgl));
+$bulan = $bulan[1] . " " . $bulan[2];
+
+// if ($bulan != date('F Y')) {
+//   echo "total pengeluaran {$bulan} : " . number_format($pengeluaran);
+// }
 ?>
 
 <!DOCTYPE html>
@@ -103,12 +103,12 @@ foreach ($baris as $v) {
       <section class="balance">
         <div class="bulanan">
           <h2>Sisa Uang Bulanan</h2>
-          <p><?= date('F Y') ?></p>
+          <p><?= $bulan ?></p>
           <p id="add-uang-btn" class="uang btn"><?= number_format($uang_bulanan) ?></p>
         </div>
         <div class="pengeluaran">
           <h2>Total Pengeluaran</h2>
-          <p><?= date('F Y') ?></p>
+          <p><?= $bulan ?></p>
           <p class="uang"><?= number_format($pengeluaran) ?></p>
         </div>
         <div id="btn-add" class="btn-add">

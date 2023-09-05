@@ -3,7 +3,7 @@ require "../connect.php";
 
 date_default_timezone_set('Asia/Singapore');
 
-$page_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC");
+$page_row = $conn->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC");
 $pages = $page_row->fetchAll(PDO::FETCH_ASSOC);
 
 $jum_data = 1;
@@ -12,7 +12,7 @@ $jum_hal = ceil($tot_data / $jum_data);
 $hal_aktif = (isset($_POST['page']) ? $_POST['page'] : 1);
 $awal_data = ($jum_data * $hal_aktif) - $jum_data;
 
-$date_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC LIMIT $awal_data, $jum_data");
+$date_row = $conn->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC LIMIT $awal_data, $jum_data");
 $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
 
 $jum_link = 1;
@@ -32,7 +32,7 @@ $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_
         <span class="keterangan">Keterangan</span>
       </div>
 
-      <?php $values = $db->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL");
+      <?php $values = $conn->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL");
       $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
       ?>
       <?php foreach ($row_values as $value) : ?>

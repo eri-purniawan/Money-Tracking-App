@@ -1,14 +1,14 @@
 <?php
 
-$dir = __DIR__;
+$serverName = 'localhost';
+$username = 'root';
+$password = '';
 
-$db = new PDO("sqlite:$dir/money_tracking.db");
-$host = gethostname();
-
-$split = str_split($host);
-foreach ($split as $str) {
-  if ($str != '-' && $str != ' ') {
-    $new_name[] = $str;
-  }
+try {
+  $conn = new PDO("mysql:host=$serverName;dbname=money_tracking", $username, $password);
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+  echo "Connection Failed: " . $e->getMessage();
 }
-$table_name = 'keuangan_' . implode('', $new_name);
+
+$table_name = 'keuangan';

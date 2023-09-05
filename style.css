@@ -360,16 +360,16 @@ nav .btn-menu {
   z-index: 1;
   font-weight: bold;
   margin: auto;
-  margin-bottom: -10px;
-  border-width: 1px 1px 1px 1px;
-  width: fit-content;
-  border-style: solid;
-  border-color: var(--black);
+  margin-bottom: -5px;
+  border: 1px solid var(--black);
   padding: 10px;
-  font-size: 25px;
   background-color: var(--versigrid);
   color: var(--black);
-  box-shadow: var(--shadow);
+  font-size: 1.1rem;
+  width: 100%;
+  text-align: center;
+  box-shadow: 5px 0 var(--black);
+  border-bottom: none;
 }
 
 .list .table-header {
@@ -378,12 +378,10 @@ nav .btn-menu {
   background-color: var(--versigrid) !important;
   color: var(--black);
   align-items: center !important;
-  font-size: 1.1rem;
 }
 
 .list .table-header,
 .list .table-value {
-  height: 80px !important;
   background-color: var(--white);
   align-items: center;
   padding: 10px 0;
@@ -392,6 +390,7 @@ nav .btn-menu {
   border-style: dashed;
   display: grid;
   grid-template-columns: 1fr 0.8fr 1fr;
+  font-size: 1.1rem;
 }
 
 .list .table-value .pengeluaran {
@@ -592,18 +591,5 @@ nav .btn-menu {
   .list {
     font-size: 15px;
     border-top: none !important;
-  }
-
-  .tgl {
-    font-size: 1.1rem;
-    width: 100%;
-    text-align: center;
-    box-shadow: 5px 0 var(--black);
-    border-bottom: none;
-  }
-
-  .list .table-header,
-  .list .table-value {
-    height: auto !important;
   }
 }

@@ -6,7 +6,7 @@ session_start();
 
 $keyword = $_GET['keyword'];
 
-$date_row = $db->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL AND kategori LIKE '%$keyword%' ORDER BY tgl DESC");
+$date_row = $conn->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL AND kategori LIKE '%$keyword%' ORDER BY tgl DESC");
 $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -22,7 +22,7 @@ $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
         <span class="keterangan">Keterangan</span>
       </div>
 
-      <?php $values = $db->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL AND kategori LIKE '%$keyword%'");
+      <?php $values = $conn->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL AND kategori LIKE '%$keyword%'");
       $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
       ?>
       <?php foreach ($row_values as $value) : ?>

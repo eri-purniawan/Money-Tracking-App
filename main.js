@@ -83,6 +83,11 @@ function ajaxHandler(data1, data2) {
 filter('.text-field', '.options', '.option', 'icon', 'reset', '.option-text', 'Kategori');
 filter('.text-field-bln', '.options-bln', '.option-bln', 'icon-bln', 'reset', '.option-text-bln', 'Bulan');
 
+function removeClass(element1, element2, className1, className2) {
+  element1.classList.remove(className1);
+  element2.classList.remove(className2);
+}
+
 function filter(text_field_, options_, option_, icon_, reset_, option_text_, reload) {
   const text_field = document.querySelector(text_field_),
     options = document.querySelector(options_),
@@ -98,14 +103,14 @@ function filter(text_field_, options_, option_, icon_, reset_, option_text_, rel
   option.forEach((list) => {
     list.addEventListener('click', () => {
       let selected = list.querySelector(option_text_).innerText;
-      options.classList.remove('active');
-      icon.classList.remove('rotate');
+      removeClass(options, icon, 'active', 'rotate');
       text_field.innerText = selected;
     });
   });
 
   reset.addEventListener('click', () => {
     text_field.innerText = reload;
+    removeClass(options, icon, 'active', 'rotate');
     loadDatas('#data-container', 'data.php');
   });
 }
@@ -115,15 +120,7 @@ cari.addEventListener('click', () => {
   let val1 = document.querySelector('.text-field').innerText;
   let val2 = document.querySelector('.text-field-bln').innerText;
 
-  if (val1 === 'Kategori') {
-    val1 = '';
-    ajaxHandler(val1, val2);
-  } else if (val2 === 'Bulan') {
-    val2 = '';
-    ajaxHandler(val1, val2);
-  } else {
-    ajaxHandler(val1, val2);
-  }
+  ajaxHandler(val1, val2);
 });
 
 //pagination with ajax jQueary

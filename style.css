@@ -23,6 +23,19 @@
   --shadow: 5px 5px var(--black);
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  padding: 3px;
+  background: var(--white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--black);
+}
+
 body {
   background-color: var(--white-bg);
 }
@@ -33,20 +46,23 @@ body {
 }
 
 nav {
-  background-color: #88c0d0b4;
-  backdrop-filter: blur(8px);
-  color: var(--black);
-  border: 1px solid var(--black);
-  box-shadow: var(--shadow);
-  margin: -130px auto;
+  top: 0;
+  left: 0;
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+  border-bottom: 2px solid var(--black);
+  background-color: var(--white);
+}
+
+nav .nav-container {
+  margin: auto;
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   gap: 50px;
   padding: 20px;
   align-items: center;
   width: 900px;
-  position: fixed;
-  z-index: 2;
 }
 
 nav .menu {
@@ -74,7 +90,7 @@ nav .btn-menu {
 }
 
 .balance {
-  margin-top: 160px;
+  margin-top: 130px;
   background-color: var(--white);
   border: 1px solid var(--black);
   box-shadow: var(--shadow);
@@ -325,14 +341,12 @@ nav .btn-menu {
 }
 
 .select-menu .reset-btn i:hover {
-  transform: scale(1.3) rotate(-180deg);
+  transform: rotate(-180deg);
 }
 
 .select-menu .options-bln {
   top: 55px;
   left: 240px !important;
-  height: 275px !important;
-  overflow-y: scroll;
 }
 
 .select-menu .options,
@@ -342,7 +356,8 @@ nav .btn-menu {
   border: 1px solid var(--black);
   box-shadow: var(--shadow);
   padding: 10px;
-  height: fit-content;
+  height: 280px !important;
+  overflow-y: scroll;
   position: absolute;
   z-index: 2;
   width: 100%;
@@ -362,6 +377,33 @@ nav .btn-menu {
 .select-menu .options .option-text,
 .select-menu .options-bln .option-text-bln {
   padding: 10px;
+}
+
+.zero-data-container {
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: -40px !important;
+  margin: 50px auto;
+}
+
+.zero-data-container .zero-data {
+  color: var(--white-bg);
+  background-color: var(--red);
+  text-align: center;
+  padding: 10px 15px;
+  width: fit-content;
+  margin: auto;
+  margin-top: -30px;
+  border: 1px solid var(--black);
+  box-shadow: var(--shadow);
+}
+
+.zero-data-container .no-data-img {
+  height: 350px;
+  width: 350px;
+  margin: auto;
 }
 
 .list {
@@ -484,6 +526,14 @@ nav .btn-menu {
 }
 
 @media (max-width: 576px) {
+  .container {
+    width: 95% !important;
+  }
+
+  .nav-container {
+    width: 95% !important;
+  }
+
   .balance {
     grid-template-areas:
       'bulanan'
@@ -510,7 +560,20 @@ nav .btn-menu {
 
   .select-menu {
     display: grid;
-    grid-template-columns: 50px 1fr 1fr;
+    grid-template-columns: 50px 1fr 1fr 50px;
+  }
+
+  .select-menu .options,
+  .select-menu .options-bln {
+    width: 150px !important;
+  }
+
+  .select-menu .options {
+    left: 7%;
+  }
+
+  .select-menu .options-bln {
+    left: 180px !important;
   }
 }
 
@@ -550,9 +613,9 @@ nav .btn-menu {
     margin-bottom: -80px;
   }
 
-  nav {
+  .nav-container {
     gap: 0;
-    width: 90%;
+    width: 90% !important;
   }
 
   .grid-areas {
@@ -564,30 +627,30 @@ nav .btn-menu {
     transition: 0.3s ease-in-out !important;
   }
 
-  nav .menu {
+  .nav-container .menu {
     display: none;
   }
 
-  nav .menu-show {
+  .nav-container .menu-show {
     padding: 40px;
-    margin-top: 20px;
+    margin-top: -20px;
     border-top: 1px solid var(--black);
     display: flex;
     flex-direction: column;
     grid-area: menus;
   }
 
-  nav .menu-show .list-menu {
+  .nav-container .menu-show .list-menu {
     padding: 10px;
   }
 
-  nav .btn-menu {
+  .nav-container .btn-menu {
     display: block;
     text-align: end;
     font-size: 30px;
   }
 
-  nav .btn-menu i {
+  .nav-container .btn-menu i {
     cursor: pointer;
   }
 

@@ -12,8 +12,6 @@ if (isset($_POST['uang_btn'])) {
 
   $stmt = $conn->query("INSERT INTO $table_name (uang_bln, tgl) VALUES ('$uang_bulanan', '$tgl')");
 
-  // $stmt->execute();
-  // sleep('1');
   header("Location: " . $_SERVER['PHP_SELF']);
   exit;
 }
@@ -39,8 +37,6 @@ if (isset($_POST['tambah-data'])) {
 
     $stmt = $conn->query("INSERT INTO $table_name (uang_bln, tgl, pengeluaran, kategori, ket) VALUES ('$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
 
-    // $stmt->execute();
-    // sleep('1');
     header("Location: " . $_SERVER['PHP_SELF']);
     exit;
   } else {
@@ -104,16 +100,18 @@ $months = array(
   <div class="container">
 
     <!-- Navigaiton -->
-    <nav id="nav">
-      <h1 class="heading">Money Tracking</h1>
-      <div id="btn-menu" class="btn-menu">
-        <i class='bx bx-menu bx-flip-horizontal'></i>
+    <nav>
+      <div id="nav" class="nav-container">
+        <h1 class="heading">Money Tracking</h1>
+        <div id="btn-menu" class="btn-menu">
+          <i class='bx bx-menu bx-flip-horizontal'></i>
+        </div>
+        <ul id="menu" class="menu">
+          <li class="list-menu">Balance</li>
+          <li class="list-menu">Statistic</li>
+          <li class="list-menu">About</li>
+        </ul>
       </div>
-      <ul id="menu" class="menu">
-        <li class="list-menu">Balance</li>
-        <li class="list-menu">Statistic</li>
-        <li class="list-menu">About</li>
-      </ul>
     </nav>
 
     <!-- Balance -->
@@ -173,56 +171,64 @@ $months = array(
 
     <main id="main">
 
-      <div class="select-menu">
+      <?php if ($pengeluaran > 0) : ?>
+        <div class="select-menu">
 
-        <div id="reset" class="reset-btn">
-          <i class='bx bx-reset bx-sm'></i>
-        </div>
+          <div id="reset" class="reset-btn">
+            <i class='bx bx-reset bx-sm'></i>
+          </div>
 
-        <div class="select-field">
-          <span class="text-field">Kategori</span>
-          <i id="icon" class='bx bx-caret-down bx-sm'></i>
-        </div>
+          <div class="select-field">
+            <span class="text-field">Kategori</span>
+            <i id="icon" class='bx bx-caret-down bx-sm'></i>
+          </div>
 
-        <ul class="options">
-          <li class="option">
-            <p class="option-text">Makanan</p>
-          </li>
-          <li class="option">
-            <p class="option-text">Bensin</p>
-          </li>
-          <li class="option">
-            <p class="option-text">Service Motor</p>
-          </li>
-          <li class="option">
-            <p class="option-text">Hobi</p>
-          </li>
-          <li class="option">
-            <p class="option-text">Holiday</p>
-          </li>
-          <li class="option">
-            <p class="option-text">Tagihan</p>
-          </li>
-        </ul>
-
-        <div class="select-field">
-          <span class="text-field-bln">Bulan</span>
-          <i id="icon-bln" class='bx bx-caret-down bx-sm'></i>
-        </div>
-
-        <ul class="options-bln">
-          <?php foreach ($months as $month) : ?>
-            <li class="option-bln">
-              <p class="option-text-bln"><?= $month ?></p>
+          <ul class="options">
+            <li class="option">
+              <p class="option-text">All</p>
             </li>
-          <?php endforeach; ?>
-        </ul>
+            <li class="option">
+              <p class="option-text">Makanan</p>
+            </li>
+            <li class="option">
+              <p class="option-text">Bensin</p>
+            </li>
+            <li class="option">
+              <p class="option-text">Service Motor</p>
+            </li>
+            <li class="option">
+              <p class="option-text">Hobi</p>
+            </li>
+            <li class="option">
+              <p class="option-text">Holiday</p>
+            </li>
+            <li class="option">
+              <p class="option-text">Tagihan</p>
+            </li>
+          </ul>
 
-        <div id="cari" class="cari">
-          <i class='bx bx-search bx-sm'></i>
+          <div class="select-field">
+            <span class="text-field-bln">Bulan</span>
+            <i id="icon-bln" class='bx bx-caret-down bx-sm'></i>
+          </div>
+
+          <ul class="options-bln">
+            <li class="option-bln">
+              <p class="option-text-bln">All</p>
+            </li>
+            <?php foreach ($months as $month) : ?>
+              <li class="option-bln">
+                <p class="option-text-bln"><?= $month . ' ' . date('Y') ?></p>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+
+          <div id="cari" class="cari">
+            <i class='bx bx-search bx-sm'></i>
+          </div>
+
         </div>
-
-      </div>
+      <?php endif; ?>
 
       <div id="data-container"></div>
     </main>

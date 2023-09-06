@@ -2,21 +2,27 @@
 
 require "../connect.php";
 
-if (isset($_GET['keyword'])) {
-  $keyword = $_GET['keyword'];
-} else {
-  $keyword = '';
+$keyword = $_GET['keyword'];
+$keyword_bln = $_GET['keyword_bln'];
+
+function check($data)
+{
+  return $data = ($data == 'All' ? $data = '' : $data);
 }
 
-if (isset($_GET['keyword_bln'])) {
-  $keyword_bln = $_GET['keyword_bln'];
-} else {
-  $keyword_bln = '';
-}
+$keyword = check($keyword);
+$keyword_bln = check($keyword_bln);
 
 $date_row = $conn->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL AND kategori LIKE '%$keyword%' AND tgl LIKE '%$keyword_bln%' ORDER BY tgl DESC");
 $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
+<?php if ($date_row->rowCount() === 0) : ?>
+  <div class="zero-data-container">
+    <img src="img/No data-cuate.png" class="no-data-img">
+    <p class="zero-data">Data Tidak Ditemukan</p>
+  </div>
+<?php endif; ?>
 
 <?php foreach ($dates as $date) : ?>
   <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>

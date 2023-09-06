@@ -1,8 +1,6 @@
 <?php
 require "../connect.php";
 
-date_default_timezone_set('Asia/Singapore');
-
 $page_row = $conn->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC");
 $pages = $page_row->fetchAll(PDO::FETCH_ASSOC);
 
@@ -12,7 +10,7 @@ $jum_hal = ceil($tot_data / $jum_data);
 $hal_aktif = (isset($_POST['page']) ? $_POST['page'] : 1);
 $awal_data = ($jum_data * $hal_aktif) - $jum_data;
 
-$date_row = $conn->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC LIMIT $awal_data, $jum_data");
+$date_row = $conn->query("SELECT DISTINCT tgl FROM $table_name WHERE pengeluaran IS NOT NULL ORDER BY id DESC LIMIT $awal_data, $jum_data");
 $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
 
 $jum_link = 1;

@@ -66,8 +66,7 @@ function number_only(event) {
 }
 
 penampung = document.getElementById('data-container');
-
-function ajaxHandler(value) {
+function ajaxHandler(data1, data2) {
   let xhr = new XMLHttpRequest();
 
   xhr.onreadystatechange = function () {
@@ -76,46 +75,59 @@ function ajaxHandler(value) {
     }
   };
 
-  xhr.open('GET', 'ajax/filter_search.php?keyword=' + value, true);
+  xhr.open('GET', 'ajax/filter_search.php?keyword=' + data1 + '&keyword_bln=' + data2, true);
   xhr.send();
 }
 
-//search filter with ajax
-const text_field = document.querySelector('.text-field'),
-  options = document.querySelector('.options'),
-  option = document.querySelectorAll('.option'),
-  select_field = document.querySelector('.select-field'),
-  icon = document.getElementById('icon'),
-  reset = document.getElementById('reset');
+//filter with ajax
+filter('.text-field', '.options', '.option', 'icon', 'reset', '.option-text', 'Kategori');
+filter('.text-field-bln', '.options-bln', '.option-bln', 'icon-bln', 'reset', '.option-text-bln', 'Bulan');
 
-text_field.addEventListener('click', () => {
-  options.classList.toggle('active');
-  icon.classList.toggle('rotate');
-});
+function filter(text_field_, options_, option_, icon_, reset_, option_text_, reload) {
+  const text_field = document.querySelector(text_field_),
+    options = document.querySelector(options_),
+    option = document.querySelectorAll(option_),
+    icon = document.getElementById(icon_),
+    reset = document.getElementById(reset_);
 
-option.forEach((list) => {
-  list.addEventListener('click', () => {
-    let selected = list.querySelector('.option-text').innerText;
-    options.classList.remove('active');
-    icon.classList.remove('rotate');
-    reset.classList.add('show');
-
-    let value = (text_field.innerText = selected);
-
-    ajaxHandler(value);
+  text_field.addEventListener('click', () => {
+    options.classList.toggle('active');
+    icon.classList.toggle('rotate');
   });
+
+  option.forEach((list) => {
+    list.addEventListener('click', () => {
+      let selected = list.querySelector(option_text_).innerText;
+      options.classList.remove('active');
+      icon.classList.remove('rotate');
+      text_field.innerText = selected;
+    });
+  });
+
+  reset.addEventListener('click', () => {
+    text_field.innerText = reload;
+    loadDatas('#data-container', 'data.php');
+  });
+}
+
+const cari = document.getElementById('cari');
+cari.addEventListener('click', () => {
+  let val1 = document.querySelector('.text-field').innerText;
+  let val2 = document.querySelector('.text-field-bln').innerText;
+
+  if (val1 === 'Kategori') {
+    val1 = '';
+    ajaxHandler(val1, val2);
+  } else if (val2 === 'Bulan') {
+    val2 = '';
+    ajaxHandler(val1, val2);
+  } else {
+    ajaxHandler(val1, val2);
+  }
 });
 
-reset.addEventListener('click', () => {
-  text_field.innerText = 'Pilih Kategori';
-  reset.classList.remove('show');
-  loadDatas('#data-container', 'data.php');
-});
-
-//pagination ajax with jquery
+//pagination with ajax jQueary
 loadDatas('#data-container', 'data.php');
-// loadDatas('#page', 'pageData.php');
-
 function loadDatas(element, url) {
   load_data();
   function load_data(page) {

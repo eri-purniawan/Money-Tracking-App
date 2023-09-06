@@ -10,12 +10,12 @@ if (isset($_POST['uang_btn'])) {
   $uang_bulanan += intval(str_replace(',', '', $_POST['uang_bulanan']));
   $tgl = date('d F Y');
 
-  $stmt = $conn->prepare("INSERT INTO $table_name (uang_bln, tgl) VALUES ('$uang_bulanan', '$tgl')");
+  $stmt = $conn->query("INSERT INTO $table_name (uang_bln, tgl) VALUES ('$uang_bulanan', '$tgl')");
 
-  $stmt->execute();
-
-  sleep('3');
-  header($_SERVER['PHP_SELF']);
+  // $stmt->execute();
+  // sleep('1');
+  header("Location: " . $_SERVER['PHP_SELF']);
+  exit;
 }
 
 function minchar($str)
@@ -23,6 +23,8 @@ function minchar($str)
   $patern = '/-/i';
   if (preg_match($patern, $str)) {
     return preg_replace($patern, ' ', $str);
+  } else {
+    return $str;
   }
 }
 
@@ -35,11 +37,12 @@ if (isset($_POST['tambah-data'])) {
 
   if ($uang_bulanan >= 0) {
 
-    $stmt = $conn->prepare("INSERT INTO $table_name (uang_bln, tgl, pengeluaran, kategori, ket) VALUES ('$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
+    $stmt = $conn->query("INSERT INTO $table_name (uang_bln, tgl, pengeluaran, kategori, ket) VALUES ('$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
 
-    $stmt->execute();
-    sleep('3');
-    header($_SERVER['PHP_SELF']);
+    // $stmt->execute();
+    // sleep('1');
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
   } else {
     $uang_bulanan = $uang_bulanan + $pengeluaran;
     echo "inputan anda melebihi batas sisa uang bulanan";
@@ -51,7 +54,6 @@ $baris = $hasil->fetchAll(PDO::FETCH_ASSOC);
 
 $pengeluaran = ($baris ? $pengeluaran = $baris[0]['pengeluaran'] : 0);
 
-$max_spend = [];
 //mengembalikan total nilai pengeluaran
 foreach ($baris as $v) {
   $pengeluaran += $v['pengeluaran'];
@@ -63,6 +65,22 @@ $array_bulan = explode(' ', $bulan);
 
 $bulan = array_diff($array_bulan, array($array_tgl));
 $bulan = $bulan[1] . " " . $bulan[2];
+
+$months = array(
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July ',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+);
+
 
 // if ($bulan != date('F Y')) {
 //   echo "total pengeluaran {$bulan} : " . number_format($pengeluaran);
@@ -157,11 +175,12 @@ $bulan = $bulan[1] . " " . $bulan[2];
 
       <div class="select-menu">
 
+        <div id="reset" class="reset-btn">
+          <i class='bx bx-reset bx-sm'></i>
+        </div>
+
         <div class="select-field">
-          <div id="reset" class="reset-btn">
-            <i class='bx bx-reset bx-sm'></i>
-          </div>
-          <span class="text-field">Pilih Kategori</span>
+          <span class="text-field">Kategori</span>
           <i id="icon" class='bx bx-caret-down bx-sm'></i>
         </div>
 
@@ -186,11 +205,26 @@ $bulan = $bulan[1] . " " . $bulan[2];
           </li>
         </ul>
 
+        <div class="select-field">
+          <span class="text-field-bln">Bulan</span>
+          <i id="icon-bln" class='bx bx-caret-down bx-sm'></i>
+        </div>
+
+        <ul class="options-bln">
+          <?php foreach ($months as $month) : ?>
+            <li class="option-bln">
+              <p class="option-text-bln"><?= $month ?></p>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+
+        <div id="cari" class="cari">
+          <i class='bx bx-search bx-sm'></i>
+        </div>
+
       </div>
 
       <div id="data-container"></div>
-      <div id="page"></div>
-
     </main>
 
   </div>

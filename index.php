@@ -6,14 +6,17 @@ $stmt = $conn->query("SELECT * FROM $table_name");
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
 
+function reload()
+{
+  header("Location: " . $_SERVER['PHP_SELF']);
+  exit;
+}
+
 if (isset($_POST['uang_btn'])) {
   $uang_bulanan += intval(str_replace(',', '', $_POST['uang_bulanan']));
   $tgl = date('d F Y');
-
   $stmt = $conn->query("INSERT INTO $table_name (uang_bln, tgl) VALUES ('$uang_bulanan', '$tgl')");
-
-  header("Location: " . $_SERVER['PHP_SELF']);
-  exit;
+  reload();
 }
 
 function minchar($str)
@@ -34,11 +37,8 @@ if (isset($_POST['tambah-data'])) {
   $tgl = date('d F Y');
 
   if ($uang_bulanan >= 0) {
-
     $stmt = $conn->query("INSERT INTO $table_name (uang_bln, tgl, pengeluaran, kategori, ket) VALUES ('$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
-
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit;
+    reload();
   } else {
     $uang_bulanan = $uang_bulanan + $pengeluaran;
     echo "inputan anda melebihi batas sisa uang bulanan";
@@ -295,9 +295,9 @@ $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="sum-content">
               <h2 class="title">Total Pengeluaran</h2>
-              <p class="sum-uang rp"><?= number_format($p_bln_lalu) ?></p>
+              <p class="sum-uang red rp"><?= number_format($p_bln_lalu) ?></p>
               <h2 class="title">Sisa Uang Bulanan</h2>
-              <p class="sum-uang red rp"><?= number_format($row[0]['uang_bln']) ?></p>
+              <p class="sum-uang rp"><?= number_format($row[0]['uang_bln']) ?></p>
               <h2 class="title">Pengeluaran Terbanyak</h2>
 
               <div class="wraper">

@@ -45,7 +45,7 @@ if (isset($_POST['tambah-data'])) {
   }
 }
 
-$pengeluaran = 1;
+$pengeluaran = 0;
 $t_pengeluaran = 0;
 foreach ($row as $v) {
   $t_pengeluaran += $v['pengeluaran'];
@@ -188,7 +188,7 @@ $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
         <div class="pengeluaran">
           <h2>Total Pengeluaran</h2>
           <p><?= $bulan ?></p>
-          <p class="uang"><?= ($pengeluaran == 1 ? 0 : number_format($pengeluaran - 1)) ?></p>
+          <p class="uang"><?= number_format($pengeluaran) ?></p>
         </div>
         <div id="btn-add" class="btn-add">
           <i class='bx bx-plus'></i>

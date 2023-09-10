@@ -2,7 +2,7 @@
 
 require "connect.php";
 
-$stmt = $conn->query("SELECT uang_bln FROM $table_name");
+$stmt = $conn->query("SELECT * FROM $table_name");
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
 
@@ -45,22 +45,21 @@ if (isset($_POST['tambah-data'])) {
   }
 }
 
-$hasil = $conn->query("SELECT * FROM $table_name");
-$baris = $hasil->fetchAll(PDO::FETCH_ASSOC);
-
-$pengeluaran = ($baris ? $pengeluaran = $baris[0]['pengeluaran'] : 0);
-
-//mengembalikan total nilai pengeluaran
-foreach ($baris as $v) {
-  $pengeluaran += $v['pengeluaran'];
-  $bulan = $v['tgl'];
+$pengeluaran = 1;
+$t_pengeluaran = 0;
+foreach ($row as $v) {
+  $t_pengeluaran += $v['pengeluaran'];
+  $bulan = explode(' ', $v['tgl'])[1] . ' ' . explode(' ', $v['tgl'])[2];
 }
 
-$array_tgl = explode(' ', $bulan)[0];
-$array_bulan = explode(' ', $bulan);
+$bulan_lalu = date('F Y', time() - 60 * 60 * 24 * days_in_month());
+$q_spend = $conn->query("SELECT pengeluaran FROM $table_name WHERE tgl LIKE '%$bulan%' ORDER BY id DESC");
+$last_month_spend = $q_spend->fetchAll(PDO::FETCH_ASSOC);
 
-$bulan = array_diff($array_bulan, array($array_tgl));
-$bulan = $bulan[1] . " " . $bulan[2];
+foreach ($last_month_spend as $v) {
+  $pengeluaran += $v['pengeluaran'];
+}
+
 
 $months = array(
   'January',
@@ -77,10 +76,74 @@ $months = array(
   'December',
 );
 
+function kategori($data, $bulan)
+{
+  global $conn;
+  global $table_name;
 
-// if ($bulan != date('F Y')) {
-//   echo "total pengeluaran {$bulan} : " . number_format($pengeluaran);
-// }
+  $kategori = $conn->query("SELECT DISTINCT kategori FROM $table_name WHERE pengeluaran is NOT NULL");
+  $kategori_row = $kategori->fetchAll(PDO::FETCH_ASSOC);
+
+  for ($i = 0; $i < count($kategori_row); $i++) {
+    $kat_name = $kategori_row[$i]['kategori'];
+    $query = $conn->query("SELECT kategori, pengeluaran FROM $table_name WHERE kategori = '$kat_name' AND tgl LIKE '%$bulan%'");
+    $query_row = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($kat_name == $data) {
+      $result = 0;
+      foreach ($query_row as $v) {
+        $result += $v['pengeluaran'];
+      }
+      $count = count($query_row);
+    }
+  }
+  if ($data == NULL) {
+    return $kategori_row;
+  }
+  return array(
+    "kategori" => $data,
+    "total" => $count,
+    "pengeluaran" => $result
+  );
+}
+
+function days_in_month()
+{
+  $month = date('m');
+  $year = date('Y');
+  if ($month == "02") {
+    if ($year % 4 == 0) return 29;
+    else return 28;
+  } else if ($month == "01" || $month == "03" || $month == "05" || $month == "07" || $month == "08" || $month == "10" || $month == "12") return 31;
+  else return 30;
+}
+
+$q = $conn->query("SELECT uang_bln, pengeluaran FROM $table_name WHERE tgl LIKE '%$bulan_lalu%' ORDER BY id DESC");
+$row = $q->fetchAll(PDO::FETCH_ASSOC);
+
+$list = kategori(NULL, $bulan_lalu);
+$kategori = [];
+foreach ($list as $v) {
+  $kategori[] = kategori($v['kategori'], $bulan_lalu);
+}
+
+$total = count($row) - 1;
+$max = 0;
+$p_bln_lalu = 0;
+
+for ($i = 0; $i < $total; $i++) {
+  $p_bln_lalu += $row[$i]['pengeluaran'];
+}
+
+for ($i = 0; $i < $total; $i++) {
+  if ($row[$i]['pengeluaran'] > $row[$i + 1]['pengeluaran']) {
+    $max = $row[$i]['pengeluaran'];
+    $row[$i + 1]['pengeluaran'] = $row[$i]['pengeluaran'];
+  }
+}
+
+$max_row = $conn->query("SELECT * FROM $table_name WHERE pengeluaran = $max");
+$max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -125,7 +188,7 @@ $months = array(
         <div class="pengeluaran">
           <h2>Total Pengeluaran</h2>
           <p><?= $bulan ?></p>
-          <p class="uang"><?= number_format($pengeluaran) ?></p>
+          <p class="uang"><?= ($pengeluaran == 1 ? 0 : number_format($pengeluaran - 1)) ?></p>
         </div>
         <div id="btn-add" class="btn-add">
           <i class='bx bx-plus'></i>
@@ -171,45 +234,34 @@ $months = array(
 
     <main id="main">
 
-      <?php if ($pengeluaran > 0) : ?>
+      <?php if ($t_pengeluaran > 0) : ?>
         <div class="select-menu">
 
           <div id="reset" class="reset-btn">
-            <i class='bx bx-reset bx-sm'></i>
+            <i class='bx bx-reset bx-xs'></i>
           </div>
 
           <div class="select-field">
             <span class="text-field">Kategori</span>
-            <i id="icon" class='bx bx-caret-down bx-sm'></i>
+            <i id="icon" class='bx bx-caret-down bx-xs'></i>
           </div>
 
           <ul class="options">
             <li class="option">
               <p class="option-text">All</p>
             </li>
-            <li class="option">
-              <p class="option-text">Makanan</p>
-            </li>
-            <li class="option">
-              <p class="option-text">Bensin</p>
-            </li>
-            <li class="option">
-              <p class="option-text">Service Motor</p>
-            </li>
-            <li class="option">
-              <p class="option-text">Hobi</p>
-            </li>
-            <li class="option">
-              <p class="option-text">Holiday</p>
-            </li>
-            <li class="option">
-              <p class="option-text">Tagihan</p>
-            </li>
+            <?php
+            $kat_list = kategori(NULL, '');
+            foreach ($kat_list as $v) : ?>
+              <li class="option">
+                <p class="option-text"><?= ucwords($v['kategori']) ?></p>
+              </li>
+            <?php endforeach; ?>
           </ul>
 
           <div class="select-field">
             <span class="text-field-bln">Bulan</span>
-            <i id="icon-bln" class='bx bx-caret-down bx-sm'></i>
+            <i id="icon-bln" class='bx bx-caret-down bx-xs'></i>
           </div>
 
           <ul class="options-bln">
@@ -224,13 +276,72 @@ $months = array(
           </ul>
 
           <div id="cari" class="cari">
-            <i class='bx bx-search bx-sm'></i>
+            <i class='bx bx-search bx-xs'></i>
           </div>
 
         </div>
       <?php endif; ?>
 
+
       <div id="data-container"></div>
+
+      <?php if ($bulan == date('F Y')) : ?>
+
+        <section class="summary">
+
+          <h1 class="heading">Summary on <?= $bulan_lalu ?></h1>
+
+          <div class="summary-container">
+
+            <div class="sum-content">
+              <h2 class="title">Total Pengeluaran</h2>
+              <p class="sum-uang rp"><?= number_format($p_bln_lalu) ?></p>
+              <h2 class="title">Sisa Uang Bulanan</h2>
+              <p class="sum-uang red rp"><?= number_format($row[0]['uang_bln']) ?></p>
+              <h2 class="title">Pengeluaran Terbanyak</h2>
+
+              <div class="wraper">
+
+                <div class="table">
+                  <p class="title-list">Tanggal</p>
+                  <p class="title-list">kategori</p>
+                  <p class="title-list">Pengeluaran</p>
+                  <p class="title-list">Keterangan</p>
+                </div>
+
+                <div class="table after">
+                  <p><?= $max_result[0]['tgl'] ?></p>
+                  <p><?= $max_result[0]['kategori'] ?></p>
+                  <p class="red rp">Rp. <?= number_format($max_result[0]['pengeluaran']) ?></p>
+                  <p><?= $max_result[0]['ket'] ?></p>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="sum-content-detail">
+              <h2 class="title-detail">Detail Kategori Pengeluaran</h2>
+              <div class="table-header">
+                <p class="title-list sum-kategori">Kategori</p>
+                <p class="title-list sum-kategori">Jumlah Pengeluaran</p>
+                <p class="title-list sum-kategori">Total Pengeluaran</p>
+              </div>
+
+              <?php foreach ($kategori as $v) : ?>
+
+                <div class="table-value">
+                  <p><?= ucwords($v['kategori']) ?></p>
+                  <p><?= $v['total'] ?></p>
+                  <p class="rp red bold"><?= number_format($v['pengeluaran']) ?></p>
+                </div>
+
+              <?php endforeach; ?>
+            </div>
+
+          </div>
+        </section>
+
+      <?php endif; ?>
     </main>
 
   </div>

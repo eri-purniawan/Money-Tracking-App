@@ -2,7 +2,7 @@ const btn_menu = document.getElementById('btn-menu');
 const nav = document.getElementById('nav');
 const menu = document.getElementById('menu');
 btn_menu.addEventListener('click', () => {
-  nav.classList.toggle('grid-areas');
+  nav.classList.toggle('height');
   menu.classList.toggle('menu-show');
 });
 

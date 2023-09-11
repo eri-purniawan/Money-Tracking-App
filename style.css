@@ -28,7 +28,8 @@
 
 ::-webkit-scrollbar-track {
   padding: 3px;
-  background: var(--white);
+  background: var(--white-bg);
+  border-left: 1px solid var(--black);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -41,6 +42,10 @@ body {
 
 .rp::before {
   content: 'Rp. ';
+}
+
+.red {
+  color: var(--red) !important;
 }
 
 .bold {
@@ -560,27 +565,48 @@ nav .btn-menu {
   text-align: center;
 }
 
+.summary-container {
+  display: grid;
+  grid-template-areas:
+    'p1 p2'
+    'kategori kategori';
+  align-items: baseline;
+}
+
 .sum-content .sum-uang {
   text-align: center;
   margin-top: 15px !important;
-  margin: 30px auto;
+  margin: 45px auto;
   font-size: 2rem;
   font-weight: bold;
+  grid-area: p1;
 }
 
-.red {
-  color: var(--red) !important;
-}
-
-.sum-content .wraper {
+.wraper {
+  grid-area: p2;
   display: grid;
-  grid-template-columns: 300px 300px;
-  justify-content: center;
+  grid-template-areas:
+    'title title'
+    'table-h table-v';
+  place-content: center;
   padding: 10px;
   font-size: 1.1rem;
+  gap: 20px;
 }
 
-.sum-content .wraper .table {
+.wraper .title {
+  grid-area: title;
+}
+
+.warper .header {
+  grid-area: table-h;
+}
+
+.warper .value {
+  grid-area: table-v;
+}
+
+.wraper .table {
   margin-top: 20px;
   display: grid;
   justify-self: center;
@@ -589,7 +615,7 @@ nav .btn-menu {
   align-items: center;
 }
 
-.sum-content .wraper .after p::before {
+.wraper .after p::before {
   content: ': ';
   color: var(--black);
 }
@@ -602,6 +628,10 @@ nav .btn-menu {
   color: var(--white);
   width: 100%;
   padding: 10px;
+}
+
+.sum-content-detail {
+  grid-area: kategori;
 }
 
 .sum-content-detail .table-header,
@@ -622,6 +652,16 @@ nav .btn-menu {
 
 .sum-content-detail .table-value {
   padding: 10px;
+}
+
+.summary .no-data {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 30px;
+  margin-top: -30px !important;
+  width: 70%;
+  margin: auto;
+  line-height: 50px;
 }
 
 @media (max-width: 576px) {
@@ -689,6 +729,10 @@ nav .btn-menu {
 
   .sum-content-detail .table-header {
     font-size: 0.8rem;
+  }
+
+  .wraper {
+    grid-template-columns: 0.6fr 0.6fr !important;
   }
 }
 
@@ -796,7 +840,15 @@ nav .btn-menu {
     border-top: none !important;
   }
 
-  .sum-content .wraper {
-    grid-template-columns: 0.5fr 0.5fr;
+  .summary-container {
+    display: block;
+  }
+
+  .wraper {
+    grid-template-columns: 0.35fr 0.35fr;
+  }
+
+  .wraper .title {
+    text-align: center;
   }
 }

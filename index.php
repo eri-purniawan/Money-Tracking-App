@@ -22,11 +22,7 @@ if (isset($_POST['uang_btn'])) {
 function minchar($str)
 {
   $patern = '/-/i';
-  if (preg_match($patern, $str)) {
-    return preg_replace($patern, ' ', $str);
-  } else {
-    return $str;
-  }
+  return (preg_match($patern, $str) ? preg_replace($patern, ' ', $str) : $str);
 }
 
 if (isset($_POST['tambah-data'])) {
@@ -285,9 +281,9 @@ $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
 
       <div id="data-container"></div>
 
-      <?php if ($bulan == date('F Y')) : ?>
+      <section id="sum" class="summary">
 
-        <section class="summary">
+        <?php if ($bulan == date('F Y')) : ?>
 
           <h1 class="heading">Summary on <?= $bulan_lalu ?></h1>
 
@@ -298,25 +294,25 @@ $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
               <p class="sum-uang red rp"><?= number_format($p_bln_lalu) ?></p>
               <h2 class="title">Sisa Uang Bulanan</h2>
               <p class="sum-uang rp"><?= number_format($row[0]['uang_bln']) ?></p>
+            </div>
+
+            <div class="wraper">
               <h2 class="title">Pengeluaran Terbanyak</h2>
 
-              <div class="wraper">
-
-                <div class="table">
-                  <p class="title-list">Tanggal</p>
-                  <p class="title-list">kategori</p>
-                  <p class="title-list">Pengeluaran</p>
-                  <p class="title-list">Keterangan</p>
-                </div>
-
-                <div class="table after">
-                  <p><?= $max_result[0]['tgl'] ?></p>
-                  <p><?= $max_result[0]['kategori'] ?></p>
-                  <p class="red rp">Rp. <?= number_format($max_result[0]['pengeluaran']) ?></p>
-                  <p><?= $max_result[0]['ket'] ?></p>
-                </div>
-
+              <div class="table header">
+                <p class="title-list">Tanggal</p>
+                <p class="title-list">kategori</p>
+                <p class="title-list">Pengeluaran</p>
+                <p class="title-list">Keterangan</p>
               </div>
+
+              <div class="table value after">
+                <p><?= $max_result[0]['tgl'] ?></p>
+                <p><?= $max_result[0]['kategori'] ?></p>
+                <p class="red rp">Rp. <?= number_format($max_result[0]['pengeluaran']) ?></p>
+                <p><?= $max_result[0]['ket'] ?></p>
+              </div>
+
             </div>
 
             <div class="sum-content-detail">
@@ -331,7 +327,7 @@ $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="table-value">
                   <p><?= ucwords($v['kategori']) ?></p>
-                  <p><?= $v['total'] ?></p>
+                  <p><?= $v['total'] ?> Kali</p>
                   <p class="rp red bold"><?= number_format($v['pengeluaran']) ?></p>
                 </div>
 
@@ -339,9 +335,13 @@ $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
           </div>
-        </section>
-
-      <?php endif; ?>
+        <?php else : ?>
+          <h1 class="heading">Summary on ... </h1>
+          <div class="no-data">
+            <h2>Data ringkasan pengeluaran bulan <?= $bulan ?> akan tersedia pada bulan berikutnya</h2>
+          </div>
+        <?php endif; ?>
+      </section>
     </main>
 
   </div>

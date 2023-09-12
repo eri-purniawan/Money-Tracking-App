@@ -16,43 +16,50 @@ $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
 $jum_link = 1;
 $startNumber = ($hal_aktif > $jum_link ? $hal_aktif - $jum_link : 1);
 $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_hal);
+
 ?>
 
-<!-- tampil data pengeluaran -->
-<div class="data">
-  <?php foreach ($dates as $date) : ?>
-    <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
-    <section class="list">
+<?php if ($date_row->rowCount() !== 0) : ?>
+  <!-- tampil data pengeluaran -->
+  <div class="data">
+    <?php foreach ($dates as $date) : ?>
+      <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
+      <section class="list">
 
-      <div class="table-header">
-        <p class="pengeluaran">Pengeluaran</p>
-        <p class="kategori">Kategori</p>
-        <p class="keterangan">Keterangan</p>
-      </div>
-
-      <?php $values = $conn->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL");
-      $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
-      ?>
-      <?php foreach ($row_values as $value) : ?>
-        <div class="table-value">
-          <p class="pengeluaran"><?= 'Rp.' . number_format($value['pengeluaran']) ?></p>
-          <p class="kategori"><?= ucwords($value['kategori']) ?></p>
-          <p class="keterangan"><?= $value['ket'] ?></p>
+        <div class="table-header">
+          <p class="pengeluaran">Pengeluaran</p>
+          <p class="kategori">Kategori</p>
+          <p class="keterangan">Keterangan</p>
         </div>
-      <?php endforeach; ?>
-    </section>
 
-    <p class="tgl total-pengeluaran">
-      <?php
-      $total_pengeluaran = 0;
-      foreach ($row_values as $value) {
-        $total_pengeluaran += $value['pengeluaran'];
-      }
-      echo 'Total Pengeluaran: Rp.' . number_format($total_pengeluaran)
-      ?>
-    </p>
-  <?php endforeach; ?>
-</div>
+        <?php $values = $conn->query("SELECT * FROM $table_name WHERE tgl = '$date' AND pengeluaran IS NOT NULL");
+        $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+        <?php foreach ($row_values as $value) : ?>
+          <div class="table-value">
+            <p class="pengeluaran"><?= 'Rp.' . number_format($value['pengeluaran']) ?></p>
+            <p class="kategori"><?= ucwords($value['kategori']) ?></p>
+            <p class="keterangan"><?= $value['ket'] ?></p>
+          </div>
+        <?php endforeach; ?>
+      </section>
+
+      <p class="tgl total-pengeluaran">
+        <?php
+        $total_pengeluaran = 0;
+        foreach ($row_values as $value) {
+          $total_pengeluaran += $value['pengeluaran'];
+        }
+        echo 'Total Pengeluaran: Rp.' . number_format($total_pengeluaran)
+        ?>
+      </p>
+    <?php endforeach; ?>
+  </div>
+<?php else : ?>
+  <section class="list">
+    <p>No List of Data Available Yet</p>
+  </section>
+<?php endif; ?>
 
 <section class="halaman">
   <?php if ($hal_aktif > 1) : ?>

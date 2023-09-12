@@ -140,6 +140,18 @@ for ($i = 0; $i < $total; $i++) {
 
 $max_row = $conn->query("SELECT * FROM $table_name WHERE pengeluaran = $max");
 $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
+
+$list_kategori = [];
+$list_spend = [];
+
+foreach ($kategori as $v) {
+  $list_kategori[] = ucwords($v['kategori']);
+  $list_spend[] = $v['pengeluaran'];
+}
+
+$kategori_label = json_encode($list_kategori);
+$spend_data = json_encode($list_spend);
+
 ?>
 
 <!DOCTYPE html>
@@ -151,8 +163,10 @@ $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
   <title>Money Tracking</title>
   <link rel="stylesheet" href="style.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/3c30c2ec7b.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -285,7 +299,7 @@ $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
 
         <?php if ($bulan == date('F Y')) : ?>
 
-          <h1 class="heading">Summary on <?= $bulan_lalu ?></h1>
+          <h1 id="heading-sum" class="heading">Summary on <?= $bulan_lalu ?></h1>
 
           <div class="summary-container">
 
@@ -338,14 +352,67 @@ $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
         <?php else : ?>
           <h1 class="heading">Summary on ... </h1>
           <div class="no-data">
-            <h2>Data ringkasan pengeluaran bulan <?= $bulan ?> akan tersedia pada bulan berikutnya</h2>
+            <p>Data ringkasan pengeluaran bulan <?= $bulan ?> akan tersedia pada bulan berikutnya</p>
           </div>
         <?php endif; ?>
       </section>
+
+      <section class="chart">
+        <?php if ($bulan == date('F Y')) : ?>
+
+          <canvas id="myChart"></canvas>
+
+        <?php else : ?>
+          <div class="no-data">
+            <p>Chart data ringkasan pengeluaran bulan <?= $bulan ?> akan tersedia pada bulan berikutnya</p>
+          </div>
+        <?php endif; ?>
+
+      </section>
+
     </main>
 
   </div>
   <script src="main.js"></script>
+  <script>
+    const kategori_label = <?= $kategori_label ?>;
+    const spend_data = <?= $spend_data ?>;
+    const summary = document.getElementById('heading-sum');
+    const ctx = document.getElementById('myChart');
+
+    Chart.defaults.font.family = "'Victor Mono', monospace";
+    Chart.defaults.font.weight = 'bold';
+
+    new Chart(ctx, {
+      type: 'polarArea',
+      data: {
+        labels: kategori_label,
+        datasets: [{
+          label: 'Chart ' + summary.innerText,
+          data: spend_data,
+          borderWidth: 1,
+          backgroundColor: [
+            '#BF616A99',
+            '#D0877099',
+            '#EBCB8B99',
+            '#A3BE8C99',
+            '#B48EAD99',
+            '#5E81AC99',
+          ],
+          borderColor: '#2E3440',
+          borderAlign: 'inner',
+          color: '#2E3440'
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
 </body>
 
 </html>

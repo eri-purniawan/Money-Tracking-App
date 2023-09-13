@@ -470,6 +470,10 @@ nav .btn-menu {
   border-bottom: none;
 }
 
+.no-data-list {
+  margin: 30px auto;
+}
+
 .list .table-header {
   font-weight: bold;
   text-align: center;
@@ -707,6 +711,7 @@ nav .btn-menu {
   margin-top: 30px;
   border-top: 5px solid var(--black);
   background-color: var(--white);
+  bottom: 0;
 }
 
 .about .container {

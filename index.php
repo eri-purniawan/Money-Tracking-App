@@ -43,10 +43,17 @@ if (isset($_POST['tambah-data'])) {
 
 $pengeluaran = 0;
 $t_pengeluaran = 0;
+$bulan_arr = [];
 foreach ($row as $v) {
   $t_pengeluaran += $v['pengeluaran'];
-  $bulan = explode(' ', $v['tgl'])[1] . ' ' . explode(' ', $v['tgl'])[2];
+  $bulan_tahun = explode(' ', $v['tgl'])[1] . ' ' . explode(' ', $v['tgl'])[2];
+
+  $bulan_arr[] = $bulan_tahun;
 }
+
+$bulan_arr = array_unique($bulan_arr);
+
+$bulan = ($row ? $bulan = $bulan_tahun : date('F Y'));
 
 $bulan_lalu = date('F Y', time() - 60 * 60 * 24 * days_in_month());
 $q_spend = $conn->query("SELECT pengeluaran FROM $table_name WHERE tgl LIKE '%$bulan%' ORDER BY id DESC");
@@ -291,11 +298,28 @@ $spend_data = json_encode($list_spend);
     <?php endif; ?>
 
 
-    <div id="data-container"></div>
+    <div id="data-container" class="no-data-list">
+      <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . 'Tgl...' ?></p>
+      <section class="list">
+
+        <div class="table-header">
+          <p class="pengeluaran">Pengeluaran</p>
+          <p class="kategori">Kategori</p>
+          <p class="keterangan">Keterangan</p>
+        </div>
+
+        <div class="table-value">
+          <p class="pengeluaran"><?= 'No data yet'  ?></p>
+          <p class="kategori"><?= 'No data yet' ?></p>
+          <p style="text-align: center;" class="keterangan"><?= 'No data yet' ?></p>
+        </div>
+
+      </section>
+    </div>
 
     <section id="sum" class="summary">
 
-      <?php if ($bulan == date('F Y')) : ?>
+      <?php if (in_array($bulan_lalu, $bulan_arr)) : ?>
 
         <h1 id="heading-sum" class="heading">Summary on <?= $bulan_lalu ?></h1>
 

@@ -385,11 +385,12 @@ $spend_data = json_encode($list_spend);
   <section class="about" id="about">
     <div class="container">
       <h1>About</h1>
+      <p class="p">Aplikasi penelusuran pengeluaran pada keuangan berbasis web</p>
       <div class="email">
         <span>Email</span>
         <p>eriipurniawan@gmail.com</p>
       </div>
-      <p>Made with hand by EX</p>
+      <p>Made by EX for you</p>
     </div>
   </section>
   <script src="main.js"></script>
@@ -402,7 +403,14 @@ $spend_data = json_encode($list_spend);
     Chart.defaults.font.family = "'Victor Mono', monospace";
     Chart.defaults.font.weight = 'bold';
     Chart.defaults.font.color = '#2E3440';
-    Chart.defaults.font.size = 14;
+
+    function myFunction(x) {
+      if (x.matches) { // If media query matches
+        Chart.defaults.font.size = 14;
+      } else {
+        Chart.defaults.font.size = 20;
+      }
+    }
 
     new Chart(ctx, {
       type: 'doughnut',
@@ -443,6 +451,10 @@ $spend_data = json_encode($list_spend);
         }
       }
     });
+
+    var x = window.matchMedia("(max-width: 576px)")
+    myFunction(x) // Call listener function at run time
+    x.addListener(myFunction) // Attach listener function on state changes
   </script>
 </body>
 

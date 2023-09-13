@@ -390,7 +390,7 @@ $spend_data = json_encode($list_spend);
         <span>Email</span>
         <p>eriipurniawan@gmail.com</p>
       </div>
-      <p>Made by EX for you</p>
+      <p>Made by EX for you and me</p>
     </div>
   </section>
   <script src="main.js"></script>

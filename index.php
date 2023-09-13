@@ -436,7 +436,9 @@ $spend_data = json_encode($list_spend);
         plugins: {
           legend: {
             position: 'bottom',
-            color: '#00070a'
+            labels: {
+              color: '#00070a',
+            }
           },
           title: {
             display: true,

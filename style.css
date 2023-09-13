@@ -9,15 +9,19 @@
 }
 
 :root {
-  --red: #bf616a;
-  /* --red-2: #ff3366; */
-  --blue: #5e81ac;
-  --white: #d8dee9;
-  --white-bg: #eceff4;
-  --black: #2e3440;
+  --green: #00798c;
+  --red: #d1495b;
+  --blue: #003d5b;
+  --white: #d5dfe4;
+  --white-bg: #fff;
+  --black: #00070a;
   --white-50: #eceff480;
   --shadow: 5px 5px var(--black);
-  --transition: 0.3s cubic-bezier(0.7, 0, 0.3, 1);
+  --transition: 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar {
@@ -55,13 +59,17 @@ body {
   margin: auto;
 }
 
+a {
+  color: var(--black);
+}
+
 nav {
   top: 0;
   left: 0;
   width: 100%;
   position: fixed;
   z-index: 2;
-  border-bottom: 1px solid var(--black);
+  border-bottom: 4px solid var(--black);
   background-color: var(--white);
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.295);
   z-index: 5;
@@ -163,6 +171,17 @@ nav .btn-menu {
   display: flex;
   text-align: center;
   font-weight: bold;
+  color: var(--white);
+  background-color: var(--green);
+  width: fit-content;
+  border-radius: 5px;
+  padding: 10px 15px;
+  transition: var(--transition);
+  margin: 5px 0;
+}
+
+.balance .bulanan .uang:hover::after {
+  box-shadow: var(--shadow);
 }
 
 .balance .pengeluaran .uang {
@@ -224,6 +243,7 @@ nav .btn-menu {
   cursor: pointer;
   box-shadow: var(--shadow);
   transition: var(--transition);
+  color: var(--white);
 }
 
 .balance .form-input-uang button:hover {
@@ -465,7 +485,7 @@ nav .btn-menu {
   padding: 10px 0;
   gap: 10px;
   border-width: 0px 0px 1px 0px;
-  border-style: dashed;
+  border-style: dotted;
   display: grid;
   grid-template-columns: 1fr 0.8fr 1fr;
   font-size: 1.1rem;
@@ -480,7 +500,7 @@ nav .btn-menu {
 .list .table-value .kategori {
   text-align: center;
   border-width: 0px 1px 0px 0px;
-  border-style: dashed;
+  border-style: dotted;
   border-color: var(--black);
 }
 
@@ -637,8 +657,8 @@ nav .btn-menu {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   text-align: center;
-  gap: 30px;
-  align-items: center;
+  gap: 10px;
+  justify-content: center;
 }
 
 .sum-content-detail .table-header {
@@ -650,6 +670,15 @@ nav .btn-menu {
 
 .sum-content-detail .table-value {
   padding: 10px;
+  border-bottom: 1px dotted var(--black);
+}
+
+.sum-content-detail .table-value p {
+  border-right: 1px dotted var(--black);
+}
+
+.sum-content-detail .table-value .red {
+  border: none;
 }
 
 .summary .no-data {
@@ -663,10 +692,7 @@ nav .btn-menu {
 }
 
 .chart {
-  margin: 30px 0;
-  border: 1px solid var(--black);
-  box-shadow: var(--shadow);
-  padding: 20px;
+  padding: 100px;
   background-color: var(--white) !important;
 }
 
@@ -674,6 +700,26 @@ nav .btn-menu {
   text-align: center;
   padding: 0 50px;
   line-height: 30px;
+}
+
+.about {
+  width: 100%;
+  margin-top: 30px;
+  border-top: 5px solid var(--black);
+  background-color: var(--white);
+}
+
+.about .container {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.about .container h1 {
+  padding: 10px;
+}
+
+.about .container .email {
+  padding: 10px;
 }
 
 @media (max-width: 576px) {
@@ -695,6 +741,7 @@ nav .btn-menu {
 
   .balance .bulanan .uang::after {
     justify-content: center;
+    margin: 10px auto;
   }
 
   .bulanan .pengeluaran {
@@ -745,6 +792,10 @@ nav .btn-menu {
 
   .wraper {
     grid-template-columns: 0.6fr 0.6fr !important;
+  }
+
+  .chart {
+    padding: 10px !important;
   }
 }
 
@@ -862,5 +913,9 @@ nav .btn-menu {
 
   .wraper .title {
     text-align: center;
+  }
+
+  .chart {
+    padding: 50px;
   }
 }

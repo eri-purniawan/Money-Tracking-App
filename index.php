@@ -8,7 +8,7 @@ $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
 
 function reload()
 {
-  header("Location: " . $_SERVER['PHP_SELF']);
+  header("Location: # ");
   exit;
 }
 
@@ -52,6 +52,10 @@ foreach ($row as $v) {
 }
 
 $bulan_arr = array_unique($bulan_arr);
+
+if (count($bulan_arr) > 2) {
+  array_splice($bulan_arr, 0, count($bulan_arr) - (count($bulan_arr) + 2));
+}
 
 $bulan = ($row ? $bulan = $bulan_tahun : date('F Y'));
 
@@ -187,9 +191,15 @@ $spend_data = json_encode($list_spend);
           <i class='bx bx-menu bx-flip-horizontal'></i>
         </div>
         <ul id="menu" class="menu">
-          <li class="list-menu"><a href="#">Profile</a></li>
-          <li class="list-menu"><a href="#sum">Summary</a></li>
-          <li class="list-menu"><a href="#about">About</a></li>
+          <a href="#">
+            <li class="list-menu">Profile</li>
+          </a>
+          <a href="#sum">
+            <li class="list-menu">Summary</li>
+          </a>
+          <a href="#about">
+            <li class="list-menu">About</li>
+          </a>
         </ul>
       </div>
     </nav>
@@ -369,9 +379,7 @@ $spend_data = json_encode($list_spend);
 
             <?php endforeach; ?>
           </div>
-
         </div>
-
         <canvas class="chart" id="myChart"></canvas>
       <?php else : ?>
         <h1 class="heading">Summary on ... </h1>
@@ -385,12 +393,12 @@ $spend_data = json_encode($list_spend);
   <section class="about" id="about">
     <div class="container">
       <h1>About</h1>
-      <p class="p">Aplikasi penelusuran pengeluaran pada keuangan berbasis web</p>
+      <p>Aplikasi penelusuran pengeluaran pada keuangan berbasis web</p>
       <div class="email">
         <span>Email</span>
         <p>eriipurniawan@gmail.com</p>
       </div>
-      <p>Made by EX for you and me</p>
+      <p>Made with <i class='bx bxs-heart-circle bx-sm red'></i> by EX </p>
     </div>
   </section>
   <script src="main.js"></script>
@@ -446,17 +454,12 @@ $spend_data = json_encode($list_spend);
             color: '#00070a'
           }
         },
-        scales: {
-          // y: {
-          //   beginAtZero: true
-          // }
-        }
       }
     });
 
     var x = window.matchMedia("(max-width: 576px)")
-    myFunction(x) // Call listener function at run time
-    x.addListener(myFunction) // Attach listener function on state changes
+    myFunction(x)
+    x.addListener(myFunction)
   </script>
 </body>
 

@@ -1,45 +1,7 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  text-decoration: none;
-  list-style: none;
-  font-family: 'Victor Mono', monospace;
-  outline: none;
-}
-
-:root {
-  --green: #00798c;
-  --red: #d1495b;
-  --blue: #003d5b;
-  --white: #d5dfe4;
-  --white-bg: #fff;
-  --black: #00070a;
-  --white-50: #eceff480;
-  --shadow: 5px 5px var(--black);
-  --transition: 0.5s cubic-bezier(0.7, 0, 0.3, 1);
-}
+@import url('default.css');
 
 html {
   scroll-behavior: smooth;
-}
-
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  padding: 3px;
-  background: var(--white-bg);
-  border-left: 1px solid var(--black);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--black);
-}
-
-body {
-  background-color: var(--white-bg);
 }
 
 .rp::before {
@@ -146,7 +108,7 @@ nav .btn-menu {
   height: 100%;
   width: 100%;
   margin: auto;
-  font-size: 20vmin;
+  font-size: 10rem;
   cursor: pointer;
   display: grid;
   align-items: center;
@@ -226,14 +188,14 @@ nav .btn-menu {
 
 .balance .form-input-uang label {
   font-weight: bold;
-  font-size: 3vmax !important;
+  font-size: 2rem !important;
   border: none !important;
 }
 
 .balance .form-input-uang label,
 .balance .form-input-uang input[type='text'],
 .balance .form-input-uang button {
-  font-size: 2vmax;
+  font-size: 1.3rem;
   padding: 10px 10px;
   border: 1px solid var(--black);
 }
@@ -724,14 +686,21 @@ nav .btn-menu {
 
 .about .container .email {
   padding: 10px;
-  font-weight: bold;
 }
 
 .about .container .p {
   margin-bottom: 20px;
 }
 
-.about .container p {
+.about .container > p {
+  border-bottom: 1px solid var(--black);
+  width: 80%;
+  margin: auto;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.about .container > span {
   font-weight: bold;
 }
 

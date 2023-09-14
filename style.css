@@ -656,6 +656,10 @@ nav .btn-menu {
   grid-area: kategori;
 }
 
+.chart {
+  padding: 100px;
+}
+
 .sum-content-detail .table-header,
 .sum-content-detail .table-value {
   display: grid;
@@ -695,11 +699,6 @@ nav .btn-menu {
   line-height: 30px;
 }
 
-.chart {
-  padding: 100px;
-  background-color: var(--white) !important;
-}
-
 .chart .no-data {
   text-align: center;
   padding: 0 50px;
@@ -728,23 +727,12 @@ nav .btn-menu {
   font-weight: bold;
 }
 
-.about .container .email span {
-  background-color: var(--green);
-  color: var(--white);
-  padding: 5px;
+.about .container .p {
+  margin-bottom: 20px;
 }
 
 .about .container p {
-  border-bottom: 5px solid var(--black);
-  width: fit-content;
-  margin: auto;
-  padding: 5px;
-  background-color: var(--green);
-  color: var(--white);
-}
-
-.about .container .p {
-  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 @media (max-width: 576px) {

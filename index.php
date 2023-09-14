@@ -388,10 +388,8 @@ $spend_data = json_encode($list_spend);
         </div>
       <?php endif; ?>
     </section>
-  </div>
 
-  <section class="about" id="about">
-    <div class="container">
+    <section class="about" id="about">
       <h1>About</h1>
       <p>Aplikasi penelusuran pengeluaran pada keuangan berbasis web</p>
       <div class="email">
@@ -399,8 +397,10 @@ $spend_data = json_encode($list_spend);
         <p>eriipurniawan@gmail.com</p>
       </div>
       <span>Made with <i class='bx bxs-heart-circle bx-sm red'></i> by EX </span>
-    </div>
-  </section>
+    </section>
+  </div>
+
+
   <script src="main.js"></script>
   <script>
     const kategori_label = <?= $kategori_label ?>;

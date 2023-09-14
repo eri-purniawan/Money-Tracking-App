@@ -668,39 +668,36 @@ nav .btn-menu {
 }
 
 .about {
+  padding: 10px;
   width: 100%;
   margin-top: 30px;
-  border-top: 5px solid var(--black);
+  border: 1px solid var(--black);
+  border-bottom: none;
   background-color: var(--white);
   bottom: 0;
-}
-
-.about .container {
   text-align: center;
-  padding: 10px 0;
+  box-shadow: var(--shadow);
 }
 
-.about .container h1 {
+.about h1 {
+  background-color: var(--blue);
+  color: var(--white);
   padding: 10px;
 }
 
-.about .container .email {
+.about .email {
   padding: 10px;
 }
 
-.about .container .p {
-  margin-bottom: 20px;
-}
-
-.about .container > p {
+.about > p {
   border-bottom: 1px solid var(--black);
   width: 80%;
   margin: auto;
   padding-bottom: 20px;
-  margin-bottom: 10px;
+  margin: 20px auto;
 }
 
-.about .container > span {
+.about > span {
   font-weight: bold;
 }
 

@@ -398,7 +398,7 @@ $spend_data = json_encode($list_spend);
         <span>Email</span>
         <p>eriipurniawan@gmail.com</p>
       </div>
-      <p>Made with <i class='bx bxs-heart-circle bx-sm red'></i> by EX </p>
+      <span>Made with <i class='bx bxs-heart-circle bx-sm red'></i> by EX </span>
     </div>
   </section>
   <script src="main.js"></script>

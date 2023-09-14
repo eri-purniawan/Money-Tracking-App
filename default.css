@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  font-family: 'Victor Mono', monospace;
+  outline: none;
+}
+
+:root {
+  --green: #00798c;
+  --red: #d1495b;
+  --blue: #003d5b;
+  --white: #dce4e8;
+  --white-bg: #f6f8f9;
+  --black: #00070a;
+  --white-50: #eceff480;
+  --shadow: 5px 5px var(--black);
+  --transition: 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  padding: 3px;
+  background: var(--white-bg);
+  border-left: 1px solid var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--black);
+}
+
+body {
+  background-color: var(--white-bg);
+}

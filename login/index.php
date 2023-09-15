@@ -34,7 +34,7 @@
       </form>
 
     </div>
-    <p>Don't have account yet? <a href="#">Sign up</a></p>
+    <p>Don't have account yet? <a href="../register/index.php">Sign up</a></p>
   </div>
 
   <div id="particles-js" class="particle"></div>

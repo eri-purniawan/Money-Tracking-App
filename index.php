@@ -2,7 +2,7 @@
 
 require "connect.php";
 
-$stmt = $conn->query("SELECT * FROM $table_name");
+$stmt = $conn->query("SELECT * FROM keuangan");
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
 
@@ -15,7 +15,7 @@ function reload()
 if (isset($_POST['uang_btn'])) {
   $uang_bulanan += intval(str_replace(',', '', $_POST['uang_bulanan']));
   $tgl = date('d F Y');
-  $stmt = $conn->query("INSERT INTO $table_name (uang_bln, tgl) VALUES ('$uang_bulanan', '$tgl')");
+  $stmt = $conn->query("INSERT INTO keuangan (uang_bln, tgl) VALUES ('$uang_bulanan', '$tgl')");
   reload();
 }
 
@@ -33,7 +33,7 @@ if (isset($_POST['tambah-data'])) {
   $tgl = date('d F Y');
 
   if ($uang_bulanan >= 0) {
-    $stmt = $conn->query("INSERT INTO $table_name (uang_bln, tgl, pengeluaran, kategori, ket) VALUES ('$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
+    $stmt = $conn->query("INSERT INTO keuangan (uang_bln, tgl, pengeluaran, kategori, ket) VALUES ('$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
     reload();
   } else {
     $uang_bulanan = $uang_bulanan + $pengeluaran;
@@ -60,7 +60,7 @@ if (count($bulan_arr) > 2) {
 $bulan = ($row ? $bulan = $bulan_tahun : date('F Y'));
 
 $bulan_lalu = date('F Y', time() - 60 * 60 * 24 * days_in_month());
-$q_spend = $conn->query("SELECT pengeluaran FROM $table_name WHERE tgl LIKE '%$bulan%' ORDER BY id DESC");
+$q_spend = $conn->query("SELECT pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan%' ORDER BY id DESC");
 $last_month_spend = $q_spend->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($last_month_spend as $v) {
@@ -86,14 +86,13 @@ $months = array(
 function kategori($data, $bulan)
 {
   global $conn;
-  global $table_name;
 
-  $kategori = $conn->query("SELECT DISTINCT kategori FROM $table_name WHERE pengeluaran is NOT NULL");
+  $kategori = $conn->query("SELECT DISTINCT kategori FROM keuangan WHERE pengeluaran is NOT NULL");
   $kategori_row = $kategori->fetchAll(PDO::FETCH_ASSOC);
 
   for ($i = 0; $i < count($kategori_row); $i++) {
     $kat_name = $kategori_row[$i]['kategori'];
-    $query = $conn->query("SELECT kategori, pengeluaran FROM $table_name WHERE kategori = '$kat_name' AND tgl LIKE '%$bulan%'");
+    $query = $conn->query("SELECT kategori, pengeluaran FROM keuangan WHERE kategori = '$kat_name' AND tgl LIKE '%$bulan%'");
     $query_row = $query->fetchAll(PDO::FETCH_ASSOC);
 
     if ($kat_name == $data) {
@@ -125,7 +124,7 @@ function days_in_month()
   else return 30;
 }
 
-$q = $conn->query("SELECT uang_bln, pengeluaran FROM $table_name WHERE tgl LIKE '%$bulan_lalu%' ORDER BY id DESC");
+$q = $conn->query("SELECT uang_bln, pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan_lalu%' ORDER BY id DESC");
 $row = $q->fetchAll(PDO::FETCH_ASSOC);
 
 $list = kategori(NULL, $bulan_lalu);
@@ -149,7 +148,7 @@ for ($i = 0; $i < $total; $i++) {
   }
 }
 
-$max_row = $conn->query("SELECT * FROM $table_name WHERE pengeluaran = $max");
+$max_row = $conn->query("SELECT * FROM keuangan WHERE pengeluaran = $max");
 $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
 
 $list_kategori = [];

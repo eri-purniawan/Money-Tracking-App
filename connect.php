@@ -10,5 +10,3 @@ try {
 } catch (PDOException $e) {
   echo "Connection Failed: " . $e->getMessage();
 }
-
-$table_name = 'keuangan';

@@ -1,23 +1,3 @@
-<?php
-
-require "../connect.php";
-
-
-
-
-
-
-
-?>
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +18,7 @@ require "../connect.php";
     <div class="container">
       <span>Login to your account</span>
 
-      <form action="../index.php" method="post">
+      <form action="" method="post">
         <div class="form-container">
           <div class="form-list">
             <label for="username">Username</label>

@@ -7,7 +7,7 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <title>Login Page</title>
+  <title>Login</title>
 </head>
 
 <body>
@@ -29,7 +29,7 @@
             <label for="password">Password</label>
             <input type="password" name="password" id="password">
           </div>
-          <button type="submit" name="submit">Submit</button>
+          <button type="submit" name="submit">Login</button>
         </div>
       </form>
 

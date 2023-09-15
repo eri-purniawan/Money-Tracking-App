@@ -414,9 +414,9 @@ $spend_data = json_encode($list_spend);
 
     function myFunction(x) {
       if (x.matches) { // If media query matches
-        Chart.defaults.font.size = 14;
+        Chart.defaults.font.size = 12;
       } else {
-        Chart.defaults.font.size = 20;
+        Chart.defaults.font.size = 16;
       }
     }
 

@@ -619,7 +619,7 @@ nav .btn-menu {
 }
 
 .chart {
-  padding: 100px;
+  padding: 50px;
 }
 
 .sum-content-detail .table-header,
@@ -895,6 +895,6 @@ nav .btn-menu {
   }
 
   .chart {
-    padding: 50px;
+    padding: 10px;
   }
 }

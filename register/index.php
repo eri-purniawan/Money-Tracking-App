@@ -31,11 +31,6 @@
           </div>
 
           <div class="form-list">
-            <label for="email">Email</label>
-            <input type="text" name="email" id="email">
-          </div>
-
-          <div class="form-list">
             <label for="cpassword"> Confirm Password</label>
             <input type="password" name="cpassword" id="cpassword">
           </div>
@@ -44,7 +39,7 @@
       </form>
 
     </div>
-    <p>Already Have account? <a href="#">Sign in</a></p>
+    <p>Already Have account? <a href="../login/index.php">Sign in</a></p>
   </div>
 
   <div id="particles-js" class="particle"></div>

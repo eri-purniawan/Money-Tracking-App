@@ -65,7 +65,7 @@ body {
 }
 
 .container .form-container .form-list label::after {
-  content: ' *';
+  content: '*';
   color: var(--red);
 }
 
@@ -100,6 +100,52 @@ body {
 
 .container .form-container button:hover {
   box-shadow: var(--shadow);
+}
+
+.bg-alert {
+  background-color: var(--white-bg);
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  font-weight: bold;
+}
+
+.alert-container {
+  border: 1px solid var(--black);
+  width: fit-content;
+  margin: auto;
+  padding: 20px;
+  line-height: 60px;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.alert-container a {
+  color: var(--white);
+  background-color: var(--blue);
+  padding: 10px;
+  border: 1px solid var(--black);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.alert-container i {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--green);
+  color: var(--white);
+  border: 1px solid var(--white);
+  box-shadow: 5px 5px var(--green);
+}
+
+.alert-container a:hover {
+  padding: 10px 20px;
 }
 
 @media (max-width: 576px) {

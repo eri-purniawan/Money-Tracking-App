@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
   $stmt = $conn->query("INSERT INTO users VALUES ('', '$username', '$password')");
 
   if ($stmt->rowCount() == 1) {
-    echo "Succes";
+    $Succes = TRUE;
   }
 }
 
@@ -59,6 +59,17 @@ end:
 </head>
 
 <body>
+
+  <?php if (isset($Succes)) : ?>
+    <div class="bg-alert">
+      <div class="alert-container">
+        <i class='bx bx-check bx-lg'></i>
+        <p>Register Success</p>
+        <a href="../login/index.php">Login</a>
+      </div>
+      <div id="particles-js" class="particle"></div>
+    </div>
+  <?php endif; ?>
 
   <div class="container-outer">
     <h1>KemanaUangku?</h1>

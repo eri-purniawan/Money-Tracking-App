@@ -82,8 +82,13 @@ nav .btn-menu {
   margin-bottom: 30px;
   position: relative;
   overflow: hidden;
-  height: 330px;
   color: var(--black);
+  transition: var(--transition);
+  height: 300px;
+}
+
+.height-balance {
+  height: 400px;
 }
 
 .balance .bulanan .btn {
@@ -112,7 +117,7 @@ nav .btn-menu {
   cursor: pointer;
   display: grid;
   align-items: center;
-  transition: var(--transition);
+  transition: 0.1s ease-in-out;
 }
 
 .balance .btn-add:hover {
@@ -231,6 +236,18 @@ nav .btn-menu {
 .balance .tampil-form {
   background-color: var(--white-50);
   transform: translateX(0);
+}
+
+.error {
+  text-align: center;
+  color: var(--red);
+  font-weight: bold;
+  width: 300px;
+  padding: 5px;
+  border: 1px solid var(--red);
+  background-color: var(--white);
+  box-shadow: 3px 3px var(--red);
+  margin: 10px;
 }
 
 .balance .input-data-pengeluaran .close {
@@ -791,6 +808,10 @@ nav .btn-menu {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     height: fit-content;
     gap: 30px;
+  }
+
+  .height-balance {
+    height: fit-content !important;
   }
 
   .balance .uang {

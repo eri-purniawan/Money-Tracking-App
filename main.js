@@ -11,17 +11,21 @@ const form_input_uang = document.getElementById('input-uang');
 add_uang_btn.addEventListener('click', () => {
   form_input_uang.classList.add('show-window');
   tambah_data.classList.remove('tampil-form');
+  balance.classList.remove('height-balance');
 });
 
 const btn_add = document.getElementById('btn-add');
 const tambah_data = document.getElementById('tambah-data');
+const balance = document.getElementById('profile');
 btn_add.addEventListener('click', () => {
   tambah_data.classList.add('tampil-form');
+  balance.classList.add('height-balance');
 });
 
 const close_btn_input_2 = document.getElementById('close-btn-input_2');
 close_btn_input_2.addEventListener('click', () => {
   tambah_data.classList.remove('tampil-form');
+  balance.classList.remove('height-balance');
 });
 
 const close_btn_input = document.getElementById('close-btn-input');
@@ -30,39 +34,115 @@ close_btn_input.addEventListener('click', () => {
 });
 
 let uang_bln = document.getElementById('uang-bulanan');
-uang_bln.addEventListener(
-  'keyup',
-  (event) => {
-    number_only(event);
-    number_format(uang_bln);
-  },
-  false
-);
+let uang_btn = document.getElementById('uang_btn');
+
+uang_btn.addEventListener('click', () => {
+  if (uang_bln.value === '') {
+    uang_btn.disabled = true;
+    inputDisable(uang_bln);
+  }
+});
+
+uang_bln.addEventListener('keyup', () => {
+  uang_bln.value = number_format(uang_bln.value);
+
+  if (uang_bln.value === '') {
+    inputDisable(uang_bln);
+  } else {
+    uang_btn.disabled = false;
+    inputEnable(uang_bln);
+  }
+});
 
 let pengeluaran = document.getElementById('pengeluaran');
-pengeluaran.addEventListener(
-  'keyup',
-  (event) => {
-    number_only(event);
-    number_format(pengeluaran);
-  },
-  false
-);
+let kategori = document.getElementById('kategori');
+let ket = document.getElementById('keterangan');
+let add_btn = document.getElementById('add-btn');
+let error = document.getElementById('error');
+let sisa_value = add_uang_btn.innerText;
+let patern = /,/gi;
+let num_bul = parseInt(sisa_value.replace(patern, ''));
 
-// function to change input value to curency format
-function number_format(value) {
-  let n = parseInt(value.value.replace(/\D/g, ''), 10);
-  value.value = n.toLocaleString();
-  if (value.value === 'NaN') {
-    value.value = '';
-  }
+function getVal(val) {
+  let spend_val = val.value;
+  return (num_spend = parseInt(spend_val.replace(patern, '')));
 }
 
-// function number only input
-function number_only(event) {
-  if (event.which < 48 || event.which > 57) {
-    event.preventDefault();
+pengeluaran.addEventListener('keyup', () => {
+  getVal(pengeluaran);
+  pengeluaran.value = number_format(pengeluaran.value);
+
+  if (pengeluaran.value === '') {
+    error.innerText = '';
+    inputDisable(pengeluaran);
+  } else if (num_bul < num_spend) {
+    inputDisable(pengeluaran);
+    error.innerHTML = '<div class="error">inputan anda melebihi batas sisa uang bulanan !!</div>';
+    add_btn.disabled = true;
+  } else {
+    inputEnable(pengeluaran);
+    error.innerText = '';
+    add_btn.disabled = false;
   }
+});
+
+add_btn.addEventListener('click', () => {
+  getVal(pengeluaran);
+  if (pengeluaran.value === '' || kategori.innerText === 'Pilih Kategori' || ket.value === '') {
+    add_btn.disabled = true;
+    inputDisable(pengeluaran);
+    inputDisable(kategori);
+    inputDisable(ket);
+  }
+
+  if (num_bul < num_spend) {
+    add_btn.disabled = true;
+  }
+});
+
+kategori.addEventListener('click', () => {
+  if (kategori.innerText === 'Pilih Kategori') {
+    inputDisable(kategori);
+  } else {
+    add_btn.disabled = false;
+    inputEnable(kategori);
+  }
+});
+
+ket.addEventListener('keyup', () => {
+  if (ket.value == '') {
+    inputDisable(ket);
+  } else {
+    add_btn.disabled = false;
+    inputEnable(ket);
+  }
+});
+
+function inputDisable(element) {
+  element.style.outline = '1px solid var(--red)';
+  element.style.border = '1px solid var(--red)';
+}
+
+function inputEnable(element) {
+  element.style.outline = '2px solid var(--blue)';
+  element.style.border = '1px solid var(--blue)';
+}
+
+// function to change input value to curency format
+function number_format(angka) {
+  var number_string = angka.replace(/[^.\d]/g, '').toString(),
+    split = number_string.split('.'),
+    sisa = split[0].length % 3,
+    rupiah = split[0].substr(0, sisa),
+    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+  // tambahkan titik jika yang di input sudah menjadi angka ribuan
+  if (ribuan) {
+    separator = sisa ? ',' : '';
+    rupiah += separator + ribuan.join(',');
+  }
+
+  return (rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah);
 }
 
 penampung = document.getElementById('data-container');

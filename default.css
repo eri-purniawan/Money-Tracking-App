@@ -18,7 +18,7 @@
   --black: #00070a;
   --white-50: #eceff480;
   --shadow: 5px 5px var(--black);
-  --transition: 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+  --transition: 0.3s cubic-bezier(0.7, 0, 0.3, 1);
 }
 
 ::-webkit-scrollbar {

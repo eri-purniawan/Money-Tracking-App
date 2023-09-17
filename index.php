@@ -13,7 +13,7 @@ function reload()
 }
 
 if (isset($_POST['uang_btn'])) {
-  $uang_bulanan += intval(str_replace(',', '', $_POST['uang_bulanan']));
+  $uang_bulanan += intval(str_replace(',', '', test_input($_POST['uang_bulanan'])));
   $tgl = date('d F Y');
   $stmt = $conn->query("INSERT INTO keuangan (uang_bln, tgl) VALUES ('$uang_bulanan', '$tgl')");
   reload();
@@ -26,19 +26,19 @@ function minchar($str)
 }
 
 if (isset($_POST['tambah-data'])) {
-  $pengeluaran = intval(str_replace(',', '', $_POST['pengeluaran']));
-  $kategori = minchar($_POST['kategori']);
-  $keterangan = $_POST['keterangan'];
+  $pengeluaran = intval(str_replace(',', '', test_input($_POST['pengeluaran'])));
+  $kategori = minchar(test_input($_POST['kategori']));
+  $keterangan = test_input($_POST['keterangan']);
   $uang_bulanan = $uang_bulanan - $pengeluaran;
   $tgl = date('d F Y');
 
-  if ($uang_bulanan >= 0) {
-    $stmt = $conn->query("INSERT INTO keuangan (uang_bln, tgl, pengeluaran, kategori, ket) VALUES ('$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
-    reload();
-  } else {
-    $uang_bulanan = $uang_bulanan + $pengeluaran;
-    echo "inputan anda melebihi batas sisa uang bulanan";
-  }
+  // if ($uang_bulanan >= 0) {
+  //   $stmt = $conn->query("INSERT INTO keuangan (uang_bln, tgl, pengeluaran, kategori, ket) VALUES ('$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
+  //   // reload();
+  // } else {
+  //   $uang_bulanan = $uang_bulanan + $pengeluaran;
+  //   echo "inputan anda melebihi batas sisa uang bulanan";
+  // }
 }
 
 $pengeluaran = 0;
@@ -204,7 +204,7 @@ $spend_data = json_encode($list_spend);
     </nav>
 
     <!-- Balance -->
-    <section class="balance" id="#profile">
+    <section class="balance" id="profile">
       <div class="bulanan">
         <h2>Sisa Uang Bulanan</h2>
         <p><?= $bulan ?></p>
@@ -223,12 +223,13 @@ $spend_data = json_encode($list_spend);
       <form id="input-uang" class="form-input-uang" action="" method="post">
         <label for="uang-bulanan">Uang Bulanan</label>
         <input type="text" name="uang_bulanan" id="uang-bulanan" autofocus placeholder="Number Only!">
-        <button type="submit" name="uang_btn">Submit</button>
+        <button id="uang_btn" type="submit" name="uang_btn">Submit</button>
         <div id="close-btn-input" class="close"><i class='bx bx-x'></i></div>
       </form>
 
       <!-- form input pengeluaran -->
       <form id="tambah-data" action="" method="post" class="input-data-pengeluaran">
+        <div id="error"></div>
         <div class="form-list">
           <label for="pengeluaran">Pengeluaran</label>
           <input type="text" name="pengeluaran" id="pengeluaran">
@@ -250,7 +251,7 @@ $spend_data = json_encode($list_spend);
           <textarea name="keterangan" id="keterangan" cols="30" rows="3"></textarea>
         </div>
         <div class="form-list">
-          <button type="submit" name="tambah-data"><i class='bx bx-plus bx-md'></i></button>
+          <button type="submit" name="tambah-data" id="add-btn"><i class='bx bx-plus bx-md'></i></button>
         </div>
         <div id="close-btn-input_2" class="close"><i class='bx bx-x'></i></div>
       </form>

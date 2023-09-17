@@ -1,3 +1,38 @@
+<?php
+
+require "../connect.php";
+
+if (isset($_POST['submit'])) {
+
+  $username = test_input($_POST['username']);
+  $password = test_input($_POST['password']);
+
+  $row = $conn->prepare("SELECT user, pass FROM users WHERE user = :username");
+  $row->bindParam('username', $username, PDO::PARAM_STR);
+  $row->execute();
+
+  if ($row->rowCount() == 1) {
+
+    $result = $row->fetchAll(PDO::FETCH_ASSOC);
+    $row_pass = password_verify($password, $result[0]['pass']);
+
+    passCheck($row_pass, $password);
+  } else {
+    $error = 'Username or password is incorect!';
+  }
+}
+
+function passCheck($data, $password)
+{
+  if ($data == $password) {
+    header('Location: ../index.php');
+  }
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,6 +55,9 @@
 
       <form action="" method="post">
         <div class="form-container">
+          <?php if (isset($error)) : ?>
+            <p><?= $error ?></p>
+          <?php endif; ?>
           <div class="form-list">
             <label for="username">Username</label>
             <input type="text" name="username" id="username">

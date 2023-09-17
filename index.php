@@ -99,7 +99,7 @@ function kategori($data, $bulan)
   global $user_id;
   global $conn;
 
-  $kategori = $conn->query("SELECT DISTINCT kategori FROM keuangan WHERE pengeluaran is NOT NULL");
+  $kategori = $conn->query("SELECT DISTINCT kategori FROM keuangan WHERE pengeluaran is NOT NULL AND user_id = $user_id");
   $kategori_row = $kategori->fetchAll(PDO::FETCH_ASSOC);
 
   for ($i = 0; $i < count($kategori_row); $i++) {
@@ -136,7 +136,7 @@ function days_in_month()
   else return 30;
 }
 
-$q = $conn->query("SELECT uang_bln, pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan_lalu%' ORDER BY id DESC");
+$q = $conn->query("SELECT uang_bln, pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan_lalu%' AND user_id = $user_id ORDER BY id DESC");
 $row = $q->fetchAll(PDO::FETCH_ASSOC);
 
 $list = kategori(NULL, $bulan_lalu);

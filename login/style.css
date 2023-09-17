@@ -92,10 +92,17 @@ body {
   z-index: -1;
 }
 
-.container .form-container p {
+.container .error {
   text-align: center;
   color: var(--red);
   font-weight: bold;
+  width: 300px;
+  padding: 5px;
+  border: 1px solid var(--red);
+  background-color: var(--white);
+  box-shadow: 3px 3px var(--red);
+  margin: 20px auto;
+  margin-top: -10px;
 }
 
 .container .form-container button:hover {

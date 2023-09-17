@@ -10,18 +10,8 @@ if (isset($_POST['submit'])) {
 
   $row = $conn->query("SELECT user FROM users WHERE user = '$username'");
 
-  if (empty($username) || empty($password) || empty($cpassword)) {
-    $error = "Please fill requared data bellow!";
-    goto end;
-  }
-
   if ($row->rowCount() == 1) {
     $error = "Username already taken!";
-    goto end;
-  }
-
-  if ($password != $cpassword) {
-    $error = "Wrong confirm password!";
     goto end;
   }
 
@@ -36,7 +26,6 @@ if (isset($_POST['submit'])) {
 
 end:
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -70,9 +59,10 @@ end:
       <span>Create your account</span>
 
       <form action="" method="post">
+        <div id="error"></div>
         <div class="form-container">
           <?php if (isset($error)) : ?>
-            <p><?= $error ?></p>
+            <p class="error"><?= $error ?></p>
           <?php endif; ?>
           <div class="form-list">
             <label for="username">Username</label>
@@ -100,6 +90,68 @@ end:
 
   <script src="../Asset/particles.js"></script>
   <script src="../login/script.js"></script>
+  <script>
+    const user = document.getElementById('username');
+    const pass = document.getElementById('password');
+    const cpass = document.getElementById('cpassword');
+    const btn = document.getElementById('btn');
+    const error = document.getElementById('error');
+
+    checkVal(user);
+    checkVal(pass);
+    checkVal(cpass);
+
+    btn.addEventListener('click', () => {
+      if (user.value === '') {
+        inputDisable(user);
+        doAction();
+      }
+
+      if (pass.value === '') {
+        inputDisable(pass);
+        doAction();
+      }
+
+      if (cpass.value === '') {
+        inputDisable(cpass);
+        doAction();
+      }
+
+      if (pass.value !== cpass.value) {
+        inputDisable(cpass);
+        inputDisable(pass);
+        btn.disabled = true;
+        error.innerHTML = '<div class="error">Wrong confirm password!</div>';
+      }
+    })
+
+    function doAction() {
+      btn.disabled = true;
+      error.innerHTML = '<div class="error">Please fill the form!!</div>';
+    }
+
+    function checkVal(element) {
+      element.addEventListener('keyup', () => {
+        if (element.value === '') {
+          inputDisable(element);
+        } else {
+          btn.disabled = false;
+          inputEnable(element);
+          error.innerHTML = '';
+        }
+      })
+    }
+
+    function inputDisable(element) {
+      element.style.outline = '1px solid var(--red)';
+      element.style.border = '1px solid var(--red)';
+    }
+
+    function inputEnable(element) {
+      element.style.outline = '2px solid var(--blue)';
+      element.style.border = '1px solid var(--blue)';
+    }
+  </script>
 </body>
 
 </html>

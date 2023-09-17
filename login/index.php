@@ -56,7 +56,7 @@ function passCheck($data, $password)
       <form action="" method="post">
         <div class="form-container">
           <?php if (isset($error)) : ?>
-            <p><?= $error ?></p>
+            <p class="error"><?= $error ?></p>
           <?php endif; ?>
           <div class="form-list">
             <label for="username">Username</label>

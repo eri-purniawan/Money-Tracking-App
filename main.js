@@ -88,11 +88,20 @@ pengeluaran.addEventListener('keyup', () => {
 
 add_btn.addEventListener('click', () => {
   getVal(pengeluaran);
-  if (pengeluaran.value === '' || kategori.innerText === 'Pilih Kategori' || ket.value === '') {
-    add_btn.disabled = true;
+
+  if (pengeluaran.value === '') {
     inputDisable(pengeluaran);
+    add_btn.disabled = true;
+  }
+
+  if (kategori.value === '') {
     inputDisable(kategori);
+    add_btn.disabled = true;
+  }
+
+  if (ket.value === '') {
     inputDisable(ket);
+    add_btn.disabled = true;
   }
 
   if (num_bul < num_spend) {

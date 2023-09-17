@@ -4,7 +4,6 @@ session_start();
 
 $user_id = $_SESSION['user_id'];
 
-
 require "../connect.php";
 
 $page_row = $conn->query("SELECT DISTINCT tgl FROM keuangan WHERE pengeluaran IS NOT NULL AND user_id = $user_id ORDER BY tgl DESC");

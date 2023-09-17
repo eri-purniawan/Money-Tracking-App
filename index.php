@@ -22,12 +22,12 @@ $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
 
 function reload()
 {
-  header("Location: # ");
+  header("Location: . ");
   exit;
 }
 
 if (isset($_POST['uang_btn'])) {
-  $uang_bulanan += intval(str_replace(',', '', test_input($_POST['uang_bulanan'])));
+  $uang_bulanan += intval(str_replace('.', '', test_input($_POST['uang_bulanan'])));
   $tgl = date('d F Y');
   $stmt = $conn->query("INSERT INTO keuangan (user_id, uang_bln, tgl) VALUES ($user_id, '$uang_bulanan', '$tgl')");
   reload();
@@ -201,13 +201,16 @@ $spend_data = json_encode($list_spend);
             <li class="list-menu">About</li>
           </a>
         </ul>
+
+        <section class="profile container">
+          <div class="user">
+            <i class='bx bxs-user-circle bx-sm'></i>
+            <h3> <?= ucwords($user[0]['user']) ?></h3>
+          </div>
+          <a href="logout.php"><i class='bx bx-log-out'></i> Logout</a>
+        </section>
       </div>
     </nav>
-
-    <section class="profile">
-      <h2>Wellcome, <?= ucwords($user[0]['user']) ?></h2>
-      <a href="logout.php"><i class='bx bx-log-out'></i> Logout</a>
-    </section>
 
     <!-- Balance -->
     <section class="balance" id="balance">

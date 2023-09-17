@@ -17,7 +17,7 @@ html {
 }
 
 .container {
-  width: 900px;
+  width: 992px;
   margin: auto;
 }
 
@@ -29,22 +29,28 @@ nav {
   top: 0;
   left: 0;
   width: 100%;
+  height: fit-content;
   position: fixed;
   z-index: 2;
-  border-bottom: 4px solid var(--black);
-  background-color: var(--white);
+  background-color: var(--white-bg);
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.295);
   z-index: 5;
+  /* border-bottom: 1px solid var(--black); */
 }
 
 nav .nav-container {
-  margin: auto;
+  margin: 20px auto;
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
+  grid-template-columns: 1fr 2fr 1fr;
   gap: 50px;
-  padding: 20px;
+  padding: 5px;
   align-items: center;
-  width: 900px;
+  width: 992px;
+  justify-content: space-evenly;
+  border: 1px solid var(--black);
+  box-shadow: var(--shadow);
+  margin-top: 20px;
+  background-color: var(--white);
 }
 
 nav .menu {
@@ -55,6 +61,10 @@ nav .menu {
   align-items: center;
   text-align: center;
   font-weight: bold;
+}
+
+.nav-container .heading {
+  padding: 0 10px;
 }
 
 nav .list-menu {
@@ -72,31 +82,41 @@ nav .btn-menu {
 }
 
 .profile {
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 110px !important;
-  border: 1px solid var(--black);
+  margin-bottom: 30px !important;
+  border-top: none;
   border-bottom: none;
-  box-shadow: var(--shadow);
-  padding: 10px 30px;
-  background-color: var(--blue);
   color: var(--white);
+  gap: 10px;
+  width: fit-content;
+  margin: auto !important;
+  background-color: var(--blue);
+  border-radius: 5px;
+  padding-left: 5px;
 }
 
 .profile a {
   font-weight: bold;
   background-color: var(--red);
-  padding: 10px;
+  padding: 10px 10px;
   color: var(--white);
-  box-shadow: var(--shadow);
+  border-radius: 3px;
 }
 
-.profile a:hover {
-  box-shadow: 3px 3px var(--black);
+.profile .user {
+  display: flex;
+  gap: 10px;
+}
+
+.profile .user i {
+  margin-top: 3px;
 }
 
 .balance {
+  margin-top: 120px;
   background-color: var(--white);
   border: 1px solid var(--black);
   box-shadow: var(--shadow);
@@ -109,7 +129,6 @@ nav .btn-menu {
   color: var(--black);
   transition: var(--transition);
   height: 300px;
-  border-top: none;
 }
 
 .height-balance {
@@ -750,7 +769,7 @@ nav .btn-menu {
     width: 95% !important;
   }
 
-  .nav-container {
+  nav .nav-container {
     width: 95% !important;
   }
 
@@ -872,11 +891,12 @@ nav .btn-menu {
     width: 90% !important;
     grid-template-areas:
       'heading btn-menu'
-      'menus menus';
+      'menus menus'
+      'profile profile';
     gap: 0;
     grid-template-columns: 1fr 30px !important;
     align-items: center;
-    height: 80px;
+    height: 50px;
     overflow: hidden;
     transition: var(--transition);
   }
@@ -885,11 +905,22 @@ nav .btn-menu {
     height: 350px;
   }
 
+  .profile {
+    margin-top: -123px !important;
+    grid-area: profile;
+    background-color: var(--blue);
+    color: var(--white);
+    width: 100%;
+    padding: 10px 20px;
+  }
+
   .nav-container .menu {
-    height: 250px;
-    padding: 40px;
-    margin-top: -20px;
+    height: 280px;
+    padding: 20px;
+    margin-top: -20px !important;
     border-top: 1px solid var(--black);
+    width: 80%;
+    margin: auto;
     display: flex;
     flex-direction: column;
     grid-area: menus;

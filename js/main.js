@@ -60,7 +60,7 @@ let ket = document.getElementById('keterangan');
 let add_btn = document.getElementById('add-btn');
 let error = document.getElementById('error');
 let sisa_value = add_uang_btn.innerText;
-let patern = /,/gi;
+let patern = /[^,\d]/gi;
 let num_bul = parseInt(sisa_value.replace(patern, ''));
 
 function getVal(val) {
@@ -139,19 +139,19 @@ function inputEnable(element) {
 
 // function to change input value to curency format
 function number_format(angka) {
-  let number_string = angka.replace(/[^.\d]/g, '').toString(),
-    split = number_string.split('.'),
+  let number_string = angka.replace(/[^,\d]/g, '').toString(),
+    split = number_string.split(','),
     sisa = split[0].length % 3,
     rupiah = split[0].substr(0, sisa),
     ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
   // tambahkan titik jika yang di input sudah menjadi angka ribuan
   if (ribuan) {
-    separator = sisa ? ',' : '';
-    rupiah += separator + ribuan.join(',');
+    separator = sisa ? '.' : '';
+    rupiah += separator + ribuan.join('.');
   }
 
-  return (rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah);
+  return (rupiah = split[1] != undefined ? rupiah + '.' + split[1] : rupiah);
 }
 
 penampung = document.getElementById('data-container');

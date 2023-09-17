@@ -42,7 +42,7 @@ $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_
       ?>
       <?php foreach ($row_values as $value) : ?>
         <div class="table-value">
-          <p class="pengeluaran"><?= 'Rp.' . number_format($value['pengeluaran']) ?></p>
+          <p class="pengeluaran"><?= 'Rp. ' . number_format($value['pengeluaran'], 0, '', '.') ?></p>
           <p class="kategori"><?= ucwords($value['kategori']) ?></p>
           <p class="keterangan"><?= $value['ket'] ?></p>
         </div>
@@ -55,7 +55,7 @@ $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_
       foreach ($row_values as $value) {
         $total_pengeluaran += $value['pengeluaran'];
       }
-      echo 'Total Pengeluaran: Rp.' . number_format($total_pengeluaran)
+      echo 'Total Pengeluaran: Rp. ' . number_format($total_pengeluaran, 0, '', '.')
       ?>
     </p>
   <?php endforeach; ?>

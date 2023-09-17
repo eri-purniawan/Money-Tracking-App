@@ -120,8 +120,7 @@ end:
       if (pass.value !== cpass.value) {
         inputDisable(cpass);
         inputDisable(pass);
-        btn.disabled = true;
-        error.innerHTML = '<div class="error">Wrong confirm password!</div>';
+        doAction();
       }
     })
 

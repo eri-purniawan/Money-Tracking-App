@@ -9,9 +9,9 @@ if (!isset($_SESSION['login'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// var_dump($user_id);
-
 require "connect.php";
+
+date_default_timezone_set('Asia/Singapore');
 
 $query = $conn->query("SELECT user FROM users WHERE id = $user_id");
 $user = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -19,8 +19,6 @@ $user = $query->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $conn->query("SELECT * FROM keuangan WHERE user_id = $user_id");
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
-
-// var_dump($row);
 
 function reload()
 {
@@ -42,7 +40,7 @@ function minchar($str)
 }
 
 if (isset($_POST['tambah-data'])) {
-  $pengeluaran = intval(str_replace(',', '', test_input($_POST['pengeluaran'])));
+  $pengeluaran = intval(str_replace('.', '', test_input($_POST['pengeluaran'])));
   $kategori = minchar(test_input($_POST['kategori']));
   $keterangan = test_input($_POST['keterangan']);
   $uang_bulanan = $uang_bulanan - $pengeluaran;
@@ -70,7 +68,7 @@ if (count($bulan_arr) > 2) {
 
 $bulan = ($row ? $bulan = $bulan_tahun : date('F Y'));
 
-$bulan_lalu = date('F Y', time() - 60 * 60 * 24 * days_in_month());
+$bulan_lalu = date('d F Y', time() - 60 * 60 * 24 * date("t", date("n") - 1));
 $q_spend = $conn->query("SELECT pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan%' AND user_id = $user_id ORDER BY id DESC");
 $last_month_spend = $q_spend->fetchAll(PDO::FETCH_ASSOC);
 
@@ -125,17 +123,6 @@ function kategori($data, $bulan)
   );
 }
 
-function days_in_month()
-{
-  $month = date('m');
-  $year = date('Y');
-  if ($month == "02") {
-    if ($year % 4 == 0) return 29;
-    else return 28;
-  } else if ($month == "01" || $month == "03" || $month == "05" || $month == "07" || $month == "08" || $month == "10" || $month == "12") return 31;
-  else return 30;
-}
-
 $q = $conn->query("SELECT uang_bln, pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan_lalu%' AND user_id = $user_id ORDER BY id DESC");
 $row = $q->fetchAll(PDO::FETCH_ASSOC);
 
@@ -188,7 +175,9 @@ $spend_data = json_encode($list_spend);
   <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/3c30c2ec7b.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+-->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 
 <body>
@@ -225,12 +214,12 @@ $spend_data = json_encode($list_spend);
       <div class="bulanan">
         <h2>Sisa Uang Bulanan</h2>
         <p><?= $bulan ?></p>
-        <p id="add-uang-btn" class="uang btn"><?= number_format($uang_bulanan) ?></p>
+        <p id="add-uang-btn" class="uang btn"><?= number_format($uang_bulanan, 0, '', '.') ?></p>
       </div>
       <div class="pengeluaran">
         <h2>Total Pengeluaran</h2>
         <p><?= $bulan ?></p>
-        <p class="uang"><?= number_format($pengeluaran) ?></p>
+        <p class="uang"><?= number_format($pengeluaran, 0, '', '.') ?></p>
       </div>
       <div id="btn-add" class="btn-add">
         <i class='bx bx-plus'></i>
@@ -372,7 +361,7 @@ $spend_data = json_encode($list_spend);
             <div class="table value after">
               <p><?= $max_result[0]['tgl'] ?></p>
               <p><?= $max_result[0]['kategori'] ?></p>
-              <p class="red rp">Rp. <?= number_format($max_result[0]['pengeluaran']) ?></p>
+              <p class="red rp">Rp. <?= number_format($max_result[0]['pengeluaran'], 0, '', '.') ?></p>
               <p><?= $max_result[0]['ket'] ?></p>
             </div>
 
@@ -391,7 +380,7 @@ $spend_data = json_encode($list_spend);
               <div class="table-value">
                 <p><?= ucwords($v['kategori']) ?></p>
                 <p><?= $v['total'] ?> Kali</p>
-                <p class="rp red bold"><?= number_format($v['pengeluaran']) ?></p>
+                <p class="rp red bold"><?= number_format($v['pengeluaran'], 0, '', '.') ?></p>
               </div>
 
             <?php endforeach; ?>
@@ -399,7 +388,7 @@ $spend_data = json_encode($list_spend);
         </div>
         <canvas class="chart" id="myChart"></canvas>
       <?php else : ?>
-        <h1 class="heading">Summary on ... </h1>
+        <h1 id="heading-sum" class="heading">Summary on ... </h1>
         <div class="no-data">
           <p>Data ringkasan pengeluaran bulan <?= $bulan ?> akan tersedia pada bulan berikutnya</p>
         </div>
@@ -420,63 +409,65 @@ $spend_data = json_encode($list_spend);
 
   <script src="js/main.js"></script>
   <script>
-    const kategori_label = <?= $kategori_label ?>;
-    const spend_data = <?= $spend_data ?>;
     const summary = document.getElementById('heading-sum');
-    const ctx = document.getElementById('myChart');
 
-    Chart.defaults.font.family = "'Victor Mono', monospace";
-    Chart.defaults.font.weight = 'bold';
-    Chart.defaults.font.color = '#2E3440';
+    if (summary.innerText !== 'Summary on ...') {
+      const kategori_label = <?= $kategori_label ?>;
+      const spend_data = <?= $spend_data ?>;
+      const ctx = document.getElementById('myChart');
 
-    function myFunction(x) {
-      if (x.matches) { // If media query matches
-        Chart.defaults.font.size = 12;
-      } else {
-        Chart.defaults.font.size = 16;
+      Chart.defaults.font.family = "'Victor Mono', monospace";
+      Chart.defaults.font.weight = 'bold';
+      Chart.defaults.font.color = '#2E3440';
+
+      function myFunction(x) {
+        if (x.matches) { // If media query matches
+          Chart.defaults.font.size = 12;
+        } else {
+          Chart.defaults.font.size = 16;
+        }
       }
-    }
 
-    new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: kategori_label,
-        datasets: [{
-          label: 'Total Pengeluaran',
-          data: spend_data,
-          borderWidth: 2,
-          backgroundColor: [
-            '#EDAE49',
-            '#D1495B',
-            '#00798c',
-            '#30638e',
-            '#003d5b',
-            '#5c425b',
-          ],
-          borderColor: '#fff',
-          color: '#00070a'
-        }]
-      },
-      options: {
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              color: '#00070a',
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: kategori_label,
+          datasets: [{
+            label: 'Total Pengeluaran',
+            data: spend_data,
+            borderWidth: 2,
+            backgroundColor: [
+              '#EDAE49',
+              '#D1495B',
+              '#00798c',
+              '#30638e',
+              '#003d5b',
+              '#5c425b',
+            ],
+            borderColor: '#fff',
+            color: '#00070a'
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#00070a',
+              }
+            },
+            title: {
+              display: true,
+              text: 'Chart ' + summary.innerText,
+              color: '#00070a'
             }
           },
-          title: {
-            display: true,
-            text: 'Chart ' + summary.innerText,
-            color: '#00070a'
-          }
-        },
-      }
-    });
-
-    var x = window.matchMedia("(max-width: 576px)")
-    myFunction(x)
-    x.addListener(myFunction)
+        }
+      });
+      let x = window.matchMedia("(max-width: 576px)")
+      myFunction(x)
+      x.addListener(myFunction)
+    }
   </script>
 </body>
 

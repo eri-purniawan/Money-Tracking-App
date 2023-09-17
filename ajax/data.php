@@ -1,7 +1,13 @@
 <?php
+
+session_start();
+
+$user_id = $_SESSION['user_id'];
+
+
 require "../connect.php";
 
-$page_row = $conn->query("SELECT DISTINCT tgl FROM keuangan WHERE pengeluaran IS NOT NULL ORDER BY tgl DESC");
+$page_row = $conn->query("SELECT DISTINCT tgl FROM keuangan WHERE pengeluaran IS NOT NULL AND user_id = $user_id ORDER BY tgl DESC");
 $pages = $page_row->fetchAll(PDO::FETCH_ASSOC);
 
 $jum_data = 1;
@@ -10,7 +16,7 @@ $jum_hal = (count($pages) > 10 ? 10 : $jum_hal = ceil($tot_data / $jum_data));
 $hal_aktif = (isset($_POST['page']) ? $_POST['page'] : 1);
 $awal_data = ($jum_data * $hal_aktif) - $jum_data;
 
-$date_row = $conn->query("SELECT DISTINCT tgl FROM keuangan WHERE pengeluaran IS NOT NULL ORDER BY id DESC LIMIT $awal_data, $jum_data");
+$date_row = $conn->query("SELECT DISTINCT tgl FROM keuangan WHERE pengeluaran IS NOT NULL AND user_id = $user_id ORDER BY id DESC LIMIT $awal_data, $jum_data");
 $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
 
 $jum_link = 1;
@@ -31,7 +37,7 @@ $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_
         <p class="keterangan">Keterangan</p>
       </div>
 
-      <?php $values = $conn->query("SELECT * FROM keuangan WHERE tgl = '$date' AND pengeluaran IS NOT NULL");
+      <?php $values = $conn->query("SELECT * FROM keuangan WHERE tgl = '$date' AND pengeluaran IS NOT NULL AND user_id = $user_id");
       $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
       ?>
       <?php foreach ($row_values as $value) : ?>

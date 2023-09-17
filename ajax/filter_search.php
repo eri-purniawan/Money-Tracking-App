@@ -1,5 +1,10 @@
 <?php
 
+session_start();
+
+$user_id = $_SESSION['user_id'];
+
+
 require "../connect.php";
 
 $keyword = $_GET['keyword'];
@@ -13,7 +18,7 @@ function check($data)
 $keyword = check($keyword);
 $keyword_bln = check($keyword_bln);
 
-$date_row = $conn->query("SELECT DISTINCT tgl FROM keuangan WHERE pengeluaran IS NOT NULL AND kategori LIKE '%$keyword%' AND tgl LIKE '%$keyword_bln%' ORDER BY tgl DESC");
+$date_row = $conn->query("SELECT DISTINCT tgl FROM keuangan WHERE pengeluaran IS NOT NULL AND user_id = $user_id AND kategori LIKE '%$keyword%' AND tgl LIKE '%$keyword_bln%' ORDER BY tgl DESC");
 $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -34,7 +39,7 @@ $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
       <span class="keterangan">Keterangan</span>
     </div>
 
-    <?php $values = $conn->query("SELECT * FROM keuangan WHERE tgl = '$date' AND pengeluaran IS NOT NULL AND kategori LIKE '%$keyword%'");
+    <?php $values = $conn->query("SELECT * FROM keuangan WHERE tgl = '$date' AND pengeluaran IS NOT NULL AND user_id = $user_id AND kategori LIKE '%$keyword%'");
     $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <?php foreach ($row_values as $value) : ?>

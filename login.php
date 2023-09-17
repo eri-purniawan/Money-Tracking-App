@@ -1,13 +1,20 @@
 <?php
 
-require "../connect.php";
+session_start();
+
+require "connect.php";
+
+if (isset($_SESSION['login'])) {
+  header('Location: index.php');
+  exit;
+}
 
 if (isset($_POST['submit'])) {
 
   $username = test_input($_POST['username']);
   $password = test_input($_POST['password']);
 
-  $row = $conn->prepare("SELECT user, pass FROM users WHERE user = :username");
+  $row = $conn->prepare("SELECT * FROM users WHERE user = :username");
   $row->bindParam('username', $username, PDO::PARAM_STR);
   $row->execute();
 
@@ -16,16 +23,23 @@ if (isset($_POST['submit'])) {
     $result = $row->fetchAll(PDO::FETCH_ASSOC);
     $row_pass = password_verify($password, $result[0]['pass']);
 
-    passCheck($row_pass, $password);
+    passCheck($row_pass);
+    $error =  passCheck($row_pass);
   } else {
     $error = 'Username or password is incorect!';
   }
 }
 
-function passCheck($data, $password)
+function passCheck($data)
 {
-  if ($data == $password) {
-    header('Location: ../index.php');
+  $error = 'Username or password is incorect!';
+  global $result;
+  if ($data === TRUE) {
+    $_SESSION['login'] = TRUE;
+    $_SESSION['user_id'] = $result[0]['id'];
+    header('Location: index.php');
+  } else {
+    return $error;
   }
 }
 
@@ -41,7 +55,7 @@ function passCheck($data, $password)
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/form.css">
   <title>Login</title>
 </head>
 
@@ -72,13 +86,13 @@ function passCheck($data, $password)
       </form>
 
     </div>
-    <p>Don't have account yet? <a href="../register/index.php">Sign up</a></p>
+    <p>Don't have account yet? <a href="register.php">Sign up</a></p>
   </div>
 
   <div id="particles-js" class="particle"></div>
 
-  <script src="../Asset/particles.js"></script>
-  <script src="script.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/form.js"></script>
 </body>
 
 </html>

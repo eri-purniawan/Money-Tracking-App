@@ -1,6 +1,6 @@
 <?php
 
-require "../connect.php";
+require "connect.php";
 
 if (isset($_POST['submit'])) {
 
@@ -35,7 +35,7 @@ end:
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../login/style.css">
+  <link rel="stylesheet" href="css/form.css">
   <title>Register</title>
 </head>
 
@@ -46,7 +46,7 @@ end:
       <div class="alert-container">
         <i class='bx bx-check bx-lg'></i>
         <p>Register Success</p>
-        <a href="../login/index.php">Login</a>
+        <a href="login.php">Login</a>
       </div>
       <div id="particles-js" class="particle"></div>
     </div>
@@ -83,13 +83,13 @@ end:
       </form>
 
     </div>
-    <p>Already Have account? <a href="../login/index.php">Sign in</a></p>
+    <p>Already Have account? <a href="login.php">Sign in</a></p>
   </div>
 
   <div id="particles-js" class="particle"></div>
 
-  <script src="../Asset/particles.js"></script>
-  <script src="../login/script.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/form.js"></script>
   <script>
     const user = document.getElementById('username');
     const pass = document.getElementById('password');

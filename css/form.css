@@ -1,4 +1,4 @@
-@import url('../default.css');
+@import url('default.css');
 
 body {
   background-color: var(--white-bg);

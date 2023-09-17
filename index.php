@@ -1,10 +1,23 @@
 <?php
 
+session_start();
+
+if (!isset($_SESSION['login'])) {
+  header('Location: login.php');
+  exit;
+}
+
+$user_id = $_SESSION['user_id'];
+
+// var_dump($user_id);
+
 require "connect.php";
 
-$stmt = $conn->query("SELECT * FROM keuangan");
+$stmt = $conn->query("SELECT * FROM keuangan WHERE user_id = $user_id");
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
+
+// var_dump($row);
 
 function reload()
 {
@@ -15,7 +28,7 @@ function reload()
 if (isset($_POST['uang_btn'])) {
   $uang_bulanan += intval(str_replace(',', '', test_input($_POST['uang_bulanan'])));
   $tgl = date('d F Y');
-  $stmt = $conn->query("INSERT INTO keuangan (uang_bln, tgl) VALUES ('$uang_bulanan', '$tgl')");
+  $stmt = $conn->query("INSERT INTO keuangan (user_id, uang_bln, tgl) VALUES ($user_id, '$uang_bulanan', '$tgl')");
   reload();
 }
 
@@ -32,13 +45,8 @@ if (isset($_POST['tambah-data'])) {
   $uang_bulanan = $uang_bulanan - $pengeluaran;
   $tgl = date('d F Y');
 
-  // if ($uang_bulanan >= 0) {
-  //   $stmt = $conn->query("INSERT INTO keuangan (uang_bln, tgl, pengeluaran, kategori, ket) VALUES ('$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
-  //   // reload();
-  // } else {
-  //   $uang_bulanan = $uang_bulanan + $pengeluaran;
-  //   echo "inputan anda melebihi batas sisa uang bulanan";
-  // }
+  $stmt = $conn->query("INSERT INTO keuangan (user_id, uang_bln, tgl, pengeluaran, kategori, ket) VALUES ($user_id, '$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
+  reload();
 }
 
 $pengeluaran = 0;
@@ -60,7 +68,7 @@ if (count($bulan_arr) > 2) {
 $bulan = ($row ? $bulan = $bulan_tahun : date('F Y'));
 
 $bulan_lalu = date('F Y', time() - 60 * 60 * 24 * days_in_month());
-$q_spend = $conn->query("SELECT pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan%' ORDER BY id DESC");
+$q_spend = $conn->query("SELECT pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan%' AND user_id = $user_id ORDER BY id DESC");
 $last_month_spend = $q_spend->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($last_month_spend as $v) {
@@ -85,6 +93,7 @@ $months = array(
 
 function kategori($data, $bulan)
 {
+  global $user_id;
   global $conn;
 
   $kategori = $conn->query("SELECT DISTINCT kategori FROM keuangan WHERE pengeluaran is NOT NULL");
@@ -92,7 +101,7 @@ function kategori($data, $bulan)
 
   for ($i = 0; $i < count($kategori_row); $i++) {
     $kat_name = $kategori_row[$i]['kategori'];
-    $query = $conn->query("SELECT kategori, pengeluaran FROM keuangan WHERE kategori = '$kat_name' AND tgl LIKE '%$bulan%'");
+    $query = $conn->query("SELECT kategori, pengeluaran FROM keuangan WHERE kategori = '$kat_name' AND tgl LIKE '%$bulan%' AND user_id = $user_id");
     $query_row = $query->fetchAll(PDO::FETCH_ASSOC);
 
     if ($kat_name == $data) {
@@ -171,7 +180,7 @@ $spend_data = json_encode($list_spend);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Money Tracking</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/main.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/3c30c2ec7b.js" crossorigin="anonymous"></script>
@@ -183,7 +192,7 @@ $spend_data = json_encode($list_spend);
   <div class="container">
 
     <!-- Navigaiton -->
-    <nav>
+    <!-- <nav>
       <div id="nav" class="nav-container">
         <h1 class="heading"><a href="#">KemanaUangku?</a></h1>
         <div id="btn-menu" class="btn-menu">
@@ -201,8 +210,9 @@ $spend_data = json_encode($list_spend);
           </a>
         </ul>
       </div>
-    </nav>
+    </nav> -->
 
+    <a href="logout.php">Logout</a>
     <!-- Balance -->
     <section class="balance" id="profile">
       <div class="bulanan">
@@ -401,7 +411,7 @@ $spend_data = json_encode($list_spend);
   </div>
 
 
-  <script src="main.js"></script>
+  <script src="js/main.js"></script>
   <script>
     const kategori_label = <?= $kategori_label ?>;
     const spend_data = <?= $spend_data ?>;

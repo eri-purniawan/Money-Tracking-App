@@ -161,6 +161,10 @@ body {
     margin: auto;
   }
 
+  .container .error {
+    width: 80%;
+  }
+
   .container {
     height: 70% !important;
     width: 100%;

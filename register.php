@@ -60,10 +60,10 @@ end:
 
       <form action="" method="post">
         <div id="error"></div>
+        <?php if (isset($error)) : ?>
+          <p class="error"><?= $error ?></p>
+        <?php endif; ?>
         <div class="form-container">
-          <?php if (isset($error)) : ?>
-            <p class="error"><?= $error ?></p>
-          <?php endif; ?>
           <div class="form-list">
             <label for="username">Username</label>
             <input type="text" name="username" id="username">

@@ -96,7 +96,7 @@ body {
   text-align: center;
   color: var(--red);
   font-weight: bold;
-  width: 300px;
+  width: 220px !important;
   padding: 5px;
   border: 1px solid var(--red);
   background-color: var(--white);

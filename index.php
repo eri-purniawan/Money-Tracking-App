@@ -13,6 +13,9 @@ $user_id = $_SESSION['user_id'];
 
 require "connect.php";
 
+$query = $conn->query("SELECT user FROM users WHERE id = $user_id");
+$user = $query->fetchAll(PDO::FETCH_ASSOC);
+
 $stmt = $conn->query("SELECT * FROM keuangan WHERE user_id = $user_id");
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
@@ -192,7 +195,7 @@ $spend_data = json_encode($list_spend);
   <div class="container">
 
     <!-- Navigaiton -->
-    <!-- <nav>
+    <nav>
       <div id="nav" class="nav-container">
         <h1 class="heading"><a href="#">KemanaUangku?</a></h1>
         <div id="btn-menu" class="btn-menu">
@@ -210,11 +213,15 @@ $spend_data = json_encode($list_spend);
           </a>
         </ul>
       </div>
-    </nav> -->
+    </nav>
 
-    <a href="logout.php">Logout</a>
+    <section class="profile">
+      <h2>Wellcome, <?= ucwords($user[0]['user']) ?></h2>
+      <a href="logout.php"><i class='bx bx-log-out'></i> Logout</a>
+    </section>
+
     <!-- Balance -->
-    <section class="balance" id="profile">
+    <section class="balance" id="balance">
       <div class="bulanan">
         <h2>Sisa Uang Bulanan</h2>
         <p><?= $bulan ?></p>

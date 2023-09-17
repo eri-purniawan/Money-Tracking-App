@@ -16,7 +16,7 @@ add_uang_btn.addEventListener('click', () => {
 
 const btn_add = document.getElementById('btn-add');
 const tambah_data = document.getElementById('tambah-data');
-const balance = document.getElementById('profile');
+const balance = document.getElementById('balance');
 btn_add.addEventListener('click', () => {
   tambah_data.classList.add('tampil-form');
   balance.classList.add('height-balance');

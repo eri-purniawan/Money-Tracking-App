@@ -71,8 +71,32 @@ nav .btn-menu {
   display: none;
 }
 
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 110px !important;
+  border: 1px solid var(--black);
+  border-bottom: none;
+  box-shadow: var(--shadow);
+  padding: 10px 30px;
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.profile a {
+  font-weight: bold;
+  background-color: var(--red);
+  padding: 10px;
+  color: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.profile a:hover {
+  box-shadow: 3px 3px var(--black);
+}
+
 .balance {
-  margin-top: 110px;
   background-color: var(--white);
   border: 1px solid var(--black);
   box-shadow: var(--shadow);
@@ -85,6 +109,7 @@ nav .btn-menu {
   color: var(--black);
   transition: var(--transition);
   height: 300px;
+  border-top: none;
 }
 
 .height-balance {
@@ -107,12 +132,12 @@ nav .btn-menu {
 }
 
 .balance .btn-add {
-  background-color: var(--blue);
-  color: var(--white);
+  background-color: var(--white);
+  color: var(--blue);
   text-align: center;
-  height: 100%;
-  width: 100%;
   margin: auto;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--blue);
   font-size: 10rem;
   cursor: pointer;
   display: grid;
@@ -121,7 +146,9 @@ nav .btn-menu {
 }
 
 .balance .btn-add:hover {
-  background-color: var(--red);
+  box-shadow: 3px 3px var(--black);
+  background-color: var(--blue);
+  color: var(--white);
 }
 
 .balance .bulanan,
@@ -727,6 +754,10 @@ nav .btn-menu {
     width: 95% !important;
   }
 
+  .profile {
+    padding: 10px 10px;
+  }
+
   .balance {
     grid-template-areas:
       'bulanan'
@@ -764,11 +795,11 @@ nav .btn-menu {
   }
 
   .select-menu .options {
-    left: 7%;
+    left: 2%;
   }
 
   .select-menu .options-bln {
-    left: 180px !important;
+    left: 50% !important;
   }
 
   .list .table-header,
@@ -880,6 +911,7 @@ nav .btn-menu {
 
   .balance .btn-add {
     font-size: 5vmin;
+    margin-bottom: 20px;
   }
 
   .balance .input-data-pengeluaran {

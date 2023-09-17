@@ -54,11 +54,12 @@ uang_bln.addEventListener('keyup', () => {
   }
 });
 
-let pengeluaran = document.getElementById('pengeluaran');
-let kategori = document.getElementById('kategori');
-let ket = document.getElementById('keterangan');
-let add_btn = document.getElementById('add-btn');
-let error = document.getElementById('error');
+const pengeluaran = document.getElementById('pengeluaran');
+const kategori = document.getElementById('kategori');
+const ket = document.getElementById('keterangan');
+const add_btn = document.getElementById('add-btn');
+const error = document.getElementById('error');
+const spend = document.getElementById('spend');
 let sisa_value = add_uang_btn.innerText;
 let patern = /[^,\d]/gi;
 let num_bul = parseInt(sisa_value.replace(patern, ''));
@@ -154,7 +155,7 @@ function number_format(angka) {
   return (rupiah = split[1] != undefined ? rupiah + '.' + split[1] : rupiah);
 }
 
-penampung = document.getElementById('data-container');
+let penampung = document.getElementById('data-container');
 function ajaxHandler(data1, data2) {
   let xhr = new XMLHttpRequest();
 
@@ -168,9 +169,10 @@ function ajaxHandler(data1, data2) {
   xhr.send();
 }
 
-//filter with ajax
-filter('.text-field', '.options', '.option', 'icon', 'reset', '.option-text', 'Kategori');
-filter('.text-field-bln', '.options-bln', '.option-bln', 'icon-bln', 'reset', '.option-text-bln', 'Bulan');
+if (parseInt(spend.innerText.replace(patern, '')) > 0) {
+  filter('.text-field', '.options', '.option', 'icon', 'reset', '.option-text', 'Kategori');
+  filter('.text-field-bln', '.options-bln', '.option-bln', 'icon-bln', 'reset', '.option-text-bln', 'Bulan');
+}
 
 function removeClass(element1, element2, className1, className2) {
   element1.classList.remove(className1);

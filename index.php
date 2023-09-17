@@ -219,7 +219,7 @@ $spend_data = json_encode($list_spend);
       <div class="pengeluaran">
         <h2>Total Pengeluaran</h2>
         <p><?= $bulan ?></p>
-        <p class="uang"><?= number_format($pengeluaran, 0, '', '.') ?></p>
+        <p id="spend" class="uang"><?= number_format($pengeluaran, 0, '', '.') ?></p>
       </div>
       <div id="btn-add" class="btn-add">
         <i class='bx bx-plus'></i>

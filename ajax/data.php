@@ -25,60 +25,80 @@ $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_
 
 ?>
 
-<!-- tampil data pengeluaran -->
-<div class="data">
-  <?php foreach ($dates as $date) : ?>
-    <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
-    <section class="list">
+<?php if ($date_row->rowCount() > 0) : ?>
+  <!-- tampil data pengeluaran -->
+  <div class="data">
+    <?php foreach ($dates as $date) : ?>
+      <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
+      <section class="list">
 
-      <div class="table-header">
-        <p class="pengeluaran">Pengeluaran</p>
-        <p class="kategori">Kategori</p>
-        <p class="keterangan">Keterangan</p>
-      </div>
-
-      <?php $values = $conn->query("SELECT * FROM keuangan WHERE tgl = '$date' AND pengeluaran IS NOT NULL AND user_id = $user_id");
-      $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
-      ?>
-      <?php foreach ($row_values as $value) : ?>
-        <div class="table-value">
-          <p class="pengeluaran"><?= 'Rp. ' . number_format($value['pengeluaran'], 0, '', '.') ?></p>
-          <p class="kategori"><?= ucwords($value['kategori']) ?></p>
-          <p class="keterangan"><?= $value['ket'] ?></p>
+        <div class="table-header">
+          <p class="pengeluaran">Pengeluaran</p>
+          <p class="kategori">Kategori</p>
+          <p class="keterangan">Keterangan</p>
         </div>
-      <?php endforeach; ?>
-    </section>
 
-    <p class="tgl total-pengeluaran">
-      <?php
-      $total_pengeluaran = 0;
-      foreach ($row_values as $value) {
-        $total_pengeluaran += $value['pengeluaran'];
-      }
-      echo 'Total Pengeluaran: Rp. ' . number_format($total_pengeluaran, 0, '', '.')
-      ?>
-    </p>
-  <?php endforeach; ?>
-</div>
+        <?php $values = $conn->query("SELECT * FROM keuangan WHERE tgl = '$date' AND pengeluaran IS NOT NULL AND user_id = $user_id");
+        $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+        <?php foreach ($row_values as $value) : ?>
+          <div class="table-value">
+            <p class="pengeluaran"><?= 'Rp. ' . number_format($value['pengeluaran'], 0, '', '.') ?></p>
+            <p class="kategori"><?= ucwords($value['kategori']) ?></p>
+            <p class="keterangan"><?= $value['ket'] ?></p>
+          </div>
+        <?php endforeach; ?>
+      </section>
 
-<section class="halaman">
-  <?php if ($hal_aktif > 1) : ?>
+      <p class="tgl total-pengeluaran">
+        <?php
+        $total_pengeluaran = 0;
+        foreach ($row_values as $value) {
+          $total_pengeluaran += $value['pengeluaran'];
+        }
+        echo 'Total Pengeluaran: Rp. ' . number_format($total_pengeluaran, 0, '', '.')
+        ?>
+      </p>
+    <?php endforeach; ?>
+  </div>
 
-    <li class="arrow list-halaman" id="<?= $hal_aktif - 1 ?>"><i class='bx bx-chevron-left bx-md'></i></li>
+  <section class="halaman">
+    <?php if ($hal_aktif > 1) : ?>
 
-  <?php endif; ?>
+      <li class="arrow list-halaman" id="<?= $hal_aktif - 1 ?>"><i class='bx bx-chevron-left bx-md'></i></li>
 
-  <?php for ($i = $startNumber; $i <= $endNumber; $i++) : ?>
-    <?php if ($i == $hal_aktif) : ?>
-      <li class="halaman-aktif list-halaman" id="<?= $i ?>"><?= $i ?></li>
-    <?php else : ?>
-      <li class="list-halaman" id="<?= $i ?>"><?= $i  ?></li>
     <?php endif; ?>
-  <?php endfor; ?>
 
-  <?php if ($hal_aktif < $jum_hal) : ?>
+    <?php for ($i = $startNumber; $i <= $endNumber; $i++) : ?>
+      <?php if ($i == $hal_aktif) : ?>
+        <li class="halaman-aktif list-halaman" id="<?= $i ?>"><?= $i ?></li>
+      <?php else : ?>
+        <li class="list-halaman" id="<?= $i ?>"><?= $i  ?></li>
+      <?php endif; ?>
+    <?php endfor; ?>
 
-    <li class="arrow list-halaman" id="<?= $hal_aktif + 1 ?>"><i class='bx bx-chevron-right bx-md'></i></li>
+    <?php if ($hal_aktif < $jum_hal) : ?>
 
-  <?php endif; ?>
-</section>
+      <li class="arrow list-halaman" id="<?= $hal_aktif + 1 ?>"><i class='bx bx-chevron-right bx-md'></i></li>
+
+    <?php endif; ?>
+  </section>
+
+<?php else : ?>
+  <p class="tgl"><i class='bx bx-calendar'></i> Tgl... </p>
+  <section class="list">
+
+    <div class="table-header">
+      <p class="pengeluaran">Pengeluaran</p>
+      <p class="kategori">Kategori</p>
+      <p class="keterangan">Keterangan</p>
+    </div>
+
+    <div class="table-value">
+      <p class="pengeluaran"><?= 'No data yet'  ?></p>
+      <p class="kategori"><?= 'No data yet' ?></p>
+      <p style="text-align: center;" class="keterangan"><?= 'No data yet' ?></p>
+    </div>
+
+  </section>
+<?php endif; ?>

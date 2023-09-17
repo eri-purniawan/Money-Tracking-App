@@ -314,24 +314,7 @@ $spend_data = json_encode($list_spend);
     <?php endif; ?>
 
 
-    <div id="data-container" class="no-data-list">
-      <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . 'Tgl...' ?></p>
-      <section class="list">
-
-        <div class="table-header">
-          <p class="pengeluaran">Pengeluaran</p>
-          <p class="kategori">Kategori</p>
-          <p class="keterangan">Keterangan</p>
-        </div>
-
-        <div class="table-value">
-          <p class="pengeluaran"><?= 'No data yet'  ?></p>
-          <p class="kategori"><?= 'No data yet' ?></p>
-          <p style="text-align: center;" class="keterangan"><?= 'No data yet' ?></p>
-        </div>
-
-      </section>
-    </div>
+    <div id="data-container" class="no-data-list"></div>
 
     <section id="sum" class="summary">
 

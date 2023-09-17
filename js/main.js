@@ -169,11 +169,6 @@ function ajaxHandler(data1, data2) {
   xhr.send();
 }
 
-if (parseInt(spend.innerText.replace(patern, '')) > 0) {
-  filter('.text-field', '.options', '.option', 'icon', 'reset', '.option-text', 'Kategori');
-  filter('.text-field-bln', '.options-bln', '.option-bln', 'icon-bln', 'reset', '.option-text-bln', 'Bulan');
-}
-
 function removeClass(element1, element2, className1, className2) {
   element1.classList.remove(className1);
   element2.classList.remove(className2);
@@ -207,12 +202,18 @@ function filter(text_field_, options_, option_, icon_, reset_, option_text_, rel
 }
 
 const cari = document.getElementById('cari');
-cari.addEventListener('click', () => {
-  let val1 = document.querySelector('.text-field').innerText;
-  let val2 = document.querySelector('.text-field-bln').innerText;
 
-  ajaxHandler(val1, val2);
-});
+if (parseInt(spend.innerText.replace(patern, '')) > 0) {
+  filter('.text-field', '.options', '.option', 'icon', 'reset', '.option-text', 'Kategori');
+  filter('.text-field-bln', '.options-bln', '.option-bln', 'icon-bln', 'reset', '.option-text-bln', 'Bulan');
+
+  cari.addEventListener('click', () => {
+    let val1 = document.querySelector('.text-field').innerText;
+    let val2 = document.querySelector('.text-field-bln').innerText;
+
+    ajaxHandler(val1, val2);
+  });
+}
 
 //pagination with ajax jQueary
 loadDatas('#data-container', 'data.php');

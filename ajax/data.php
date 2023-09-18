@@ -83,8 +83,8 @@ $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_
   </section>
 
 <?php else : ?>
-  <p class="tgl"><i class='bx bx-calendar'></i> Tgl... </p>
   <section class="list">
+    <p class="tgl"><i class='bx bx-calendar'></i> Tgl... </p>
 
     <div class="table-header">
       <p class="pengeluaran">Pengeluaran</p>

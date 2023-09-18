@@ -120,7 +120,8 @@ end:
       if (pass.value !== cpass.value) {
         inputDisable(cpass);
         inputDisable(pass);
-        doAction();
+        btn.disabled = true;
+        error.innerHTML = '<div class="error">Wrong confirm password</div>';
       }
     })
 
@@ -143,11 +144,11 @@ end:
 
     function inputDisable(element) {
       element.style.outline = '1px solid var(--red)';
-      element.style.border = '1px solid var(--red)';
+      element.style.border = 'none';
     }
 
     function inputEnable(element) {
-      element.style.outline = '2px solid var(--blue)';
+      element.style.outline = '1px solid var(--blue)';
       element.style.border = '1px solid var(--blue)';
     }
   </script>

@@ -86,7 +86,7 @@ function passCheck($data)
       </form>
 
     </div>
-    <p>Don't have account yet? <a href="register.php">Sign up</a></p>
+    <p>Don't have account yet? <a href="register.php"><span>Sign up</span></a></p>
   </div>
 
   <div id="particles-js" class="particle"></div>

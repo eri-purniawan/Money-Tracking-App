@@ -12,10 +12,10 @@
   --sky-blue: #30638e;
   --green: #00798c;
   --red: #d1495b;
-  --blue: #093348;
-  --white: #dce4e8;
-  --white-bg: #f6f8f9;
-  --black: #00070a;
+  --blue: #3a606e;
+  --white: #f4f4f9;
+  --white-bg: #f4f4f9;
+  --black: #171d1c;
   --white-50: #eceff480;
   --shadow: 5px 5px var(--black);
   --transition: 0.3s cubic-bezier(0.7, 0, 0.3, 1);

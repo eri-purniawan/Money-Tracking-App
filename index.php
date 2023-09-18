@@ -147,7 +147,7 @@ for ($i = 0; $i < $total; $i++) {
   }
 }
 
-$max_row = $conn->query("SELECT * FROM keuangan WHERE pengeluaran = $max");
+$max_row = $conn->query("SELECT * FROM keuangan WHERE pengeluaran = $max AND user_id = $user_id");
 $max_result = $max_row->fetchAll(PDO::FETCH_ASSOC);
 
 $list_kategori = [];
@@ -204,10 +204,10 @@ $spend_data = json_encode($list_spend);
 
         <section class="profile container">
           <div class="user">
-            <i class='bx bxs-user-circle bx-sm'></i>
+            <!-- <i class='bx bxs-user-circle bx-sm'></i> -->
             <h3> <?= ucwords($user[0]['user']) ?></h3>
           </div>
-          <a href="logout.php"><i class='bx bx-log-out'></i> Logout</a>
+          <a href="logout.php"> Logout</a>
         </section>
       </div>
     </nav>
@@ -260,7 +260,7 @@ $spend_data = json_encode($list_spend);
           <textarea name="keterangan" id="keterangan" cols="30" rows="3"></textarea>
         </div>
         <div class="form-list">
-          <button type="submit" name="tambah-data" id="add-btn"><i class='bx bx-plus bx-md'></i></button>
+          <button type="submit" name="tambah-data" id="add-btn" value="submit"><i class='bx bx-plus bx-md'></i></button>
         </div>
         <div id="close-btn-input_2" class="close"><i class='bx bx-x'></i></div>
       </form>

@@ -22,7 +22,7 @@ $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
 
 function reload()
 {
-  header("Location: . ");
+  header("Location: index.php ");
   exit;
 }
 
@@ -33,15 +33,9 @@ if (isset($_POST['uang_btn'])) {
   reload();
 }
 
-function minchar($str)
-{
-  $patern = '/-/i';
-  return (preg_match($patern, $str) ? preg_replace($patern, ' ', $str) : $str);
-}
-
 if (isset($_POST['tambah-data'])) {
   $pengeluaran = intval(str_replace('.', '', test_input($_POST['pengeluaran'])));
-  $kategori = minchar(test_input($_POST['kategori']));
+  $kategori = str_replace('-', ' ', test_input($_POST['kategori']));
   $keterangan = test_input($_POST['keterangan']);
   $uang_bulanan = $uang_bulanan - $pengeluaran;
   $tgl = date('d F Y');
@@ -50,7 +44,6 @@ if (isset($_POST['tambah-data'])) {
   reload();
 }
 
-$pengeluaran = 0;
 $t_pengeluaran = 0;
 $bulan_arr = [];
 foreach ($row as $v) {
@@ -69,13 +62,8 @@ if (count($bulan_arr) > 2) {
 $bulan = ($row ? $bulan = $bulan_tahun : date('F Y'));
 
 $bulan_lalu = date('d F Y', time() - 60 * 60 * 24 * date("t", date("n") - 1));
-$q_spend = $conn->query("SELECT pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan%' AND user_id = $user_id ORDER BY id DESC");
+$q_spend = $conn->query("SELECT SUM(pengeluaran) AS pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan%' AND user_id = $user_id");
 $last_month_spend = $q_spend->fetchAll(PDO::FETCH_ASSOC);
-
-foreach ($last_month_spend as $v) {
-  $pengeluaran += $v['pengeluaran'];
-}
-
 
 $months = array(
   'January',
@@ -123,7 +111,7 @@ function kategori($data, $bulan)
   );
 }
 
-$q = $conn->query("SELECT uang_bln, pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan_lalu%' AND user_id = $user_id ORDER BY id DESC");
+$q = $conn->query("SELECT uang_bln, pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan_lalu%' AND user_id = $user_id");
 $row = $q->fetchAll(PDO::FETCH_ASSOC);
 
 $list = kategori(NULL, $bulan_lalu);
@@ -157,10 +145,6 @@ foreach ($kategori as $v) {
   $list_kategori[] = ucwords($v['kategori']);
   $list_spend[] = $v['pengeluaran'];
 }
-
-$kategori_label = json_encode($list_kategori);
-$spend_data = json_encode($list_spend);
-
 ?>
 
 <!DOCTYPE html>
@@ -168,15 +152,15 @@ $spend_data = json_encode($list_spend);
 
 <head>
   <meta charset="UTF-8">
+  <meta name="description" content="Aplikasi penelusuran pengeluaran pada keuangan berbasis web">
+  <meta name="keywords" content="Uang, kemana, aplikasi">
+  <meta name="author" content="Eri Purniawan">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Money Tracking</title>
   <link rel="stylesheet" href="css/main.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/3c30c2ec7b.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
--->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 
@@ -191,19 +175,12 @@ $spend_data = json_encode($list_spend);
           <i class='bx bx-menu bx-flip-horizontal'></i>
         </div>
         <ul id="menu" class="menu">
-          <a href="#">
-            <li class="list-menu">Profile</li>
-          </a>
-          <a href="#sum">
-            <li class="list-menu">Summary</li>
-          </a>
-          <a href="#about">
-            <li class="list-menu">About</li>
-          </a>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#sum">Summary</a></li>
+          <li><a href="#about">About</a></li>
         </ul>
-
         <section class="profile container">
-          <h3> <?= ucwords($user[0]['user']) ?></h3>
+          <p> <?= preg_replace('/[_\d]/mi', ' ', ucwords($user[0]['user'])) ?></p>
           <a href="logout.php"> Logout</a>
         </section>
       </div>
@@ -219,17 +196,17 @@ $spend_data = json_encode($list_spend);
       <div class="pengeluaran">
         <h2>Total Pengeluaran</h2>
         <p><?= $bulan ?></p>
-        <p id="spend" class="uang"><?= number_format($pengeluaran, 0, '', '.') ?></p>
+        <p id="spend" class="uang"><?= number_format($last_month_spend[0]['pengeluaran'], 0, '', '.') ?></p>
       </div>
       <div id="btn-add" class="btn-add">
-        <i class='bx bx-plus'></i>
+        <i class='bx bx-window-open bx-md'></i>
       </div>
 
       <!-- form input balance -->
       <form id="input-uang" class="form-input-uang" action="" method="post">
         <label for="uang-bulanan">Uang Bulanan</label>
         <input type="text" name="uang_bulanan" id="uang-bulanan" autofocus placeholder="Number Only!">
-        <button id="uang_btn" type="submit" name="uang_btn">Submit</button>
+        <button id="uang_btn" type="submit" name="uang_btn"><i class='bx bx-plus bx-md'></i>Tambah Uang Bulanan</button>
         <div id="close-btn-input" class="close"><i class='bx bx-x'></i></div>
       </form>
 
@@ -257,13 +234,11 @@ $spend_data = json_encode($list_spend);
           <textarea name="keterangan" id="keterangan" cols="30" rows="3"></textarea>
         </div>
         <div class="form-list">
-          <button type="submit" name="tambah-data" id="add-btn" value="submit"><i class='bx bx-plus bx-md'></i></button>
+          <button type="submit" name="tambah-data" id="add-btn" value="submit"><i class='bx bx-plus bx-md'></i> Tambah Pengeluaran</button>
         </div>
         <div id="close-btn-input_2" class="close"><i class='bx bx-x'></i></div>
       </form>
     </section>
-
-
 
     <?php if ($t_pengeluaran > 0) : ?>
       <div class="select-menu">
@@ -312,7 +287,6 @@ $spend_data = json_encode($list_spend);
 
       </div>
     <?php endif; ?>
-
 
     <div id="data-container" class="no-data-list"></div>
 
@@ -389,14 +363,13 @@ $spend_data = json_encode($list_spend);
     </section>
   </div>
 
-
   <script src="js/main.js"></script>
   <script>
     const summary = document.getElementById('heading-sum');
 
     if (summary.innerText !== 'Summary on ...') {
-      const kategori_label = <?= $kategori_label ?>;
-      const spend_data = <?= $spend_data ?>;
+      const kategori_label = <?= json_encode($list_kategori) ?>;
+      const spend_data = <?= json_encode($list_spend) ?>;
       const ctx = document.getElementById('myChart');
 
       Chart.defaults.font.family = "'Victor Mono', monospace";

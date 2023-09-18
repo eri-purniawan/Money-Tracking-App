@@ -63,21 +63,21 @@ $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_
   <section class="halaman">
     <?php if ($hal_aktif > 1) : ?>
 
-      <li class="arrow list-halaman" id="<?= $hal_aktif - 1 ?>"><i class='bx bx-chevron-left bx-md'></i></li>
+      <p class="arrow list-halaman" id="<?= $hal_aktif - 1 ?>"><i class='bx bx-chevron-left bx-md'></i></p>
 
     <?php endif; ?>
 
     <?php for ($i = $startNumber; $i <= $endNumber; $i++) : ?>
       <?php if ($i == $hal_aktif) : ?>
-        <li class="halaman-aktif list-halaman" id="<?= $i ?>"><?= $i ?></li>
+        <p class="halaman-aktif list-halaman" id="<?= $i ?>"><?= $i ?></p>
       <?php else : ?>
-        <li class="list-halaman" id="<?= $i ?>"><?= $i  ?></li>
+        <p class="list-halaman" id="<?= $i ?>"><?= $i  ?></p>
       <?php endif; ?>
     <?php endfor; ?>
 
     <?php if ($hal_aktif < $jum_hal) : ?>
 
-      <li class="arrow list-halaman" id="<?= $hal_aktif + 1 ?>"><i class='bx bx-chevron-right bx-md'></i></li>
+      <p class="arrow list-halaman" id="<?= $hal_aktif + 1 ?>"><i class='bx bx-chevron-right bx-md'></i></p>
 
     <?php endif; ?>
   </section>

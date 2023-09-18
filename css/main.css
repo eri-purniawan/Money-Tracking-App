@@ -65,14 +65,14 @@ nav .menu {
   padding: 0 10px;
 }
 
-nav .list-menu {
+nav li a {
   cursor: pointer;
-  padding: 10px 0;
+  padding: 10px;
   transition: var(--transition);
   position: relative;
 }
 
-nav .list-menu:hover {
+nav li a:hover {
   outline: 1px solid var(--black);
 }
 
@@ -109,7 +109,8 @@ nav .btn-menu {
   color: var(--red);
 }
 
-.profile h3 {
+.profile p {
+  font-weight: bold;
   font-size: 1.2rem;
 }
 
@@ -130,7 +131,8 @@ nav .btn-menu {
 }
 
 .height-balance {
-  height: 400px;
+  align-items: center;
+  height: 480px;
 }
 
 .balance .bulanan .btn {
@@ -155,11 +157,15 @@ nav .btn-menu {
   margin: auto;
   box-shadow: var(--shadow);
   border: 1px solid var(--blue);
-  font-size: 10rem;
+  padding: 30px;
   cursor: pointer;
   display: grid;
   align-items: center;
   transition: 0.1s ease-in-out;
+}
+
+.balance .btn-add i {
+  transform: rotate(270deg);
 }
 
 .balance .btn-add:hover {
@@ -175,8 +181,8 @@ nav .btn-menu {
 }
 
 .balance .bulanan .uang::after {
-  font-family: 'Font Awesome 5 Free', 'Victor Mono', monospace;
-  content: '\f044  Add';
+  font-family: 'boxicons', 'Victor Mono', monospace;
+  content: '\ee65  Add';
   font-size: 17px;
   padding: 10px;
   display: flex;
@@ -230,7 +236,6 @@ nav .btn-menu {
   align-items: center;
   font-size: 30px;
   background-color: var(--red);
-  border: 1px solid var(--black);
   color: var(--white);
   cursor: pointer;
 }
@@ -259,6 +264,15 @@ nav .btn-menu {
   cursor: pointer;
   transition: var(--transition);
   color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.balance .form-input-uang label::after,
+.balance .input-data-pengeluaran .form-list label::after {
+  content: '*';
+  color: var(--red);
 }
 
 .balance .form-input-uang button:hover {
@@ -271,6 +285,7 @@ nav .btn-menu {
   flex-direction: column;
   background-color: var(--white);
   right: 0;
+  gap: 5px;
   box-shadow: 0 0 80px rgba(0, 0, 0, 0.295);
   width: 50%;
   height: 100%;
@@ -294,7 +309,7 @@ nav .btn-menu {
   padding: 5px;
   border: 1px solid var(--red);
   background-color: var(--white);
-  margin: 10px;
+  margin: -10px 10px 10px 10px;
 }
 
 .balance .input-data-pengeluaran .close {
@@ -306,7 +321,6 @@ nav .btn-menu {
   align-items: center;
   background-color: var(--red);
   color: var(--white);
-  border: 1px solid var(--black);
   cursor: pointer;
 }
 
@@ -314,7 +328,7 @@ nav .btn-menu {
   margin-top: 5px;
   display: grid;
   width: 80%;
-  gap: 5px;
+  gap: 10px;
   font-size: 17px;
   text-align: left;
 }
@@ -341,7 +355,10 @@ nav .btn-menu {
 }
 
 .balance .input-data-pengeluaran .form-list button {
-  width: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: auto;
   cursor: pointer;
   font-weight: bold;
@@ -909,10 +926,8 @@ nav .btn-menu {
   }
 
   .profile {
-    margin-top: -123px !important;
+    margin-top: -120px !important;
     grid-area: profile;
-    /* background-color: var(--blue); */
-    /* color: var(--white); */
     width: 100%;
     padding: 10px 20px;
   }
@@ -929,7 +944,7 @@ nav .btn-menu {
     grid-area: menus;
   }
 
-  .nav-container .menu .list-menu {
+  .nav-container .menu li {
     padding: 10px;
   }
 
@@ -982,5 +997,9 @@ nav .btn-menu {
 
   .chart {
     padding: 10px;
+  }
+
+  .balance .btn-add i {
+    transform: none;
   }
 }

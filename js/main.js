@@ -129,13 +129,11 @@ ket.addEventListener('keyup', () => {
 });
 
 function inputDisable(element) {
-  element.style.outline = '1px solid var(--red)';
-  element.style.border = '1px solid var(--red)';
+  element.style.outline = '2px solid var(--red)';
 }
 
 function inputEnable(element) {
   element.style.outline = '2px solid var(--blue)';
-  element.style.border = '1px solid var(--blue)';
 }
 
 // function to change input value to curency format

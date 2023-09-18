@@ -92,8 +92,8 @@ nav .btn-menu {
   width: fit-content;
   margin: auto !important;
   padding-left: 10px;
-  background-color: var(--black);
-  color: var(--white);
+  color: var(--black);
+  border: 1px solid var(--black);
 }
 
 .profile a {
@@ -109,12 +109,7 @@ nav .btn-menu {
   color: var(--red);
 }
 
-.profile .user {
-  display: flex;
-  gap: 10px;
-}
-
-.profile .user h3 {
+.profile h3 {
   font-size: 1.2rem;
 }
 
@@ -187,10 +182,10 @@ nav .btn-menu {
   display: flex;
   text-align: center;
   font-weight: bold;
-  color: var(--white);
-  background-color: var(--green);
+  color: var(--green);
+  background-color: var(--white);
   width: fit-content;
-  border-radius: 5px;
+  outline: 1px solid var(--green);
   padding: 10px 15px;
   transition: var(--transition);
   margin: 5px 0;
@@ -254,10 +249,14 @@ nav .btn-menu {
   border: 1px solid var(--black);
 }
 
+.balance .form-input-uang input[type='text'] {
+  outline: 1px solid var(--black);
+  border: none;
+}
+
 .balance .form-input-uang button {
   background-color: var(--blue);
   cursor: pointer;
-  box-shadow: var(--shadow);
   transition: var(--transition);
   color: var(--white);
 }
@@ -295,7 +294,6 @@ nav .btn-menu {
   padding: 5px;
   border: 1px solid var(--red);
   background-color: var(--white);
-  box-shadow: 3px 3px var(--red);
   margin: 10px;
 }
 
@@ -331,30 +329,39 @@ nav .btn-menu {
 .balance .input-data-pengeluaran .form-list button {
   font-size: 17px;
   padding: 5px;
-  border: 1px solid var(--black);
+  outline: 1px solid var(--black);
+  border: none;
+  background-color: var(--white);
 }
 
 .balance .input-data-pengeluaran .form-list input[type='text']:focus,
 .balance .input-data-pengeluaran .form-list select:focus,
 .balance .input-data-pengeluaran .form-list textarea:focus {
-  border: 1px solid var(--blue);
+  outline: 2px solid var(--blue);
 }
 
 .balance .input-data-pengeluaran .form-list button {
   width: 100px;
   margin: auto;
-  box-shadow: var(--shadow);
-  background-color: var(--red);
   cursor: pointer;
   font-weight: bold;
+  outline: none;
+  border: 1px solid var(--red);
   color: var(--white);
+  background-color: var(--red);
+  transition: var(--transition);
+}
+
+.balance .input-data-pengeluaran .form-list button:hover {
+  background-color: var(--white);
+  color: var(--red);
 }
 
 .select-menu {
   display: grid;
   grid-template-columns: 40px 200px 200px 40px;
   border: 1px solid var(--black);
-  box-shadow: var(--shadow);
+  padding: 5px;
   margin-bottom: 20px !important;
   margin: auto;
   position: relative;
@@ -411,7 +418,6 @@ nav .btn-menu {
 }
 
 .select-menu .options-bln {
-  top: 55px;
   left: 240px !important;
 }
 
@@ -420,15 +426,14 @@ nav .btn-menu {
   width: 180px !important;
   background-color: var(--white);
   border: 1px solid var(--black);
-  box-shadow: var(--shadow);
   padding: 10px;
   height: 0px !important;
-  overflow-y: scroll;
+  overflow: hidden;
   position: absolute;
   z-index: 2;
   width: 100%;
   opacity: 0;
-  top: 55px;
+  top: 60px;
   left: 50px;
   transition: var(--transition);
 }
@@ -438,6 +443,7 @@ nav .btn-menu {
 }
 
 .select-menu .active {
+  overflow-y: scroll;
   opacity: 1;
   height: 280px !important;
 }
@@ -473,29 +479,25 @@ nav .btn-menu {
 }
 
 .list {
+  padding: 10px;
   border: 1px solid var(--black);
-  border-bottom: none !important;
-  box-shadow: var(--shadow);
   display: grid;
   grid-template-rows: 1fr 1fr;
   font-size: 20px;
+  margin-bottom: 30px;
 }
 
-.tgl {
-  position: relative;
+.list .tgl {
+  border-bottom: 1px dotted var(--white);
+  width: 100%;
   z-index: 1;
   font-weight: bold;
   margin: auto;
-  margin-bottom: -5px;
-  border: 1px solid var(--black);
   padding: 10px;
   background-color: var(--blue);
   color: var(--white);
   font-size: 1.1rem;
-  width: 100%;
   text-align: center;
-  box-shadow: 5px 0 var(--black);
-  border-bottom: none;
 }
 
 .no-data-list {
@@ -526,31 +528,33 @@ nav .btn-menu {
 .list .table-value .pengeluaran {
   color: var(--red);
   font-weight: bold;
+  display: flex;
+  justify-content: center;
 }
 
 .list .table-value .pengeluaran,
 .list .table-value .kategori {
+  align-items: center;
   text-align: center;
   border-width: 0px 1px 0px 0px;
   border-style: dotted;
   border-color: var(--black);
+  height: 100% !important;
 }
 
 .total-pengeluaran {
-  border-width: 0px 1px 1px 1px !important;
-  border-style: solid !important;
-  border-color: var(--black) !important;
   background-color: var(--white);
   color: var(--red);
-  margin-bottom: 20px;
   font-size: 18px;
   width: 100%;
   text-align: center;
-  box-shadow: var(--shadow) !important;
-  position: static;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 5px;
 }
 
 .halaman {
+  padding: 5px;
   background-color: var(--white);
   display: flex;
   justify-content: center;
@@ -562,7 +566,6 @@ nav .btn-menu {
   width: fit-content;
   margin-bottom: 20px;
   border: 1px solid var(--black);
-  box-shadow: var(--shadow);
 }
 
 .halaman .list-halaman {
@@ -578,8 +581,6 @@ nav .btn-menu {
 
 .halaman .arrow {
   margin: auto;
-  border: none;
-  box-shadow: none;
   background-color: unset;
   height: 46px;
   width: 30px;
@@ -593,6 +594,7 @@ nav .btn-menu {
 .halaman .halaman-aktif {
   background-color: var(--blue);
   color: var(--white);
+  padding: 10px;
 }
 
 .summary {
@@ -600,7 +602,6 @@ nav .btn-menu {
   background-color: var(--white);
   padding: 10px;
   border: 1px solid var(--black);
-  box-shadow: var(--shadow);
 }
 
 .summary .heading {
@@ -742,7 +743,6 @@ nav .btn-menu {
   background-color: var(--white);
   bottom: 0;
   text-align: center;
-  box-shadow: var(--shadow);
 }
 
 .about h1 {
@@ -966,7 +966,6 @@ nav .btn-menu {
 
   .list {
     font-size: 15px;
-    border-top: none !important;
   }
 
   .summary-container {

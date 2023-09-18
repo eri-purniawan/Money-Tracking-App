@@ -203,10 +203,7 @@ $spend_data = json_encode($list_spend);
         </ul>
 
         <section class="profile container">
-          <div class="user">
-            <!-- <i class='bx bxs-user-circle bx-sm'></i> -->
-            <h3> <?= ucwords($user[0]['user']) ?></h3>
-          </div>
+          <h3> <?= ucwords($user[0]['user']) ?></h3>
           <a href="logout.php"> Logout</a>
         </section>
       </div>

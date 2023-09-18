@@ -28,8 +28,8 @@ $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_
   <!-- tampil data pengeluaran -->
   <div class="data">
     <?php foreach ($dates as $date) : ?>
-      <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
       <section class="list">
+        <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
 
         <div class="table-header">
           <p class="pengeluaran">Pengeluaran</p>
@@ -47,17 +47,16 @@ $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_
             <p class="keterangan"><?= $value['ket'] ?></p>
           </div>
         <?php endforeach; ?>
+        <p class="total-pengeluaran">
+          <?php
+          $total_pengeluaran = 0;
+          foreach ($row_values as $value) {
+            $total_pengeluaran += $value['pengeluaran'];
+          }
+          echo 'Total Pengeluaran: Rp. ' . number_format($total_pengeluaran, 0, '', '.')
+          ?>
+        </p>
       </section>
-
-      <p class="tgl total-pengeluaran">
-        <?php
-        $total_pengeluaran = 0;
-        foreach ($row_values as $value) {
-          $total_pengeluaran += $value['pengeluaran'];
-        }
-        echo 'Total Pengeluaran: Rp. ' . number_format($total_pengeluaran, 0, '', '.')
-        ?>
-      </p>
     <?php endforeach; ?>
   </div>
 

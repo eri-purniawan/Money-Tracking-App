@@ -528,12 +528,12 @@ nav .btn-menu {
 .list .table-value .pengeluaran {
   color: var(--red);
   font-weight: bold;
-  display: flex;
-  justify-content: center;
 }
 
 .list .table-value .pengeluaran,
 .list .table-value .kategori {
+  display: flex;
+  justify-content: center;
   align-items: center;
   text-align: center;
   border-width: 0px 1px 0px 0px;

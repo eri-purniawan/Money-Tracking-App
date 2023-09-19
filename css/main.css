@@ -488,7 +488,7 @@ nav .btn-menu {
 .zero-data-container .no-data-img {
   height: 350px;
   width: 350px;
-  margin: auto;
+  margin: -30px 0 0 -10px;
 }
 
 .list {

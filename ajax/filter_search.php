@@ -23,7 +23,7 @@ $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
 
 <?php if ($date_row->rowCount() === 0) : ?>
   <div class="zero-data-container">
-    <img src="../img/No data-cuate.png" class="no-data-img">
+    <a href="https://storyset.com/data"><img src="img/nodata.png" class="no-data-img" alt="nodata"></a>
     <p class="zero-data">Data Tidak Ditemukan</p>
   </div>
 <?php endif; ?>

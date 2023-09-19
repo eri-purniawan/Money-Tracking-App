@@ -32,11 +32,14 @@ end:
 
 <head>
   <meta charset="UTF-8">
+  <meta name="description" content="Aplikasi penelusuran pengeluaran pada keuangan berbasis web">
+  <meta name="keywords" content="Uang, kemana, aplikasi">
+  <meta name="author" content="Eri Purniawan">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/form.css">
-  <title>Register</title>
+  <title>KemanaUangku?</title>
+  <link rel="icon" type="image/png" href="img/money_5776691.png" />
 </head>
 
 <body>

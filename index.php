@@ -156,7 +156,7 @@ foreach ($kategori as $v) {
   <meta name="keywords" content="Uang, kemana, aplikasi">
   <meta name="author" content="Eri Purniawan">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Money Tracking</title>
+  <title>KemanaUangku?</title>
   <link rel="stylesheet" href="css/main.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -164,6 +164,7 @@ foreach ($kategori as $v) {
   <?php if (in_array($bulan_lalu, $bulan_arr)) : ?>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <?php endif; ?>
+  <link rel="icon" type="image/png" href="img/money_5776691.png" />
 </head>
 
 <body>

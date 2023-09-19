@@ -180,7 +180,7 @@ foreach ($kategori as $v) {
           <li><a href="#about">About</a></li>
         </ul>
         <section class="profile container">
-          <p> <?= preg_replace('/[_\d]/mi', ' ', ucwords($user[0]['user'])) ?></p>
+          <span> <?= preg_replace('/[_\d]/mi', ' ', ucwords($user[0]['user'])) ?></span>
           <a href="logout.php"> Logout</a>
         </section>
       </div>

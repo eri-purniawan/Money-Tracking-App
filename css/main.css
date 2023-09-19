@@ -38,7 +38,7 @@ nav {
 }
 
 nav .nav-container {
-  margin: 20px auto;
+  margin: 10px auto;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   gap: 50px;
@@ -46,7 +46,6 @@ nav .nav-container {
   align-items: center;
   width: 992px;
   justify-content: space-evenly;
-  margin-top: 20px;
 }
 
 nav .menu {
@@ -85,11 +84,9 @@ nav .btn-menu {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 30px !important;
-  border-top: none;
-  border-bottom: none;
   gap: 10px;
   width: fit-content;
+  padding: 5px;
   margin: auto !important;
   padding-left: 10px;
   color: var(--black);
@@ -109,13 +106,13 @@ nav .btn-menu {
   color: var(--red);
 }
 
-.profile p {
+.profile span {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .balance {
-  margin-top: 120px;
+  margin-top: 110px;
   background-color: var(--white);
   border: 1px solid var(--black);
   box-shadow: var(--shadow);
@@ -379,7 +376,6 @@ nav .btn-menu {
   grid-template-columns: 40px 200px 200px 40px;
   border: 1px solid var(--black);
   padding: 5px;
-  margin-bottom: 20px !important;
   margin: auto;
   position: relative;
   color: var(--black);
@@ -392,7 +388,7 @@ nav .btn-menu {
   padding: 10px;
   font-weight: bold;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   gap: 10px;
   align-items: center;
 }
@@ -447,12 +443,12 @@ nav .btn-menu {
   height: 0px !important;
   overflow: hidden;
   position: absolute;
-  z-index: 2;
   width: 100%;
-  opacity: 0;
   top: 60px;
   left: 50px;
+  opacity: 0;
   transition: var(--transition);
+  z-index: 1;
 }
 
 .select-menu .select-field .rotate {
@@ -460,8 +456,8 @@ nav .btn-menu {
 }
 
 .select-menu .active {
-  overflow-y: scroll;
   opacity: 1;
+  overflow-y: scroll;
   height: 280px !important;
 }
 
@@ -507,7 +503,6 @@ nav .btn-menu {
 .list .tgl {
   border-bottom: 1px dotted var(--white);
   width: 100%;
-  z-index: 1;
   font-weight: bold;
   margin: auto;
   padding: 10px;
@@ -789,6 +784,10 @@ nav .btn-menu {
     width: 95% !important;
   }
 
+  .height-balance {
+    height: fit-content !important;
+  }
+
   nav .nav-container {
     width: 95% !important;
   }
@@ -878,10 +877,7 @@ nav .btn-menu {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     height: fit-content;
     gap: 30px;
-  }
-
-  .height-balance {
-    height: fit-content !important;
+    margin-top: 90px;
   }
 
   .balance .uang {
@@ -1001,5 +997,9 @@ nav .btn-menu {
 
   .balance .btn-add i {
     transform: none;
+  }
+
+  .height-balance {
+    height: 480px !important;
   }
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Aplikasi penelusuran pengeluaran pada keuangan berbasis web">
+  <meta name="keywords" content="Uang, kemana, aplikasi">
+  <meta name="author" content="Eri Purniawan">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Money Tracking</title>
+  <link rel="stylesheet" href="css/landPage.css">
+  <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <h1>KemanaUangku?</h1>
+    <p>Aplikasi penelusuran pengeluaran pada keuangan berbasis web</p>
+    <a href="login.php" class="login">Login</a>
+    <a href="register.php" class="register">Register</a>
+  </header>
+
+  <div id="particles-js" class="particle"></div>
+  <script src="js/particles.js"></script>
+  <script src="js/form.js"></script>
+</body>
+
+</html>

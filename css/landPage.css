@@ -1,0 +1,83 @@
+@import url(default.css);
+
+a {
+  text-decoration: none;
+  padding: 20px;
+  width: 150px;
+  margin: auto;
+  font-weight: bold;
+  background-color: var(--blue);
+  color: var(--white);
+  transition: var(--transition);
+}
+
+a:hover {
+  box-shadow: var(--shadow);
+}
+
+body {
+  height: 100vh;
+  position: relative;
+  display: grid;
+  align-items: center;
+}
+
+header {
+  text-align: center;
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'desc desc'
+    'login regis';
+  width: 992px;
+  margin: auto;
+  gap: 30px;
+  border: 1px solid var(--black);
+  padding: 60px;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+}
+
+h1 {
+  grid-area: header;
+}
+
+p {
+  line-height: 60px;
+  grid-area: desc;
+  font-size: 2rem;
+}
+
+.login {
+  grid-area: login;
+}
+
+.register {
+  grid-area: regis;
+}
+
+.particle {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+@media (max-width: 992px) {
+  header {
+    width: 80%;
+  }
+}
+
+@media (max-width: 576px) {
+  header {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 30px;
+  }
+}

@@ -11,7 +11,7 @@ $pages = $page_row->fetchAll(PDO::FETCH_ASSOC);
 
 $jum_data = 1;
 $tot_data = count($pages);
-$jum_hal = (count($pages) > 10 ? 10 : $jum_hal = ceil($tot_data / $jum_data));
+$jum_hal = (count($pages) > 40 ? 40 : $jum_hal = ceil($tot_data / $jum_data));
 $hal_aktif = (isset($_POST['page']) ? $_POST['page'] : 1);
 $awal_data = ($jum_data * $hal_aktif) - $jum_data;
 

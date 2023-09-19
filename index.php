@@ -61,7 +61,7 @@ if (count($bulan_arr) > 2) {
 
 $bulan = ($row ? $bulan = $bulan_tahun : date('F Y'));
 
-$bulan_lalu = date('d F Y', time() - 60 * 60 * 24 * date("t", date("n") - 1));
+$bulan_lalu = date('F Y', time() - 60 * 60 * 24 * date("t", date("n") - 1));
 $q_spend = $conn->query("SELECT SUM(pengeluaran) AS pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan%' AND user_id = $user_id");
 $last_month_spend = $q_spend->fetchAll(PDO::FETCH_ASSOC);
 
@@ -111,7 +111,7 @@ function kategori($data, $bulan)
   );
 }
 
-$q = $conn->query("SELECT uang_bln, pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan_lalu%' AND user_id = $user_id");
+$q = $conn->query("SELECT uang_bln, pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan_lalu%' AND user_id = $user_id ORDER BY id DESC");
 $row = $q->fetchAll(PDO::FETCH_ASSOC);
 
 $list = kategori(NULL, $bulan_lalu);
@@ -303,9 +303,9 @@ foreach ($kategori as $v) {
 
           <div class="sum-content">
             <h2 class="title">Total Pengeluaran</h2>
-            <p class="sum-uang red rp"><?= number_format($p_bln_lalu) ?></p>
+            <p class="sum-uang red rp"><?= number_format($p_bln_lalu, 0, '', '.') ?></p>
             <h2 class="title">Sisa Uang Bulanan</h2>
-            <p class="sum-uang rp"><?= number_format($row[0]['uang_bln']) ?></p>
+            <p class="sum-uang rp"><?= number_format($row[0]['uang_bln'], 0, '', '.') ?></p>
           </div>
 
           <div class="wraper">

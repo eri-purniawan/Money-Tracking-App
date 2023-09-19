@@ -5,4 +5,4 @@ session_unset();
 session_destroy();
 $_SESSION['login'] = FALSE;
 
-header('Location: login.php');
+header('Location: landPage.html');

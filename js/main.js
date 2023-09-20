@@ -1,10 +1,10 @@
 const btn_menu = document.getElementById('btn-menu');
 const nav = document.getElementById('nav');
 const menu = document.getElementById('menu');
-btn_menu.addEventListener('click', () => {
-  nav.classList.toggle('height');
-  menu.classList.toggle('menu-show');
-});
+// btn_menu.addEventListener('click', () => {
+//   nav.classList.toggle('height');
+//   menu.classList.toggle('menu-show');
+// });
 
 const add_uang_btn = document.getElementById('add-uang-btn');
 const form_input_uang = document.getElementById('input-uang');
@@ -32,6 +32,8 @@ const close_btn_input = document.getElementById('close-btn-input');
 close_btn_input.addEventListener('click', () => {
   form_input_uang.classList.remove('show-window');
 });
+
+document.getElementById('tgl').valueAsDate = new Date();
 
 let uang_bln = document.getElementById('uang-bulanan');
 let uang_btn = document.getElementById('uang_btn');

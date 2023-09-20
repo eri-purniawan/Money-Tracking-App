@@ -18,6 +18,10 @@ $user = $query->fetchAll(PDO::FETCH_ASSOC);
 
 $stmt = $conn->query("SELECT * FROM keuangan WHERE user_id = $user_id");
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// $dates = $conn->query("SELECT DATE_FORMAT(tgl, '%d %M %Y') as tgl FROM keuangan WHERE user_id = $user_id");
+// $date = $dates->fetchAll(PDO::FETCH_ASSOC);
+
 $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
 
 function reload()
@@ -28,8 +32,10 @@ function reload()
 
 if (isset($_POST['uang_btn'])) {
   $uang_bulanan += intval(str_replace('.', '', test_input($_POST['uang_bulanan'])));
-  $tgl = date('d F Y');
-  $stmt = $conn->query("INSERT INTO keuangan (user_id, uang_bln, tgl) VALUES ($user_id, '$uang_bulanan', '$tgl')");
+  $tgl = str_replace('/', ' ', test_input($_POST['tgl']));
+
+  $stmt = $conn->query("INSERT INTO keuangan (user_id, uang_bln, tgl) VALUES ($user_id, '$uang_bulanan', STR_TO_DATE('$tgl', '%d %m %Y'))");
+
   reload();
 }
 
@@ -38,20 +44,37 @@ if (isset($_POST['tambah-data'])) {
   $kategori = str_replace('-', ' ', test_input($_POST['kategori']));
   $keterangan = test_input($_POST['keterangan']);
   $uang_bulanan = $uang_bulanan - $pengeluaran;
-  $tgl = date('d F Y');
+  $tgl = str_replace('/', ' ', test_input($_POST['tgl']));
+
+  var_dump($tgl);
 
   $stmt = $conn->query("INSERT INTO keuangan (user_id, uang_bln, tgl, pengeluaran, kategori, ket) VALUES ($user_id, '$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
   reload();
 }
 
+
 $t_pengeluaran = 0;
 $bulan_arr = [];
 foreach ($row as $v) {
   $t_pengeluaran += $v['pengeluaran'];
-  $bulan_tahun = explode(' ', $v['tgl'])[1] . ' ' . explode(' ', $v['tgl'])[2];
+  $bulan = str_replace('-', ' ', $v['tgl']);
 
-  $bulan_arr[] = $bulan_tahun;
+  $bulan = explode(" ", $bulan);
+  array_splice($bulan, -1);
+  $bulan = implode("-", $bulan);
+
+  $bulan_arr[] = $bulan;
 }
+
+// foreach ($date as $v) {
+//   $bulan_tahun = explode(' ', $v['tgl'])[1] . ' ' . explode(' ', $v['tgl'])[2];
+
+//   $bulan_arr[] = $bulan_tahun;
+// }
+
+
+
+
 
 $bulan_arr = array_unique($bulan_arr);
 
@@ -59,9 +82,9 @@ if (count($bulan_arr) > 2) {
   array_splice($bulan_arr, 0, count($bulan_arr) - (count($bulan_arr) + 2));
 }
 
-$bulan = ($row ? $bulan = $bulan_tahun : date('F Y'));
+// $bulan = ($row ? $bulan = $bulan_tahun : date('Y-m-d'));
 
-$bulan_lalu = date('F Y', time() - 60 * 60 * 24 * date("t", date("n") - 1));
+$bulan_lalu = date('Y-m', time() - 60 * 60 * 24 * date("t", date("n") - 1));
 $q_spend = $conn->query("SELECT SUM(pengeluaran) AS pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan%' AND user_id = $user_id");
 $last_month_spend = $q_spend->fetchAll(PDO::FETCH_ASSOC);
 
@@ -85,12 +108,12 @@ function kategori($data, $bulan)
   global $user_id;
   global $conn;
 
-  $kategori = $conn->query("SELECT DISTINCT kategori FROM keuangan WHERE pengeluaran is NOT NULL AND user_id = $user_id");
+  $kategori = $conn->query("SELECT DISTINCT kategori FROM keuangan WHERE pengeluaran is NOT NULL AND user_id = $user_id AND tgl LIKE '%$bulan%'");
   $kategori_row = $kategori->fetchAll(PDO::FETCH_ASSOC);
 
   for ($i = 0; $i < count($kategori_row); $i++) {
     $kat_name = $kategori_row[$i]['kategori'];
-    $query = $conn->query("SELECT kategori, pengeluaran FROM keuangan WHERE kategori = '$kat_name' AND tgl LIKE '%$bulan%' AND user_id = $user_id");
+    $query = $conn->query("SELECT kategori, pengeluaran FROM keuangan WHERE kategori = '$kat_name' AND user_id = $user_id AND pengeluaran IS NOT NULL");
     $query_row = $query->fetchAll(PDO::FETCH_ASSOC);
 
     if ($kat_name == $data) {
@@ -171,7 +194,7 @@ foreach ($kategori as $v) {
   <div class="container">
 
     <!-- Navigaiton -->
-    <nav>
+    <!-- <nav>
       <div id="nav" class="nav-container">
         <h1 class="heading"><a href="#">KemanaUangku?</a></h1>
         <div id="btn-menu" class="btn-menu">
@@ -187,18 +210,18 @@ foreach ($kategori as $v) {
           <a href="logout.php"> Logout</a>
         </section>
       </div>
-    </nav>
+    </nav> -->
 
     <!-- Balance -->
     <section class="balance" id="balance">
       <div class="bulanan">
         <h2>Sisa Uang Bulanan</h2>
-        <p><?= $bulan ?></p>
+        <p><?= substr(strstr(date("d F Y", strtotime($bulan)), " "), 1) ?></p>
         <p id="add-uang-btn" class="uang btn"><?= number_format($uang_bulanan, 0, '', '.') ?></p>
       </div>
       <div class="pengeluaran">
         <h2>Total Pengeluaran</h2>
-        <p><?= $bulan ?></p>
+        <p><?= substr(strstr(date("d F Y", strtotime($bulan)), " "), 1) ?></p>
         <p id="spend" class="uang"><?= number_format($last_month_spend[0]['pengeluaran'], 0, '', '.') ?></p>
       </div>
       <div id="btn-add" class="btn-add">
@@ -207,6 +230,7 @@ foreach ($kategori as $v) {
 
       <!-- form input balance -->
       <form id="input-uang" class="form-input-uang" action="" method="post">
+        <input type="hidden" name="tgl" value="<?= date('d/m/Y') ?>">
         <label for="uang-bulanan">Uang Bulanan</label>
         <input type="text" name="uang_bulanan" id="uang-bulanan" autofocus placeholder="Number Only!">
         <button id="uang_btn" type="submit" name="uang_btn"><i class='bx bx-plus bx-md'></i>Tambah Uang Bulanan</button>
@@ -216,6 +240,10 @@ foreach ($kategori as $v) {
       <!-- form input pengeluaran -->
       <form id="tambah-data" action="" method="post" class="input-data-pengeluaran">
         <div id="error"></div>
+        <div class="form-list">
+          <label for="tgl">Tgl</label>
+          <input type="date" name="tgl" id="tgl">
+        </div>
         <div class="form-list">
           <label for="pengeluaran">Pengeluaran</label>
           <input type="text" name="pengeluaran" id="pengeluaran">
@@ -297,7 +325,7 @@ foreach ($kategori as $v) {
 
       <?php if (in_array($bulan_lalu, $bulan_arr)) : ?>
 
-        <h1 id="heading-sum" class="heading">Summary on <?= $bulan_lalu ?></h1>
+        <h1 id="heading-sum" class="heading">Summary on <?= substr(strstr(date("d F Y", strtotime($bulan_lalu)), " "), 1) ?></h1>
 
         <div class="summary-container">
 
@@ -319,7 +347,7 @@ foreach ($kategori as $v) {
             </div>
 
             <div class="table value after">
-              <p><?= $max_result[0]['tgl'] ?></p>
+              <p><?= date("d F Y", strtotime($max_result[0]['tgl'])) ?></p>
               <p><?= $max_result[0]['kategori'] ?></p>
               <p class="red rp">Rp. <?= number_format($max_result[0]['pengeluaran'], 0, '', '.') ?></p>
               <p><?= $max_result[0]['ket'] ?></p>
@@ -350,7 +378,7 @@ foreach ($kategori as $v) {
       <?php else : ?>
         <h1 id="heading-sum" class="heading">Summary on ... </h1>
         <div class="no-data">
-          <p>Data ringkasan pengeluaran bulan <?= $bulan ?> akan tersedia pada bulan berikutnya</p>
+          <p>Data ringkasan pengeluaran bulan <?= date('F Y') ?> akan tersedia pada bulan berikutnya</p>
         </div>
       <?php endif; ?>
     </section>

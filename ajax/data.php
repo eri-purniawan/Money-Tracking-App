@@ -15,7 +15,7 @@ $jum_hal = (count($pages) > 40 ? 40 : $jum_hal = ceil($tot_data / $jum_data));
 $hal_aktif = (isset($_POST['page']) ? $_POST['page'] : 1);
 $awal_data = ($jum_data * $hal_aktif) - $jum_data;
 
-$date_row = $conn->query("SELECT DISTINCT tgl FROM keuangan WHERE pengeluaran IS NOT NULL AND user_id = $user_id ORDER BY id DESC LIMIT $awal_data, $jum_data");
+$date_row = $conn->query("SELECT DISTINCT tgl FROM keuangan WHERE pengeluaran IS NOT NULL AND user_id = $user_id ORDER BY tgl DESC LIMIT $awal_data, $jum_data");
 $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
 
 $jum_link = 1;
@@ -29,14 +29,14 @@ $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_
   <div class="data">
     <?php foreach ($dates as $date) : ?>
       <section class="list">
-        <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
+        <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . date("d F Y", strtotime($date['tgl'])) ?></p>
 
         <div class="table-header">
           <p class="pengeluaran">Pengeluaran</p>
           <p class="kategori">Kategori</p>
           <p class="keterangan">Keterangan</p>
         </div>
-
+        <?php $date = $date['tgl'] ?>
         <?php $values = $conn->query("SELECT * FROM keuangan WHERE tgl = '$date' AND pengeluaran IS NOT NULL AND user_id = $user_id");
         $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
         ?>

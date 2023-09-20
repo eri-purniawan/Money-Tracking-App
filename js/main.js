@@ -1,10 +1,10 @@
 const btn_menu = document.getElementById('btn-menu');
 const nav = document.getElementById('nav');
 const menu = document.getElementById('menu');
-// btn_menu.addEventListener('click', () => {
-//   nav.classList.toggle('height');
-//   menu.classList.toggle('menu-show');
-// });
+btn_menu.addEventListener('click', () => {
+  nav.classList.toggle('height');
+  menu.classList.toggle('menu-show');
+});
 
 const add_uang_btn = document.getElementById('add-uang-btn');
 const form_input_uang = document.getElementById('input-uang');

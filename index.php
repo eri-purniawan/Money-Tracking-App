@@ -190,7 +190,7 @@ foreach ($kategori as $v) {
   <div class="container">
 
     <!-- Navigaiton -->
-    <!-- <nav>
+    <nav>
       <div id="nav" class="nav-container">
         <h1 class="heading"><a href="#">KemanaUangku?</a></h1>
         <div id="btn-menu" class="btn-menu">
@@ -206,7 +206,7 @@ foreach ($kategori as $v) {
           <a href="logout.php"> Logout</a>
         </section>
       </div>
-    </nav> -->
+    </nav>
 
     <!-- Balance -->
     <section class="balance" id="balance">

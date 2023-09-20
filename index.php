@@ -72,10 +72,6 @@ foreach ($row as $v) {
 //   $bulan_arr[] = $bulan_tahun;
 // }
 
-
-
-
-
 $bulan_arr = array_unique($bulan_arr);
 
 if (count($bulan_arr) > 2) {

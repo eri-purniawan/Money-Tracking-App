@@ -31,7 +31,6 @@ nav {
   width: 100%;
   height: fit-content;
   position: fixed;
-  z-index: 2;
   background-color: var(--white-bg);
   z-index: 5;
   border-bottom: 1px solid var(--black);
@@ -128,7 +127,6 @@ nav .btn-menu {
 }
 
 .height-balance {
-  align-items: center;
   height: 480px;
 }
 
@@ -181,7 +179,6 @@ nav .btn-menu {
   font-family: 'boxicons', 'Victor Mono', monospace;
   content: '\ee65  Add';
   font-size: 17px;
-  padding: 10px;
   display: flex;
   text-align: center;
   font-weight: bold;
@@ -443,7 +440,6 @@ nav .btn-menu {
   height: 0px !important;
   overflow: hidden;
   position: absolute;
-  width: 100%;
   top: 60px;
   left: 50px;
   opacity: 0;
@@ -784,10 +780,6 @@ nav .btn-menu {
     width: 95% !important;
   }
 
-  .height-balance {
-    height: fit-content !important;
-  }
-
   nav .nav-container {
     width: 95% !important;
   }
@@ -802,6 +794,11 @@ nav .btn-menu {
       'pengeluaran'
       'button' !important;
     text-align: center;
+    height: fit-content !important;
+  }
+
+  .height-balance {
+      height: fit-content !important;
   }
 
   .balance .bulanan .uang::after {
@@ -875,9 +872,14 @@ nav .btn-menu {
       'bulanan pengeluaran'
       'button button';
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    height: fit-content;
     gap: 30px;
     margin-top: 90px;
+    height: 400px;
+    transition: var(--transition) !important;
+  }
+
+  .height-balance {
+      height: 480px;
   }
 
   .balance .uang {
@@ -903,7 +905,6 @@ nav .btn-menu {
   }
 
   .nav-container {
-    gap: 0;
     width: 90% !important;
     grid-template-areas:
       'heading btn-menu'
@@ -997,9 +998,5 @@ nav .btn-menu {
 
   .balance .btn-add i {
     transform: none;
-  }
-
-  .height-balance {
-    height: 480px !important;
   }
 }

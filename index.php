@@ -19,9 +19,6 @@ $user = $query->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $conn->query("SELECT * FROM keuangan WHERE user_id = $user_id");
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// $dates = $conn->query("SELECT DATE_FORMAT(tgl, '%d %M %Y') as tgl FROM keuangan WHERE user_id = $user_id");
-// $date = $dates->fetchAll(PDO::FETCH_ASSOC);
-
 $uang_bulanan = ($row ? $uang_bulanan = $row[count($row) - 1]['uang_bln'] : 0);
 
 function reload()
@@ -44,11 +41,9 @@ if (isset($_POST['tambah-data'])) {
   $kategori = str_replace('-', ' ', test_input($_POST['kategori']));
   $keterangan = test_input($_POST['keterangan']);
   $uang_bulanan = $uang_bulanan - $pengeluaran;
-  $tgl = str_replace('/', ' ', test_input($_POST['tgl']));
+  $tgl = test_input($_POST['tgl']);
 
-  var_dump($tgl);
-
-  $stmt = $conn->query("INSERT INTO keuangan (user_id, uang_bln, tgl, pengeluaran, kategori, ket) VALUES ($user_id, '$uang_bulanan', '$tgl', '$pengeluaran', '$kategori', '$keterangan')");
+  $stmt = $conn->query("INSERT INTO keuangan (user_id, uang_bln, tgl, pengeluaran, kategori, ket) VALUES ($user_id, '$uang_bulanan', STR_TO_DATE('$tgl', '%d %M %Y'), '$pengeluaran', '$kategori', '$keterangan')");
   reload();
 }
 
@@ -66,19 +61,11 @@ foreach ($row as $v) {
   $bulan_arr[] = $bulan;
 }
 
-// foreach ($date as $v) {
-//   $bulan_tahun = explode(' ', $v['tgl'])[1] . ' ' . explode(' ', $v['tgl'])[2];
-
-//   $bulan_arr[] = $bulan_tahun;
-// }
-
 $bulan_arr = array_unique($bulan_arr);
 
 if (count($bulan_arr) > 2) {
   array_splice($bulan_arr, 0, count($bulan_arr) - (count($bulan_arr) + 2));
 }
-
-// $bulan = ($row ? $bulan = $bulan_tahun : date('Y-m-d'));
 
 $bulan_lalu = date('Y-m', time() - 60 * 60 * 24 * date("t", date("n") - 1));
 $q_spend = $conn->query("SELECT SUM(pengeluaran) AS pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan%' AND user_id = $user_id");
@@ -164,6 +151,32 @@ foreach ($kategori as $v) {
   $list_kategori[] = ucwords($v['kategori']);
   $list_spend[] = $v['pengeluaran'];
 }
+
+$list_tgl = [];
+$x = 0;
+$jumlah_tgl = 6;
+while ($x >= -$jumlah_tgl) {
+  $list_tgl[] = date('d F Y', time() + 60 * 60 * 24 * $x);
+  $x--;
+}
+
+$daftarKategori = [
+  "Konsumsi",
+  "Bahan Bakar",
+  "Kendaraan",
+  "Holiday",
+  "Tagihan",
+  "Belanja",
+  "Elektronik",
+  "Hobi",
+  "Hiburan",
+  "Perawatan",
+  "Kesehatan",
+  "Pakaian",
+  "Pendidikan",
+  "Transportasi"
+]
+
 ?>
 
 <!DOCTYPE html>
@@ -238,7 +251,11 @@ foreach ($kategori as $v) {
         <div id="error"></div>
         <div class="form-list">
           <label for="tgl">Tgl</label>
-          <input type="date" name="tgl" id="tgl">
+          <select name="tgl" id="tgl">
+            <?php foreach ($list_tgl as $v) : ?>
+              <option value="<?= $v ?>"><?= $v ?></option>
+            <?php endforeach; ?>
+          </select>
         </div>
         <div class="form-list">
           <label for="pengeluaran">Pengeluaran</label>
@@ -248,12 +265,9 @@ foreach ($kategori as $v) {
           <label for="kategori">Kategori</label>
           <select name="kategori" id="kategori">
             <option value="" selected disabled hidden>Pilih Kategori</option>
-            <option value="makanan">Makanan</option>
-            <option value="bensin">Bensin</option>
-            <option value="service-motor">Service Motor</option>
-            <option value="hobi">Hobi</option>
-            <option value="holiday">Holiday</option>
-            <option value="tagihan">Tagihan</option>
+            <?php foreach ($daftarKategori as $v) : ?>
+              <option value="<?= $v ?>"><?= $v ?></option>
+            <?php endforeach; ?>
           </select>
         </div>
         <div class="form-list">

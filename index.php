@@ -31,8 +31,12 @@ if (isset($_POST['uang_btn'])) {
   $uang_bulanan += intval(str_replace('.', '', test_input($_POST['uang_bulanan'])));
   $tgl = str_replace('/', ' ', test_input($_POST['tgl']));
 
-  $stmt = $conn->query("INSERT INTO keuangan (user_id, uang_bln, tgl) VALUES ($user_id, '$uang_bulanan', STR_TO_DATE('$tgl', '%d %m %Y'))");
+  $stmt = $conn->prepare("INSERT INTO keuangan (user_id, uang_bln, tgl) VALUES (?, ?, STR_TO_DATE('$tgl', '%d %m %Y'))");
 
+  $stmt->bindParam(1, $user_id, PDO::PARAM_INT);
+  $stmt->bindParam(2, $uang_bulanan, PDO::PARAM_INT);
+
+  $stmt->execute();
   reload();
 }
 
@@ -43,10 +47,17 @@ if (isset($_POST['tambah-data'])) {
   $uang_bulanan = $uang_bulanan - $pengeluaran;
   $tgl = test_input($_POST['tgl']);
 
-  $stmt = $conn->query("INSERT INTO keuangan (user_id, uang_bln, tgl, pengeluaran, kategori, ket) VALUES ($user_id, '$uang_bulanan', STR_TO_DATE('$tgl', '%d %M %Y'), '$pengeluaran', '$kategori', '$keterangan')");
+  $stmt = $conn->prepare("INSERT INTO keuangan (user_id, uang_bln, tgl, pengeluaran, kategori, ket) VALUES (?, ?, STR_TO_DATE( ? , '%d %M %Y'), ?, ?, ?)");
+
+  $stmt->bindParam(1, $user_id, PDO::PARAM_INT);
+  $stmt->bindParam(2, $uang_bulanan, PDO::PARAM_INT);
+  $stmt->bindParam(3, $tgl, PDO::PARAM_STR);
+  $stmt->bindParam(4, $pengeluaran, PDO::PARAM_INT);
+  $stmt->bindParam(5, $kategori, PDO::PARAM_STR);
+  $stmt->bindParam(6, $keterangan, PDO::PARAM_STR);
+  $stmt->execute();
   reload();
 }
-
 
 $t_pengeluaran = 0;
 $bulan_arr = [];
@@ -61,6 +72,7 @@ foreach ($row as $v) {
   $bulan_arr[] = $bulan;
 }
 
+$bulan = ($row ? $bulan = $bulan : date('F Y'));
 $bulan_arr = array_unique($bulan_arr);
 
 if (count($bulan_arr) > 2) {
@@ -214,14 +226,15 @@ $daftarKategori = [
           <li><a href="#sum">Summary</a></li>
           <li><a href="#about">About</a></li>
         </ul>
-        <section class="profile container">
-          <span> <?= preg_replace('/[_\d]/mi', ' ', ucwords($user[0]['user'])) ?></span>
-          <a href="logout.php"> Logout</a>
-        </section>
       </div>
     </nav>
 
     <!-- Balance -->
+    <section class="profile">
+      <span> Wellcome, <?= preg_replace('/[_\d]/mi', ' ', ucwords($user[0]['user'])) ?></span>
+      <a href="logout.php"> Logout</a>
+    </section>
+
     <section class="balance" id="balance">
       <div class="bulanan">
         <h2>Sisa Uang Bulanan</h2>

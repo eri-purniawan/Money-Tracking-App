@@ -93,9 +93,9 @@ $endNumber = ($hal_aktif < $jum_hal - $jum_link ? $hal_aktif + $jum_link : $jum_
     </div>
 
     <div class="table-value">
-      <p class="pengeluaran"><?= 'No data yet'  ?></p>
-      <p class="kategori"><?= 'No data yet' ?></p>
-      <p style="text-align: center;" class="keterangan"><?= 'No data yet' ?></p>
+      <p class="pengeluaran"><?= 'None'  ?></p>
+      <p class="kategori"><?= 'None' ?></p>
+      <p style="text-align: center;" class="keterangan"><?= 'None' ?></p>
     </div>
 
   </section>

@@ -16,8 +16,11 @@ if (isset($_POST['submit'])) {
   }
 
   $password = password_hash($password, PASSWORD_DEFAULT);
+  $stmt = $conn->prepare("INSERT INTO users VALUES ('', ?, ?)");
 
-  $stmt = $conn->query("INSERT INTO users VALUES ('', '$username', '$password')");
+  $stmt->bindParam(1, $username, PDO::PARAM_STR);
+  $stmt->bindParam(2, $password, PDO::PARAM_STR);
+  $stmt->execute();
 
   if ($stmt->rowCount() == 1) {
     $Succes = TRUE;

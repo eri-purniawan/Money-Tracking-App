@@ -29,15 +29,15 @@ $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
 <?php endif; ?>
 
 <?php foreach ($dates as $date) : ?>
-  <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . $date = $date['tgl'] ?></p>
   <section class="list">
-
+    <p class="tgl"><?= "<i class='bx bx-calendar'></i> " . date("d F Y", strtotime($date['tgl'])) ?></p>
     <div class="table-header">
       <span class="pengeluaran">Pengeluaran</span>
       <span class="kategori">Kategori</span>
       <span class="keterangan">Keterangan</span>
     </div>
 
+    <?php $date = $date['tgl'] ?>
     <?php $values = $conn->query("SELECT * FROM keuangan WHERE tgl = '$date' AND pengeluaran IS NOT NULL AND user_id = $user_id AND kategori LIKE '%$keyword%'");
     $row_values = $values->fetchAll(PDO::FETCH_ASSOC);
     ?>
@@ -48,15 +48,14 @@ $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);
         <p class="keterangan"><?= $value['ket'] ?></p>
       </div>
     <?php endforeach; ?>
+    <p class="total-pengeluaran">
+      <?php
+      $total_pengeluaran = 0;
+      foreach ($row_values as $value) {
+        $total_pengeluaran += $value['pengeluaran'];
+      }
+      echo 'Total Pengeluaran: Rp.' . number_format($total_pengeluaran)
+      ?>
+    </p>
   </section>
-
-  <p class="tgl total-pengeluaran">
-    <?php
-    $total_pengeluaran = 0;
-    foreach ($row_values as $value) {
-      $total_pengeluaran += $value['pengeluaran'];
-    }
-    echo 'Total Pengeluaran: Rp.' . number_format($total_pengeluaran)
-    ?>
-  </p>
 <?php endforeach; ?>

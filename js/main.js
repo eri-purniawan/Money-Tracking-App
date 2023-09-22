@@ -62,6 +62,7 @@ const ket = document.getElementById('keterangan');
 const add_btn = document.getElementById('add-btn');
 const error = document.getElementById('error');
 const spend = document.getElementById('spend');
+const tglVal = document.getElementById('tgl');
 let sisa_value = add_uang_btn.innerText;
 let patern = /[^,\d]/gi;
 let num_bul = parseInt(sisa_value.replace(patern, ''));
@@ -107,17 +108,31 @@ add_btn.addEventListener('click', () => {
     add_btn.disabled = true;
   }
 
+  if (tglVal.innerText === '') {
+    inputDisable(tglVal);
+    add_btn.disabled = true;
+  }
+
   if (num_bul < num_spend) {
     add_btn.disabled = true;
   }
 });
 
 kategori.addEventListener('click', () => {
-  if (kategori.innerText === 'Pilih Kategori') {
+  if (kategori.value === '') {
     inputDisable(kategori);
   } else {
     add_btn.disabled = false;
     inputEnable(kategori);
+  }
+});
+
+tglVal.addEventListener('click', () => {
+  if (tglVal.innerText === '') {
+    inputDisable(tglVal);
+  } else {
+    add_btn.disabled = false;
+    inputEnable(tglVal);
   }
 });
 

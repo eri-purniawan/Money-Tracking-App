@@ -84,6 +84,12 @@ function passCheck($data)
             <label for="password">Password</label>
             <input type="password" name="password" id="password">
           </div>
+
+          <div class="show-pass">
+            <label for="checkbox">Show Password</label>
+            <input type="checkbox" name="checkbox" id="checkbox">
+          </div>
+
           <button type="submit" name="submit">Login</button>
         </div>
       </form>
@@ -96,6 +102,17 @@ function passCheck($data)
 
   <script src="js/particles.js"></script>
   <script src="js/form.js"></script>
+  <script>
+    const check = document.getElementById('checkbox');
+    const pass = document.getElementById('password');
+    check.addEventListener('click', () => {
+      if (pass.type == 'password') {
+        pass.type = 'text';
+      } else {
+        pass.type = 'password';
+      }
+    })
+  </script>
 </body>
 
 </html>

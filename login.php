@@ -77,7 +77,7 @@ function passCheck($data)
         <div class="form-container">
           <div class="form-list">
             <label for="username">Username</label>
-            <input type="text" name="username" id="username">
+            <input type="text" name="username" id="username" autocomplete="no">
           </div>
 
           <div class="form-list">

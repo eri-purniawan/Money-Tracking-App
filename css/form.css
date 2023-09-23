@@ -48,6 +48,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  position: relative;
 }
 
 .container .form-container .form-list input {
@@ -67,6 +68,13 @@ body {
 
 .container .form-container .form-list label {
   font-weight: bold;
+}
+
+.container .form-container .form-list p {
+  margin-top: -5px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--red);
 }
 
 .container .form-container button {
@@ -147,6 +155,23 @@ body {
 
 .alert-container a:hover {
   padding: 10px 20px;
+}
+
+.form-container .show-pass {
+  display: flex;
+  gap: 5px;
+}
+
+.show-pass input {
+  order: 1;
+  width: 30px;
+  border: 1px solid var(--black);
+  border-radius: 0px;
+}
+
+.show-pass label {
+  order: 2;
+  margin-top: -3px;
 }
 
 @media (max-width: 576px) {

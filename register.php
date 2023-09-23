@@ -41,6 +41,7 @@ end:
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/form.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <title>KemanaUangku?</title>
   <link rel="icon" type="image/png" href="img/money_5776691.png" />
 </head>
@@ -72,12 +73,18 @@ end:
         <div class="form-container">
           <div class="form-list">
             <label for="username">Username</label>
-            <input type="text" name="username" id="username">
+            <input type="text" name="username" id="username" autocomplete="no">
           </div>
 
           <div class="form-list">
             <label for="password">Password</label>
             <input type="password" name="password" id="password">
+            <div style="display: none;" id="warning"></div>
+          </div>
+
+          <div class="show-pass">
+            <label for="checkbox">Show Password</label>
+            <input type="checkbox" name="checkbox" id="checkbox">
           </div>
 
           <div class="form-list">
@@ -157,6 +164,27 @@ end:
       element.style.outline = '1px solid var(--blue)';
       element.style.border = '1px solid var(--blue)';
     }
+
+    const warn = document.getElementById('warning');
+    pass.addEventListener('keyup', () => {
+      let value = pass.value;
+      if (value.length < 8) {
+        warn.style.display = 'block';
+        warn.innerHTML = "<p>Must contain 8 character</p>";
+      } else {
+        warn.innerHTML = "";
+        warn.style.display = 'none';
+      }
+    })
+
+    const check = document.getElementById('checkbox');
+    check.addEventListener('click', () => {
+      if (pass.type == 'password') {
+        pass.type = 'text';
+      } else {
+        pass.type = 'password';
+      }
+    })
   </script>
 </body>
 

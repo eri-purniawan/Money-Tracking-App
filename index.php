@@ -310,11 +310,9 @@ $daftarKategori = [
           <li class="option">
             <p class="option-text">All</p>
           </li>
-          <?php
-          $kat_list = kategori(NULL, '');
-          foreach ($kat_list as $v) : ?>
+          <?php foreach ($daftarKategori as $v) : ?>
             <li class="option">
-              <p class="option-text"><?= ucwords($v['kategori']) ?></p>
+              <p class="option-text"><?= ucwords($v) ?></p>
             </li>
           <?php endforeach; ?>
         </ul>

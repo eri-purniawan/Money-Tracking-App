@@ -7,7 +7,7 @@ $user_id = $_SESSION['user_id'];
 require "../connect.php";
 
 $keyword = $_GET['keyword'];
-$keyword_bln = $_GET['keyword_bln'];
+$keyword_bln = date('Y-m', strtotime($_GET['keyword_bln']));
 
 function check($data)
 {

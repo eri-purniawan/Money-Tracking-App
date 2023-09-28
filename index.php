@@ -186,7 +186,8 @@ $daftarKategori = [
   "Kesehatan",
   "Pakaian",
   "Pendidikan",
-  "Transportasi"
+  "Transportasi",
+  "Sedekah"
 ]
 
 ?>

@@ -79,7 +79,7 @@ if (count($bulan_arr) > 2) {
   array_splice($bulan_arr, 0, count($bulan_arr) - (count($bulan_arr) + 2));
 }
 
-$bulan_lalu = date('Y-m', time() - 60 * 60 * 24 * date("t", date("n") - 1));
+$bulan_lalu = date('Y-m', time() - 60 * 60 * 24 * date("t", mktime(0, 0, 0, date("n") - 1)));
 $q_spend = $conn->query("SELECT SUM(pengeluaran) AS pengeluaran FROM keuangan WHERE tgl LIKE '%$bulan%' AND user_id = $user_id");
 $last_month_spend = $q_spend->fetchAll(PDO::FETCH_ASSOC);
 
@@ -202,7 +202,7 @@ $daftarKategori = [
   <meta name="author" content="Eri Purniawan">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KemanaUangku?</title>
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css?v=1">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -452,6 +452,8 @@ $daftarKategori = [
               '#30638e',
               '#003d5b',
               '#5c425b',
+              '#473335',
+              '#495867',
             ],
             borderColor: '#fff',
             color: '#00070a'

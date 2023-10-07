@@ -6,16 +6,13 @@ $user_id = $_SESSION['user_id'];
 
 require "../connect.php";
 
-$keyword = $_GET['keyword'];
-$keyword_bln = date('Y-m', strtotime($_GET['keyword_bln']));
+$keyword = check($_GET['keyword']);
+$keyword_bln = check(date('Y-m', strtotime($_GET['keyword_bln'])));
 
 function check($data)
 {
-  return $data = ($data == 'All' ? $data = '' : $data);
+  return $data == "All" || $data == "1970-01" ? $data = "" : $data;
 }
-
-$keyword = check($keyword);
-$keyword_bln = check($keyword_bln);
 
 $date_row = $conn->query("SELECT DISTINCT tgl FROM keuangan WHERE pengeluaran IS NOT NULL AND user_id = $user_id AND kategori LIKE '%$keyword%' AND tgl LIKE '%$keyword_bln%' ORDER BY tgl DESC");
 $dates = $date_row->fetchAll(PDO::FETCH_ASSOC);

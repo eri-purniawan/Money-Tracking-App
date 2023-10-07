@@ -108,7 +108,7 @@ function kategori($data, $bulan)
 
   for ($i = 0; $i < count($kategori_row); $i++) {
     $kat_name = $kategori_row[$i]['kategori'];
-    $query = $conn->query("SELECT kategori, pengeluaran FROM keuangan WHERE kategori = '$kat_name' AND user_id = $user_id AND pengeluaran IS NOT NULL");
+    $query = $conn->query("SELECT kategori, pengeluaran FROM keuangan WHERE kategori = '$kat_name' AND user_id = $user_id AND pengeluaran IS NOT NULL AND tgl LIKE '%$bulan%'");
     $query_row = $query->fetchAll(PDO::FETCH_ASSOC);
 
     if ($kat_name == $data) {
